@@ -1,10 +1,16 @@
 package main;
 
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 
 
 /*
@@ -25,6 +31,33 @@ public class Interface {
         JFrame frame = new JFrame("OCM Opensource clinical manager");
         ComandiPaziente command = new ComandiPaziente();
         PazienteBuilder p = new PazienteBuilder();
+        
+        
+     // Define new buttons 
+        JButton jb1 = new JButton("Button 1");      
+         
+         
+        // Define the panel to hold the buttons 
+        JPanel panel = new JPanel();
+        JTabbedPane tabPane = new JTabbedPane();
+        JPanel panel1 = new JPanel();
+        JPanel panel2 = new JPanel();
+        JLabel label1 = new JLabel("Tab 1");
+        JLabel label2 = new JLabel("Tab 2");
+
+        panel1.add(label1);
+        panel2.add(label2);
+
+        tabPane.add("Tab 1", panel1);
+        tabPane.add("Tab 2", panel2);
+        //frame.add(tabPane);
+        //panel.setLayout(new FlowLayout());
+        //panel.add(jb1);
+       frame.add(tabPane);
+         
+        // Set the window to be visible as the default to be false
+        //frame.add(panel);
+        //frame.pack();
 
         frame.setLocationRelativeTo(null);
         frame.setSize(new Dimension(400, 400));
@@ -46,6 +79,8 @@ public class Interface {
         
         command.addPaziente(p.setNome("q").setCognome("i").setID(0).setEta(0).setNascita("21/12/231").setSesso("M"));
         command.addPaziente(p.setNome("q").setCognome("i").setID(0).setEta(0).setNascita("20/12/231").setSesso("M"));
+        command.listPazienti();
+        command.addPaziente(p.setNome("a").setCognome("i").setID(0).setEta(0).setNascita("20/12/231").setSesso("M").setPrenotazione("22/12/2023"));
         command.listPazienti();
         
     }
