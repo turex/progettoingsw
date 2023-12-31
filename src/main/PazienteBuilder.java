@@ -4,7 +4,7 @@ public class PazienteBuilder {
 	
 	String nome = "";
 	String cognome = "";
-	int ID = 0;
+	String ID = "";
 	String nascita = "";
 	String sesso = "";
 	String prenotazione = "";
@@ -20,7 +20,9 @@ public class PazienteBuilder {
 
 	}
 
-	public PazienteBuilder setID(int ID) {
+	public PazienteBuilder setID(String ID) {
+		
+		
 		this.ID = ID;
 		return this;
 

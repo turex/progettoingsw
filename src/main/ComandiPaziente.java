@@ -9,6 +9,8 @@ public class ComandiPaziente {
 	
 	
 	void addPaziente(PazienteBuilder p) {
+		
+		p.ID = p.nome.substring(0,2).toUpperCase() + p.cognome.substring(0, 2).toUpperCase() + p.nascita.replace("/", "");
         pazi.add(p.getPaziente());
 
         //System.out.println(users.get(2)); TODO : da eliminare, solo per reference

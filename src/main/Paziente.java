@@ -5,12 +5,12 @@ public class Paziente implements Uomo{
 	
 	String nome = "";
 	String cognome = "";
-	int ID = 0;
+	String ID = "";
 	String nascita = "";
 	String sesso = "";
 	String prenotazione = "";
 	
-public Paziente(String nome,String cognome,int ID,String nascita,String sesso, String prenotazione) {
+public Paziente(String nome,String cognome,String ID,String nascita,String sesso, String prenotazione) {
 		this.nome = nome;
 		this.cognome = cognome;
 		this.ID = ID;
@@ -32,7 +32,7 @@ public Paziente(String nome,String cognome,int ID,String nascita,String sesso, S
 	}
 
 	@Override
-	public int getID() {
+	public String getID() {
 		// TODO Auto-generated method stub
 		return ID;
 	}

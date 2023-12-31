@@ -1,7 +1,10 @@
 package main;
 
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
@@ -41,25 +45,70 @@ public class Interface {
         // Define the panel to hold the buttons 
         JTabbedPane tabPane = new JTabbedPane();
         
-        JPanel panel1 = new JPanel();
-        JPanel panel2 = new JPanel();
-        JPanel panel3 = new JPanel();
+        JPanel panel1 = new JPanel();// Pannello "Paziente" dove vengono inseriti i dati del paziente
+        JPanel panel2 = new JPanel();// Pannello "Medico" dove vengono inseriti i dati del Medico
+        JPanel panel3 = new JPanel();// Pannello "Macchinario" dove vengono inseriti i dati dei macchinari
+        JPanel panel4 = new JPanel();// Pannello "Prenotazioni" dove vengono inseriti i dati delle prenotazioni
         
         
-        JTextField  nome = new JTextField(20);
         
-        JLabel label1 = new JLabel("Pazienti");
+       
+        JButton addPaziente = new JButton("Aggiungi paziente");
+        JButton listPaziente = new JButton("Lista pazienti");
+       
+        JTextField  nome = new JTextField(30);
+       // nome.setBounds(20, 20, 20, 20);
+        JTextField  cognome = new JTextField(30);
+        //nome.setBounds(30, 20, 20, 20);
+        JTextField data = new JTextField(10);
+        JTextField sesso = new JTextField(1);
+       // sesso.setBounds(30, 20, 20, 20);
+        
+        
+        
+        JLabel label1 = new JLabel("Nome : ");
+        //label1.setLocation(100,100);
+        JLabel label11 = new JLabel("Cognome : ");
+        //label1.setLocation(100,100);
+        JLabel label12 = new JLabel("Data di nascita : ");
+        JLabel label13 = new JLabel("Sesso : ");
+        //label1.setLocation(100,100);
+        
+        
+        
+        
+        
+        
+        
         JLabel label2 = new JLabel("Medici");
         JLabel label3 = new JLabel("Macchinari");
 
-        panel1.add(label1);
-        panel1.add(nome).setLocation(20,20);
+        //Impostsazioni della tab 1 relativa ai pazienti
+        
+        panel1.add(label1,BorderLayout.WEST);
+        panel1.add(nome,BorderLayout.CENTER);
+        panel1.add(label11,BorderLayout.WEST);
+        panel1.add(cognome,BorderLayout.CENTER);
+        panel1.add(label12,BorderLayout.WEST);
+        panel1.add(data, BorderLayout.CENTER);
+        panel1.add(label13,BorderLayout.WEST);
+        panel1.add(sesso, BorderLayout.CENTER);
+        
+        panel1.add(addPaziente);
+        panel1.add(listPaziente);
+        
+        
+        // Fine tab pazienti
+        
+        
+        
         panel2.add(label2);
         panel3.add(label3);
 
         tabPane.add("Pazienti", panel1);
         tabPane.add("Medici", panel2);
         tabPane.add("Macchinari", panel3);
+        tabPane.add("Gestione prenotazioni",panel4);
         //frame.add(tabPane);
         //panel.setLayout(new FlowLayout());
         //panel.add(jb1);
@@ -72,27 +121,46 @@ public class Interface {
         frame.setLocationRelativeTo(null);
         frame.setSize(new Dimension(400, 400));
         frame.setVisible(true);
+        //frame.pack();
         
         
         
-		/*
-		 * PazienteBuilder p = new PazienteBuilder();
-		 * 
-		 * List<Paziente> users = new ArrayList<>(10); for (int i = 0; i < 10; i++) {
-		 * users.add(p.setName("toto" + i).setCognome("Ferrari").getPaziente()); }
-		 * 
-		 * System.out.println(users.get(2));
-		 */
         
-        command.addPaziente(p.setNome("q").setCognome("i").setID(0).setEta(0).setNascita("21/12/2311").setSesso("M"));
-        //command.printPaziente(0);
+        addPaziente.addActionListener(new ActionListener(){
+        	
+        	public void actionPerformed(ActionEvent e) {
+        		
+        		// We require at least Name and Surname
+        		
+        		if(!nome.getText().isEmpty() && !cognome.getText().isEmpty() && 
+        				!data.getText().isEmpty()) { //check if nome , cognome and data are empty
+        		
+        		command.addPaziente(p.setNome(nome.getText()).setCognome(cognome.getText()).setNascita(data.getText()).setSesso(sesso.getText()));
+        		
+        		JOptionPane.showMessageDialog(
+        		        null, "Paziente aggiunto", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+        		}
+        		else
+        			JOptionPane.showMessageDialog(
+            		        null, "Errore!\n Nome, cognome e data di nascita sono necessari", "ERRORE", JOptionPane.ERROR_MESSAGE);
+        		
+        	}
+        	
+        });
         
-        command.addPaziente(p.setNome("q").setCognome("i").setID(0).setEta(0).setNascita("21/12/231").setSesso("M"));
-        command.addPaziente(p.setNome("q").setCognome("i").setID(0).setEta(0).setNascita("20/12/231").setSesso("M"));
-        command.listPazienti();
-        command.addPaziente(p.setNome("a").setCognome("i").setID(0).setEta(0).setNascita("20/12/231").setSesso("M").setPrenotazione("22/12/2023"));
-        command.listPazienti();
+        listPaziente.addActionListener(new ActionListener(){
+        	
+        	public void actionPerformed(ActionEvent e) {
+        		command.listPazienti();
+        	}
+        	
+        });
+		
+	
+		 
         
+       
     }
+	
 
 }
