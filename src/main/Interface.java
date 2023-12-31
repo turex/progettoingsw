@@ -121,6 +121,7 @@ public class Interface {
         frame.setLocationRelativeTo(null);
         frame.setSize(new Dimension(400, 400));
         frame.setVisible(true);
+        frame.setResizable(false);
         //frame.pack();
         
         
@@ -142,7 +143,7 @@ public class Interface {
         		}
         		else
         			JOptionPane.showMessageDialog(
-            		        null, "Errore!\n Nome, cognome e data di nascita sono necessari", "ERRORE", JOptionPane.ERROR_MESSAGE);
+            		        null, "Errore!\nNome, cognome e data di nascita sono necessari", "ERRORE", JOptionPane.ERROR_MESSAGE);
         		
         	}
         	
