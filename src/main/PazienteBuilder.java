@@ -5,7 +5,6 @@ public class PazienteBuilder {
 	String nome = "";
 	String cognome = "";
 	int ID = 0;
-	int eta = 0;
 	String nascita = "";
 	String sesso = "";
 	String prenotazione = "";
@@ -27,12 +26,6 @@ public class PazienteBuilder {
 
 	}
 
-	public PazienteBuilder setEta(int eta) {
-		this.eta = eta;
-		return this;
-
-	}
-
 	public PazienteBuilder setNascita(String nascita) {
 		this.nascita = nascita;
 		return this;
@@ -50,7 +43,7 @@ public class PazienteBuilder {
 	}
 	
 	public Paziente getPaziente() {
-		return new Paziente(nome,cognome,ID,eta,nascita,sesso,prenotazione);
+		return new Paziente(nome,cognome,ID,nascita,sesso,prenotazione);
 	}
 	
 	

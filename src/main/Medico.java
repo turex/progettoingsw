@@ -9,12 +9,11 @@ public class Medico implements Uomo{
 	String nascita = "";
 	String sesso = "";
 	
-	public Medico(String nome,String cognome,int ID,int eta,String nascita,String sesso) {
+	public Medico(String nome,String cognome,int ID,String nascita,String sesso) {
 		
 		this.nome = nome;
 		this.cognome = cognome;
 		this.ID = ID;
-		this.eta = eta;
 		this.nascita = nascita;
 		this.sesso = sesso;
 		
@@ -36,12 +35,6 @@ public class Medico implements Uomo{
 	public int getID() {
 		// TODO Auto-generated method stub
 		return ID;
-	}
-
-	@Override
-	public int getEta() {
-		// TODO Auto-generated method stub
-		return eta;
 	}
 
 	@Override

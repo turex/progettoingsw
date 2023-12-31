@@ -1,21 +1,19 @@
 package main;
 
+
 public class Paziente implements Uomo{
 	
 	String nome = "";
 	String cognome = "";
 	int ID = 0;
-	int eta = 0;
 	String nascita = "";
 	String sesso = "";
 	String prenotazione = "";
 	
-public Paziente(String nome,String cognome,int ID,int eta,String nascita,String sesso, String prenotazione) {
-		super();
+public Paziente(String nome,String cognome,int ID,String nascita,String sesso, String prenotazione) {
 		this.nome = nome;
 		this.cognome = cognome;
 		this.ID = ID;
-		this.eta = eta;
 		this.nascita = nascita;
 		this.sesso = sesso;
 		this.prenotazione = prenotazione;
@@ -40,12 +38,6 @@ public Paziente(String nome,String cognome,int ID,int eta,String nascita,String 
 	}
 
 	@Override
-	public int getEta() {
-		// TODO Auto-generated method stub
-		return eta;
-	}
-
-	@Override
 	public String getNascita() {
 		// TODO Auto-generated method stub
 		return nascita;
@@ -58,7 +50,7 @@ public Paziente(String nome,String cognome,int ID,int eta,String nascita,String 
 
 	@Override
 	public String toString() {
-		return "Paziente [nome=" + nome + ", cognome=" + cognome + ", ID=" + ID + ", eta=" + eta + ", nascita="
+		return "Paziente [nome=" + nome + ", cognome=" + cognome + ", ID=" + ID + ", nascita="
 				+ nascita + ", sesso=" + sesso + ", prenotazione=" + prenotazione + "]";
 	}
 
