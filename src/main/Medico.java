@@ -49,4 +49,5 @@ public class Medico implements Uomo{
 		// TODO Auto-generated method stub
 		return nascita;
 	}
+
 }

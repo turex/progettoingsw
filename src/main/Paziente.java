@@ -8,8 +8,9 @@ public class Paziente implements Uomo{
 	int eta = 0;
 	String nascita = "";
 	String sesso = "";
+	String prenotazione = "";
 	
-public Paziente(String nome,String cognome,int ID,int eta,String nascita,String sesso) {
+public Paziente(String nome,String cognome,int ID,int eta,String nascita,String sesso, String prenotazione) {
 		super();
 		this.nome = nome;
 		this.cognome = cognome;
@@ -17,7 +18,7 @@ public Paziente(String nome,String cognome,int ID,int eta,String nascita,String 
 		this.eta = eta;
 		this.nascita = nascita;
 		this.sesso = sesso;
-		
+		this.prenotazione = prenotazione;
 	}
 
 	@Override
@@ -50,10 +51,15 @@ public Paziente(String nome,String cognome,int ID,int eta,String nascita,String 
 		return nascita;
 	}
 
+	public String getPrenotazione() {
+		// TODO Auto-generated method stub
+		return prenotazione;
+	}
+
 	@Override
 	public String toString() {
 		return "Paziente [nome=" + nome + ", cognome=" + cognome + ", ID=" + ID + ", eta=" + eta + ", nascita="
-				+ nascita + ", sesso=" + sesso + "]";
+				+ nascita + ", sesso=" + sesso + ", prenotazione=" + prenotazione + "]";
 	}
 
 	

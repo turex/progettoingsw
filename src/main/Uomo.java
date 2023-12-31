@@ -7,5 +7,5 @@ public interface Uomo {
 	public int getID();
 	public int getEta();
 	public String getNascita();
-
+	//public String getPrenotazione();
 }
