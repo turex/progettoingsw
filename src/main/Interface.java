@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 
 
 /*
@@ -34,22 +35,31 @@ public class Interface {
         
         
      // Define new buttons 
-        JButton jb1 = new JButton("Button 1");      
+        //JButton jb1 = new JButton("Button 1");      
          
          
         // Define the panel to hold the buttons 
-        JPanel panel = new JPanel();
         JTabbedPane tabPane = new JTabbedPane();
+        
         JPanel panel1 = new JPanel();
         JPanel panel2 = new JPanel();
-        JLabel label1 = new JLabel("Tab 1");
-        JLabel label2 = new JLabel("Tab 2");
+        JPanel panel3 = new JPanel();
+        
+        
+        JTextField  nome = new JTextField(20);
+        
+        JLabel label1 = new JLabel("Pazienti");
+        JLabel label2 = new JLabel("Medici");
+        JLabel label3 = new JLabel("Macchinari");
 
         panel1.add(label1);
+        panel1.add(nome).setLocation(20,20);
         panel2.add(label2);
+        panel3.add(label3);
 
-        tabPane.add("Tab 1", panel1);
-        tabPane.add("Tab 2", panel2);
+        tabPane.add("Pazienti", panel1);
+        tabPane.add("Medici", panel2);
+        tabPane.add("Macchinari", panel3);
         //frame.add(tabPane);
         //panel.setLayout(new FlowLayout());
         //panel.add(jb1);
