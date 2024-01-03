@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
@@ -36,7 +37,7 @@ public class Interface {
         MedicoBuilder m = new MedicoBuilder();
          
          
-        // Define the panel to hold the buttons 
+        // Define the panel 
         JTabbedPane tabPane = new JTabbedPane();//TAB Panel
         
         JPanel panel1 = new JPanel();// Pannello "Paziente" dove vengono inseriti i dati del paziente
@@ -102,10 +103,52 @@ public class Interface {
         panel2.add(listMedici);
         
         
-        // Fine tab pazienti
+        // Fine tab Medici
         
-        //panel2.add(label2);
-        //panel3.add(label3);
+        
+        //TODO :: Da fare TAB 3
+        
+        //
+        //
+        //
+        
+        
+        //Impostazioni della tab 4 relativa alle prenotazioni
+        
+        
+        JButton addPrenotazione = new JButton("Aggiungi prenotazione");
+        JButton listPrenotazioni = new JButton("Lista prenotazioni");
+        
+        
+        JList lp = new JList(command.listaPazientitoString());
+        //JTextField nome2 = new JTextField(30);
+        //JTextField cognome2 = new JTextField(30);
+        //JTextField professione = new JTextField(10);
+        //JTextField sesso = new JTextField(1);
+        
+        //JLabel label2 = new JLabel("Nome : ");
+        //JLabel label21 = new JLabel("Cognome : ");
+        //JLabel label22 = new JLabel("Professione : ");
+        //JLabel label23 = new JLabel("Sesso : ");
+        
+        /*
+        panel2.add(label2,BorderLayout.WEST);
+        panel2.add(nome2,BorderLayout.CENTER);
+        panel2.add(label21,BorderLayout.WEST);
+        panel2.add(cognome2,BorderLayout.CENTER);
+        panel2.add(label22,BorderLayout.WEST);
+        panel2.add(professione, BorderLayout.CENTER);
+        //panel2.add(label23,BorderLayout.WEST);
+        //panel2.add(sesso2, BorderLayout.CENTER);
+        panel2.add(addMedico);
+        panel2.add(listMedici);
+        */
+        
+        panel4.add(lp);
+        
+        // Fine tab Medici
+        
+
 
         tabPane.add("Pazienti", panel1);
         tabPane.add("Medici", panel2);
@@ -125,17 +168,21 @@ public class Interface {
         		
         		// We require at least Name, Surname and date
         		
-        		if(!nome.getText().isEmpty() && !cognome.getText().isEmpty() && 
-        				!data.getText().isEmpty()) { //check if nome , cognome and data are empty
-        		
+        		if(!command.checkPaziente(nome.getText(),cognome.getText(),data.getText())) { //check if nome , cognome and data are empty and if is not still on database
         		command.addPaziente(p.setNome(nome.getText()).setCognome(cognome.getText()).setNascita(data.getText()).setSesso(sesso.getText()));
-        		
+
         		JOptionPane.showMessageDialog(
         		        null, "Paziente aggiunto", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+        		
+        		
+        		//Lo aggiungo alla lista
+        		
+        		lp.setModel(command.listaPazientitoString());
         		}
+        		//}
         		else
         			JOptionPane.showMessageDialog(
-            		        null, "Errore!\nNome, cognome e data di nascita sono necessari", "ERRORE", JOptionPane.ERROR_MESSAGE);
+            		        null, "Errore!\nNome, cognome e data di nascita sono necessari o paziente gia registrato", "ERRORE", JOptionPane.ERROR_MESSAGE);
         		
         	}
         	
@@ -183,12 +230,53 @@ addMedico.addActionListener(new ActionListener(){
         	}
         	
         });
+        
+        //ADD Macchinario
+        
+        //
+        
+        ///
+        ///
+        ///
+        ////
+        
+        ////
+        
+        
+        
+addPrenotazione.addActionListener(new ActionListener(){
+        	
+        	public void actionPerformed(ActionEvent e) {
+        		
+        		// We require at least Name, Surname and date
+        		
+        		if(!nome2.getText().isEmpty() && !cognome2.getText().isEmpty() && 
+        				!professione.getText().isEmpty()) { //check if nome , cognome and data are empty
+        		
+        		medcommand.addMedico(m.setNome(nome2.getText()).setCognome(cognome2.getText()).setProfessione(professione.getText()));
+        		
+        		JOptionPane.showMessageDialog(
+        		        null, "Medico aggiunto", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+        		}
+        		else
+        			JOptionPane.showMessageDialog(
+            		        null, "Errore!\nTutti i campi sono necessari", "ERRORE", JOptionPane.ERROR_MESSAGE);
+        		
+        	}
+        	
+        });
+        
+        listPrenotazioni.addActionListener(new ActionListener(){
+        	
+        	public void actionPerformed(ActionEvent e) {
+        		medcommand.listMedici();
+        	}
+        	
+        });
 		
 	
 		 
-        
-       
-    }
+    }// end Main
 	
 
-}
+}//End class
