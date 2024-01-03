@@ -20,7 +20,7 @@ public Paziente(String nome,String cognome,String ID,String nascita,String sesso
 	}
 
 	@Override
-	public String getName() {
+	public String getNome() {
 		// TODO Auto-generated method stub
 		return nome;
 	}
