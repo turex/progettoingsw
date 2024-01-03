@@ -15,6 +15,34 @@ public class Prenotazione {
 	
 	
 	
+	public String getNomePaziente() {
+		// TODO Auto-generated method stub
+		return nome_paziente;
+		
+	}
+	
+	public String getNomeMedico() {
+		// TODO Auto-generated method stub
+		return nome_medico;
+		
+	}
+	
+	public String getProfessione() {
+		// TODO Auto-generated method stub
+		return professione;
+		
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Prenotazione [nome_paziente=" + nome_paziente + ", nome_medico=" + nome_medico + ", professione="
+				+ professione + "]";
+	}
+	
+	
+
 	
 
 }
@@ -46,5 +74,7 @@ class PrenotazioneBuilder{
 	public Prenotazione getPrenotazione() {
 		return new Prenotazione(nome_paziente,nome_medico,professione);
 	}
+	
+	
 	
 }

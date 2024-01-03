@@ -37,9 +37,12 @@ public class Interface {
                 
         ComandiPaziente command = new ComandiPaziente();
         ComandiMedico medcommand = new ComandiMedico();
+        ComandiPrenotazione prencommand = new ComandiPrenotazione();
+        
         PazienteBuilder p = new PazienteBuilder();
         MedicoBuilder m = new MedicoBuilder();
-         
+        PrenotazioneBuilder pb = new PrenotazioneBuilder();
+        
          
         // Define the panel 
         JTabbedPane tabPane = new JTabbedPane();//TAB Panel
@@ -259,7 +262,7 @@ addMedico.addActionListener(new ActionListener(){
         	
         	public void actionPerformed(ActionEvent e) {
         		
-        		
+        		prencommand.addPrenotazione(pb.setnomePaziente(selectionItem).setnomeMedico("Mimmo").setProfessione( "Oculista"));
         		
         		
         		
@@ -271,7 +274,7 @@ addMedico.addActionListener(new ActionListener(){
         listPrenotazioni.addActionListener(new ActionListener(){
         	
         	public void actionPerformed(ActionEvent e) {
-        		medcommand.listMedici();
+        		prencommand.listPrenotazioni();
         	}
         	
         });
