@@ -5,12 +5,14 @@ public class Prenotazione {
 	String nome_paziente ="";
 	String nome_medico ="";
 	String professione ="";
+	String data="";
 	
 
-	public Prenotazione(String nome_paziente, String nome_medico, String professione) {
+	public Prenotazione(String nome_paziente, String nome_medico, String professione, String data) {
 		this.nome_paziente = nome_paziente;
 		this.nome_medico = nome_medico;
 		this.professione = professione;
+		this.data = data;
 	}
 	
 	
@@ -32,18 +34,22 @@ public class Prenotazione {
 		return professione;
 		
 	}
+	
+	public String getData() {
+		// TODO Auto-generated method stub
+		return data;
+		
+	}
 
 
 
 	@Override
 	public String toString() {
 		return "Prenotazione [nome_paziente=" + nome_paziente + ", nome_medico=" + nome_medico + ", professione="
-				+ professione + "]";
+				+ professione + ", data=" + data + "]";
 	}
 	
-	
-
-	
+		
 
 }
 
@@ -55,6 +61,7 @@ class PrenotazioneBuilder{
 	String nome_paziente ="";
 	String nome_medico ="";
 	String professione ="";
+	String data="";
 	
 	public PrenotazioneBuilder setnomePaziente(String nome_paziente) {
 		this.nome_paziente = nome_paziente;
@@ -71,8 +78,13 @@ class PrenotazioneBuilder{
 		return this;	
 	}
 	
+	public PrenotazioneBuilder setData(String data) {
+		this.data = data;
+		return this;	
+	}
+	
 	public Prenotazione getPrenotazione() {
-		return new Prenotazione(nome_paziente,nome_medico,professione);
+		return new Prenotazione(nome_paziente,nome_medico,professione,data);
 	}
 	
 	
