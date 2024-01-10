@@ -29,11 +29,14 @@ import javax.swing.event.ListSelectionListener;
  */
 
 public class Interface {
-	static String selectionItem;
+	static String selectionItem; //mi da l'item del paziente
+	static String selectionProfessione;// mi da l'item della professione
 	
 	public static void main(String[] args) {
+		
+		final String TITOLO = "OCM Opensource clinic manager";
 
-        JFrame frame = new JFrame("OCM Opensource clinical manager");
+        JFrame frame = new JFrame(TITOLO);
                 
         ComandiPaziente command = new ComandiPaziente();
         ComandiMedico medcommand = new ComandiMedico();
@@ -50,7 +53,7 @@ public class Interface {
         JPanel panel1 = new JPanel();// Pannello "Paziente" dove vengono inseriti i dati del paziente
         JPanel panel2 = new JPanel();// Pannello "Medico" dove vengono inseriti i dati del Medico
         JPanel panel3 = new JPanel();// Pannello "Macchinario" dove vengono inseriti i dati dei macchinari
-        JPanel panel4 = new JPanel();// Pannello "Prenotazioni" dove vengono inseriti i dati delle prenotazioni
+        JPanel panel4 = new JPanel(new BorderLayout());// Pannello "Prenotazioni" dove vengono inseriti i dati delle prenotazioni
         
         
         
@@ -91,12 +94,10 @@ public class Interface {
         JTextField nome2 = new JTextField(30);
         JTextField cognome2 = new JTextField(30);
         JTextField professione = new JTextField(10);
-        //JTextField sesso = new JTextField(1);
         
         JLabel label2 = new JLabel("Nome : ");
         JLabel label21 = new JLabel("Cognome : ");
         JLabel label22 = new JLabel("Professione : ");
-        //JLabel label23 = new JLabel("Sesso : ");
         
         panel2.add(label2,BorderLayout.WEST);
         panel2.add(nome2,BorderLayout.CENTER);
@@ -104,8 +105,7 @@ public class Interface {
         panel2.add(cognome2,BorderLayout.CENTER);
         panel2.add(label22,BorderLayout.WEST);
         panel2.add(professione, BorderLayout.CENTER);
-        //panel2.add(label23,BorderLayout.WEST);
-        //panel2.add(sesso2, BorderLayout.CENTER);
+       
         panel2.add(addMedico);
         panel2.add(listMedici);
         
@@ -126,15 +126,39 @@ public class Interface {
         JButton addPrenotazione = new JButton("Aggiungi prenotazione");
         JButton listPrenotazioni = new JButton("Lista prenotazioni");
         
+        JPanel sinistro = new JPanel(new BorderLayout());//Inserisco la lista pazienti
+        JPanel giu = new JPanel(new BorderLayout()); // Inserisco i bottoni
+        JPanel destro = new JPanel(new BorderLayout()); // Inserisco i bottoni
+        JPanel centro = new JPanel(new BorderLayout());//Inserisco la lista pazienti
         
-        JList lp = new JList();
+        
+        JList lp = new JList(); //Lista pazienti
+        JList lprof = new JList(); //Lista professioni medici
+        
+        JTextField data_prenotazione = new JTextField(15);
+        
         
         JLabel l4 = new JLabel("Lista Pazienti : ");
+        JLabel l41 = new JLabel("Lista professioni : ");
+        JLabel l42 = new JLabel("Inserisci data prenotazione : ");
         
-        panel4.add(l4);
-        panel4.add(lp);
-        panel4.add(addPrenotazione);
-        panel4.add(listPrenotazioni);
+        
+        sinistro.add(l4,BorderLayout.NORTH);
+        sinistro.add(lp,BorderLayout.EAST);
+        
+        giu.add(addPrenotazione,BorderLayout.WEST);
+        giu.add(listPrenotazioni,BorderLayout.EAST);
+        
+        destro.add(l41,BorderLayout.NORTH);
+        destro.add(lprof,BorderLayout.EAST);
+        
+        centro.add(l42,BorderLayout.NORTH);
+        centro.add(data_prenotazione, BorderLayout.CENTER);
+        
+        panel4.add(centro,BorderLayout.CENTER);
+        panel4.add(destro, BorderLayout.EAST);
+        panel4.add(sinistro, BorderLayout.WEST);
+        panel4.add(giu,BorderLayout.SOUTH);
         
         // Fine tab Medici
         
@@ -161,10 +185,10 @@ public class Interface {
         		if(!command.checkPaziente(nome.getText(),cognome.getText(),data.getText())) { //check if nome , cognome and data are empty and if is not still on database
         		command.addPaziente(p.setNome(nome.getText()).setCognome(cognome.getText()).setNascita(data.getText()).setSesso(sesso.getText()));
 
-        		lp.setModel(command.listaPazientitoString());
+        		lp.setModel(command.listaPazientitoString()); //ottengo la lista pazienti e la inserisco nella listbox
         		
         		JOptionPane.showMessageDialog(
-        		        null, "Paziente aggiunto", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+        		        null, "Paziente aggiunto!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
         		
         		
         		//Lo aggiungo alla lista
@@ -203,8 +227,11 @@ addMedico.addActionListener(new ActionListener(){
         		
         		medcommand.addMedico(m.setNome(nome2.getText()).setCognome(cognome2.getText()).setProfessione(professione.getText()));
         		
+        		lprof.setModel(medcommand.listaMedicitoString());
+        		
+        		
         		JOptionPane.showMessageDialog(
-        		        null, "Medico aggiunto", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+        		        null, "Medico aggiunto!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
         		}
         		else
         			JOptionPane.showMessageDialog(
@@ -244,7 +271,7 @@ addMedico.addActionListener(new ActionListener(){
                 if (!arg0.getValueIsAdjusting()) {
                 	try {
                 		
-                		if(!lp.isSelectionEmpty())
+                		if(!(lp == null))
                   selectionItem = lp.getSelectedValue().toString();
                 	}
                 	catch (NullPointerException e)
@@ -257,14 +284,40 @@ addMedico.addActionListener(new ActionListener(){
         });
         
         
+        lprof.addListSelectionListener(new ListSelectionListener() { //Setto il Listener per selezione dati da JList
+
+            @Override
+            public void valueChanged(ListSelectionEvent arg0) {
+                if (!arg0.getValueIsAdjusting()) {
+                	try {
+                		
+                		if(!(lprof == null))
+                  selectionProfessione = lprof.getSelectedValue().toString();
+                	}
+                	catch (NullPointerException e)
+                	{
+                		e.printStackTrace();
+                	}
+                  System.out.println(selectionProfessione);
+                }
+            }
+        });
+        
+        
         
         addPrenotazione.addActionListener(new ActionListener(){
         	
         	public void actionPerformed(ActionEvent e) {
+        		String[] split_medico= {};
         		
-        		prencommand.addPrenotazione(pb.setnomePaziente(selectionItem).setnomeMedico("Mimmo").setProfessione( "Oculista"));
+        		if(!(selectionProfessione == null)) {
+        		split_medico = selectionProfessione.split(" ");
         		
+        		prencommand.addPrenotazione(pb.setnomePaziente(selectionItem).setnomeMedico(split_medico[0]).setProfessione(split_medico[2]).setData(data_prenotazione.getText()));
         		
+        		}
+        		else
+        			System.out.println("Non é stato inserito il medico!");
         		
         		
         	}
@@ -274,7 +327,17 @@ addMedico.addActionListener(new ActionListener(){
         listPrenotazioni.addActionListener(new ActionListener(){
         	
         	public void actionPerformed(ActionEvent e) {
-        		prencommand.listPrenotazioni();
+        		try
+        		{
+        		if(!(selectionItem == null))
+        		prencommand.listPrenotazioni(selectionItem);
+        		else
+        			System.out.println("Seleziona Paziente");
+        		}
+        		catch (NullPointerException e1)
+        		{
+        			e1.printStackTrace();
+        		}
         	}
         	
         });
