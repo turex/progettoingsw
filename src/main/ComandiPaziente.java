@@ -32,9 +32,13 @@ public class ComandiPaziente {
 	
 	void listPazienti() {  
 		
+		if(pazi.size() > 0) {
 		for (int list = 0; list < pazi.size(); list++) {
 		System.out.println(pazi.get(list));
 		}
+		}
+		else
+			System.out.println("Lista pazienti vuota");
 	}
 	
 	DefaultListModel listaPazientitoString() {
