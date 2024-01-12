@@ -4,8 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -15,6 +18,8 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.text.DateFormatter;
+import javax.swing.text.MaskFormatter;
 
 
 /*
@@ -64,8 +69,18 @@ public class Interface {
        
         JTextField nome = new JTextField(30);
         JTextField cognome = new JTextField(30);
-        JTextField data = new JTextField(10);
         JTextField sesso = new JTextField(1);
+        
+        /*
+         * 
+         * Il SimpledataFormat mi crea una formattazione utile per le date
+         * Poi creo un TextField formattato con formattazione creata in precedenza
+         */
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // Formattazione ad uso globale
+        JFormattedTextField data = new JFormattedTextField(sdf);
+        data.setPreferredSize(new Dimension(100, 20));
+        data.setValue(new Date());
         
         JLabel label1 = new JLabel("Nome : ");
         JLabel label11 = new JLabel("Cognome : ");
@@ -135,7 +150,9 @@ public class Interface {
         JList lp = new JList(); //Lista pazienti
         JList lprof = new JList(); //Lista professioni medici
         
-        JTextField data_prenotazione = new JTextField(15);
+        JFormattedTextField data_prenotazione = new JFormattedTextField(sdf);
+        data_prenotazione.setPreferredSize(new Dimension(100, 20));
+        data_prenotazione.setValue(new Date());
         
         
         JLabel l4 = new JLabel("Lista Pazienti : ");
@@ -152,8 +169,8 @@ public class Interface {
         destro.add(l41,BorderLayout.NORTH);
         destro.add(lprof,BorderLayout.EAST);
         
-        centro.add(l42,BorderLayout.NORTH);
-        centro.add(data_prenotazione, BorderLayout.EAST);
+        centro.add(l42);
+        centro.add(data_prenotazione);
         
         panel4.add(centro,BorderLayout.CENTER);
         panel4.add(destro, BorderLayout.EAST);
