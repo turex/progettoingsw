@@ -169,8 +169,8 @@ public class Interface {
         destro.add(l41,BorderLayout.NORTH);
         destro.add(lprof,BorderLayout.EAST);
         
-        centro.add(l42);
-        centro.add(data_prenotazione);
+        centro.add(l42,BorderLayout.NORTH);
+        centro.add(data_prenotazione,BorderLayout.SOUTH);
         
         panel4.add(centro,BorderLayout.CENTER);
         panel4.add(destro, BorderLayout.EAST);
