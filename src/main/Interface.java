@@ -153,7 +153,7 @@ public class Interface {
         destro.add(lprof,BorderLayout.EAST);
         
         centro.add(l42,BorderLayout.NORTH);
-        centro.add(data_prenotazione, BorderLayout.CENTER);
+        centro.add(data_prenotazione, BorderLayout.EAST);
         
         panel4.add(centro,BorderLayout.CENTER);
         panel4.add(destro, BorderLayout.EAST);
@@ -314,6 +314,8 @@ addMedico.addActionListener(new ActionListener(){
         		split_medico = selectionProfessione.split(" ");
         		
         		prencommand.addPrenotazione(pb.setnomePaziente(selectionItem).setnomeMedico(split_medico[0]).setProfessione(split_medico[2]).setData(data_prenotazione.getText()));
+        		
+        		new Popup("SUCCESSO","Prenotazione aggiunta!");
         		
         		}
         		else
