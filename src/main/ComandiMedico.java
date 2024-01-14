@@ -12,7 +12,13 @@ public class ComandiMedico {
 	
 	void addMedico(MedicoBuilder m) {
 		
-		m.ID = m.nome.substring(0,2).toUpperCase() + m.cognome.substring(0, 2).toUpperCase() + m.professione.substring(0,2).toUpperCase();        
+		int len_n = m.nome.length();
+		int len_c = m.cognome.length();
+		
+		final int len_nome = (len_n > 5) ? len_n/2 : len_n;
+		final int len_cognome = (len_c > 5) ? len_c/2 : len_c;
+		
+		m.ID = m.nome.substring(0,len_nome).toUpperCase() + m.cognome.substring(0, len_cognome).toUpperCase() + m.professione.substring(0,2).toUpperCase();        
 		medi.add(m.getMedico());
 
 	}
