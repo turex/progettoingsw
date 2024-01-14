@@ -158,7 +158,7 @@ public class Interface {
         
         
         JLabel l4 = new JLabel("Lista Pazienti : ");
-        JLabel l41 = new JLabel("Lista professioni : ");
+        JLabel l41 = new JLabel("Lista professionisti : ");
         JLabel l42 = new JLabel("Inserisci data prenotazione : ");
         
         
