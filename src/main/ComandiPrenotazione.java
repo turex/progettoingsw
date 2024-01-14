@@ -27,24 +27,27 @@ boolean checkPrenotazione(String nome_paziente, String cognome_paziente, String 
 		if (nome_paziente.isEmpty() || nome_medico.isEmpty() || professione.isEmpty() || data_prenotazione.isEmpty())
 			return true;
 		
-		//TODO :: Implement cognome of paziente and medico
 		for (int i = 0; i< pren.size(); i++) {
 			String check_nomepaziente="";
+			String check_cognomepaziente="";
 			String check_nomemedico="";
+			String check_cognomemedico="";
 			String check_professione="";
 			String check_dataprenotazione="";
 			
 			
 			check_nomepaziente = pren.get(i).nome_paziente.toUpperCase();
+			check_cognomepaziente = pren.get(i).cognome_paziente.toUpperCase();
 			check_nomemedico = pren.get(i).nome_medico.toUpperCase();
+			check_cognomemedico = pren.get(i).cognome_medico.toUpperCase();
 			check_professione = pren.get(i).professione.toUpperCase();
 			check_dataprenotazione = pren.get(i).data;
 			
-			if(check_nomepaziente.equals(nome_paziente.toUpperCase()) && check_nomemedico.equals(nome_medico.toUpperCase()) && 
+			if(check_nomepaziente.equals(nome_paziente.toUpperCase()) && check_cognomepaziente.equals(cognome_paziente.toUpperCase()) && 
+					check_nomemedico.equals(nome_medico.toUpperCase()) && check_cognomemedico.equals(cognome_medico.toUpperCase()) &&
 					check_professione.equals(professione.toUpperCase()) && check_dataprenotazione.equals(data_prenotazione))
 			
 				return true;
-			
 			
 		}
 			return false;
@@ -56,18 +59,26 @@ boolean checkPrenotazione(String nome_paziente, String cognome_paziente, String 
 	
 	void listPrenotazioni(String nome_paziente) {  
 		
+		boolean stato_lista = false; // default la setto false per dire che é vuota
+		
 		for (int list = 0; list < pren.size(); list++) {
 			String check_nome="";
-			check_nome = pren.get(list).nome_paziente.toUpperCase();
-			
-			if(check_nome.equals(nome_paziente.toUpperCase()))
+			check_nome = pren.get(list).nome_paziente.toUpperCase() + " " + pren.get(list).cognome_paziente.toUpperCase();
+			if(check_nome.equals(nome_paziente.toUpperCase())) {
 				System.out.println(pren.get(list));
-			//else
-			//	System.out.println("Lista vuota");
+				stato_lista = true;
 			
 		}
+			
+			if(!stato_lista)
+				System.out.println("Lista vuota");
+		
+	  }
+	
 		
 	}
-
-
+	
 }
+
+
+

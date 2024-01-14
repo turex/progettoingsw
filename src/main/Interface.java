@@ -34,7 +34,7 @@ import javax.swing.text.MaskFormatter;
  */
 
 public class Interface {
-	static String selectionItem; //mi da l'item del paziente
+	static String selectPaziente; //mi da l'item del paziente
 	static String selectionProfessione;// mi da l'item della professione
 	
 	public static void main(String[] args) {
@@ -289,13 +289,13 @@ addMedico.addActionListener(new ActionListener(){
                 	try {
                 		
                 		if(!(lp.getSelectedValue() == null))
-                  selectionItem = lp.getSelectedValue().toString();
+                  selectPaziente = lp.getSelectedValue().toString();
                 	}
                 	catch (NullPointerException e)
                 	{
                 		e.printStackTrace();
                 	}
-                  System.out.println(selectionItem);
+                  System.out.println(selectPaziente);
                 }
             }
         });
@@ -325,14 +325,17 @@ addMedico.addActionListener(new ActionListener(){
         addPrenotazione.addActionListener(new ActionListener(){
         	
         	public void actionPerformed(ActionEvent e) {
+        		String[] split_paziente= {};
         		String[] split_medico= {};
         		
-        		if(!(selectionProfessione == null) && !(selectionItem == null)) { // aggiungo la prenotazione se ho selezionato sia paziente che medico ma
+        		if(!(selectionProfessione == null) && !(selectPaziente == null)) { // aggiungo la prenotazione se ho selezionato sia paziente che medico ma
         			//non é presente gia una prenotazion
-        		split_medico = selectionProfessione.split(" ");
-        		
-        			if(!prencommand.checkPrenotazione(selectionItem, split_medico[0], split_medico[2], data_prenotazione.getText(), TITOLO, TITOLO)) {
-        				prencommand.addPrenotazione(pb.setnomePaziente(selectionItem).setnomeMedico(split_medico[0]).setProfessione(split_medico[2]).setData(data_prenotazione.getText()));
+        			split_paziente = selectPaziente.split(" ");
+        			split_medico = selectionProfessione.split(" ");
+        			        		
+        			if(!prencommand.checkPrenotazione(split_paziente[0],split_paziente[1], split_medico[0],split_medico[1], split_medico[2], data_prenotazione.getText())) { //se il check é false allora mi aggiunge la prenotazione
+        				//System.out.println(prencommand.checkPrenotazione(split_paziente[0],split_paziente[1], split_medico[0],split_medico[1], split_medico[2], data_prenotazione.getText())); //DEBUG
+        				prencommand.addPrenotazione(pb.setnomePaziente(split_paziente[0]).setcognomePaziente(split_paziente[1]).setnomeMedico(split_medico[0]).setcognomeMedico(split_medico[1]).setProfessione(split_medico[2]).setData(data_prenotazione.getText()));
         		
         				new Popup("SUCCESSO","Prenotazione aggiunta!");
         			}
@@ -352,8 +355,9 @@ addMedico.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent e) {
         		try
         		{
-        		if(!(selectionItem == null))
-        		prencommand.listPrenotazioni(selectionItem);
+        			
+        		if(!(selectPaziente == null))
+        		prencommand.listPrenotazioni(selectPaziente);
         		else
         			new Popup("ERROE", "Seleziona Paziente");
         		}
