@@ -31,6 +31,37 @@ DefaultListModel listaMedicitoString() { // Inserisco in una lista modello le pr
 		return model;
 		
 	}
+
+boolean checkMedico(String nome, String cognome , String professione) {
+	
+	// True se esiste o ci sono errori
+			
+	if (nome.isEmpty() || cognome.isEmpty() || professione.isEmpty())
+		return true;
+	
+	
+	for (int i = 0; i< medi.size(); i++) {
+		String check_nome="";
+		String check_cognome="";
+		String check_professione="";
+		
+		
+		check_nome = medi.get(i).nome.toUpperCase();
+		check_cognome = medi.get(i).cognome.toUpperCase();
+		check_professione = medi.get(i).professione.toUpperCase();
+		
+		if(check_nome.equals(nome.toUpperCase()) && check_cognome.equals(cognome.toUpperCase()) && check_professione.equals(professione.toUpperCase()))
+		
+			return true;
+		
+		
+	}
+		return false;
+	
+	
+
+
+}
 	
 	
 	void printMedico(int z) {  
