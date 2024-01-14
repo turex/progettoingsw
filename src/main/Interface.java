@@ -18,8 +18,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.text.DateFormatter;
-import javax.swing.text.MaskFormatter;
+
 
 
 /*
@@ -335,14 +334,15 @@ addMedico.addActionListener(new ActionListener(){
         			split_paziente = selectPaziente.split(" ");
         			split_medico = selectionProfessione.split(" ");
         			        		
-        			if(!prencommand.checkPrenotazione(split_paziente[0],split_paziente[1], split_medico[0],split_medico[1], split_medico[2], data_prenotazione.getText())) { //se il check é false allora mi aggiunge la prenotazione
+        			if(!prencommand.checkPrenotazione(split_paziente[0],split_paziente[1], split_medico[0],split_medico[1], split_medico[2], data_prenotazione.getText())&&
+        					!prencommand.checkdispoMedico(split_medico[0],split_medico[1], split_medico[2], data_prenotazione.getText())) { //se il check é false allora mi aggiunge la prenotazione
         				//System.out.println(prencommand.checkPrenotazione(split_paziente[0],split_paziente[1], split_medico[0],split_medico[1], split_medico[2], data_prenotazione.getText())); //DEBUG
         				prencommand.addPrenotazione(pb.setnomePaziente(split_paziente[0]).setcognomePaziente(split_paziente[1]).setnomeMedico(split_medico[0]).setcognomeMedico(split_medico[1]).setProfessione(split_medico[2]).setData(data_prenotazione.getText()));
         		
         				new Popup("SUCCESSO","Prenotazione aggiunta!");
         			}
         			else
-        				new Popup("ERRORE","Prenotazione gia presente o campi vuoti");
+        				new Popup("ERRORE","Prenotazione gia presente , medico non disponibile o campi vuoti");
         		}
         		else
         			new Popup("ERRORE", "Seleziona medico e paziente!");

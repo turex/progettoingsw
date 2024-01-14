@@ -14,6 +14,44 @@ public class ComandiPrenotazione {
 
 	}
 	
+boolean checkdispoMedico(String nome_medico, String cognome_medico, String professione , String data_prenotazione) {
+		
+		// True se esiste o ci sono errori
+	
+		/*
+		 * 
+		 * Controllo che il medico non abbia gia un prenotazione a carico
+		 * 
+		 * 
+		 */
+				
+		if (nome_medico.isEmpty() || professione.isEmpty() || data_prenotazione.isEmpty())
+			return true;
+		
+		for (int i = 0; i< pren.size(); i++) {
+			String check_nomemedico="";
+			String check_cognomemedico="";
+			String check_professione="";
+			String check_dataprenotazione="";
+			
+			check_nomemedico = pren.get(i).nome_medico.toUpperCase();
+			check_cognomemedico = pren.get(i).cognome_medico.toUpperCase();
+			check_professione = pren.get(i).professione.toUpperCase();
+			check_dataprenotazione = pren.get(i).data;
+			
+			if(check_nomemedico.equals(nome_medico.toUpperCase()) && check_cognomemedico.equals(cognome_medico.toUpperCase()) &&
+					check_professione.equals(professione.toUpperCase()) && check_dataprenotazione.equals(data_prenotazione))
+			
+				return true;
+			
+		}
+			return false;
+		
+		
+	
+
+}
+	
 	
 	void printMedico(int z) {  
 		
@@ -23,6 +61,13 @@ public class ComandiPrenotazione {
 boolean checkPrenotazione(String nome_paziente, String cognome_paziente, String nome_medico, String cognome_medico, String professione , String data_prenotazione) {
 		
 		// True se esiste o ci sono errori
+	
+		/*
+		 * 
+		 * La prenotazione é valida se il medico é libero o se il paziente non é gia prenotato
+		 * 
+		 * 
+		 */
 				
 		if (nome_paziente.isEmpty() || nome_medico.isEmpty() || professione.isEmpty() || data_prenotazione.isEmpty())
 			return true;
@@ -51,10 +96,7 @@ boolean checkPrenotazione(String nome_paziente, String cognome_paziente, String 
 			
 		}
 			return false;
-		
-		
 	
-
 }
 	
 	void listPrenotazioni(String nome_paziente) {  

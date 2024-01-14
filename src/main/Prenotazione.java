@@ -7,8 +7,8 @@ public class Prenotazione {
 	String nome_medico ="";
 	String cognome_medico ="";
 	String professione ="";
-	String data="";
-	
+	String data="";	
+		
 
 	public Prenotazione(String nome_paziente, String cognome_paziente, String nome_medico, String cognome_medico, String professione, String data) {
 		this.nome_paziente = nome_paziente;
@@ -56,9 +56,7 @@ public class Prenotazione {
 		return data;
 		
 	}
-
-
-
+	
 	@Override
 	public String toString() {
 		return "Prenotazione [nome_paziente=" + nome_paziente + ", cognome_paziente=" + cognome_paziente
