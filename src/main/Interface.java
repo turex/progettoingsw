@@ -40,6 +40,8 @@ public class Interface {
 	public static void main(String[] args) {
 		
 		final String TITOLO = "OCM Opensource clinic manager";
+		final int x = 500;//dimensioni finestra applicazione
+		final int y = 500;
 
         JFrame frame = new JFrame(TITOLO);
                 
@@ -190,7 +192,7 @@ public class Interface {
         frame.add(tabPane);
 
         frame.setLocationRelativeTo(null);
-        frame.setSize(new Dimension(400, 400));
+        frame.setSize(new Dimension(x, y));
         frame.setVisible(true);
         frame.setResizable(false);
         
