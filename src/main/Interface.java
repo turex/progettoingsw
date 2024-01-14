@@ -77,7 +77,7 @@ public class Interface {
          * Poi creo un TextField formattato con formattazione creata in precedenza
          */
         
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // Formattazione ad uso globale
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // Formattazione data
         JFormattedTextField data = new JFormattedTextField(sdf);
         data.setPreferredSize(new Dimension(100, 20));
         data.setValue(new Date());
@@ -150,7 +150,8 @@ public class Interface {
         JList lp = new JList(); //Lista pazienti
         JList lprof = new JList(); //Lista professioni medici
         
-        JFormattedTextField data_prenotazione = new JFormattedTextField(sdf);
+        SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy hh:mm"); // Formattazione data
+        JFormattedTextField data_prenotazione = new JFormattedTextField(sdf1);
         data_prenotazione.setPreferredSize(new Dimension(100, 20));
         data_prenotazione.setValue(new Date());
         
@@ -239,8 +240,7 @@ addMedico.addActionListener(new ActionListener(){
         		
         		// We require at least Name, Surname and date
         		
-        		if(!nome2.getText().isEmpty() && !cognome2.getText().isEmpty() && 
-        				!professione.getText().isEmpty()) { //check if nome , cognome and data are empty
+        		if(!medcommand.checkMedico(nome2.getText(),cognome2.getText(),professione.getText())) { //check if nome , cognome and data are empty
         		
         		medcommand.addMedico(m.setNome(nome2.getText()).setCognome(cognome2.getText()).setProfessione(professione.getText()));
         		
@@ -281,14 +281,14 @@ addMedico.addActionListener(new ActionListener(){
         
         
         
-        lp.addListSelectionListener(new ListSelectionListener() { //Setto il Listener per selezione dati da JList
+        lp.addListSelectionListener(new ListSelectionListener() { //Setto il Listener per selezione dati da JList PAZIENTEL
 
             @Override
             public void valueChanged(ListSelectionEvent arg0) {
                 if (!arg0.getValueIsAdjusting()) {
                 	try {
                 		
-                		if(!(lp == null))
+                		if(!(lp.getSelectedValue() == null))
                   selectionItem = lp.getSelectedValue().toString();
                 	}
                 	catch (NullPointerException e)
@@ -301,14 +301,14 @@ addMedico.addActionListener(new ActionListener(){
         });
         
         
-        lprof.addListSelectionListener(new ListSelectionListener() { //Setto il Listener per selezione dati da JList
+        lprof.addListSelectionListener(new ListSelectionListener() { //Setto il Listener per selezione dati da JList MEDICO
 
             @Override
             public void valueChanged(ListSelectionEvent arg0) {
                 if (!arg0.getValueIsAdjusting()) {
                 	try {
                 		
-                		if(!(lprof == null))
+                		if(!(lprof.getSelectedValue() == null))
                   selectionProfessione = lprof.getSelectedValue().toString();
                 	}
                 	catch (NullPointerException e)
@@ -327,16 +327,20 @@ addMedico.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent e) {
         		String[] split_medico= {};
         		
-        		if(!(selectionProfessione == null)) {
+        		if(!(selectionProfessione == null) && !(selectionItem == null)) { // aggiungo la prenotazione se ho selezionato sia paziente che medico ma
+        			//non é presente gia una prenotazion
         		split_medico = selectionProfessione.split(" ");
         		
-        		prencommand.addPrenotazione(pb.setnomePaziente(selectionItem).setnomeMedico(split_medico[0]).setProfessione(split_medico[2]).setData(data_prenotazione.getText()));
+        			if(!prencommand.checkPrenotazione(selectionItem, split_medico[0], split_medico[2], data_prenotazione.getText(), TITOLO, TITOLO)) {
+        				prencommand.addPrenotazione(pb.setnomePaziente(selectionItem).setnomeMedico(split_medico[0]).setProfessione(split_medico[2]).setData(data_prenotazione.getText()));
         		
-        		new Popup("SUCCESSO","Prenotazione aggiunta!");
-        		
+        				new Popup("SUCCESSO","Prenotazione aggiunta!");
+        			}
+        			else
+        				new Popup("ERRORE","Prenotazione gia presente o campi vuoti");
         		}
         		else
-        			System.out.println("Non é stato inserito il medico!");
+        			new Popup("ERRORE", "Seleziona medico e paziente!");
         		
         		
         	}
@@ -351,7 +355,7 @@ addMedico.addActionListener(new ActionListener(){
         		if(!(selectionItem == null))
         		prencommand.listPrenotazioni(selectionItem);
         		else
-        			System.out.println("Seleziona Paziente");
+        			new Popup("ERROE", "Seleziona Paziente");
         		}
         		catch (NullPointerException e1)
         		{
