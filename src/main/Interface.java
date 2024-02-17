@@ -45,10 +45,6 @@ public class Interface {
 		final String TITOLO = "OCM Opensource clinic manager";
 		final int x = 500;//dimensioni finestra applicazione
 		final int y = 500;
-		
-JsonHelper a = new JsonHelper();
-		
-		a.writetest();
 
         JFrame frame = new JFrame(TITOLO);
                 
