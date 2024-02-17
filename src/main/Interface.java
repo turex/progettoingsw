@@ -152,8 +152,8 @@ public class Interface {
         JPanel centro = new JPanel(new BorderLayout());//Inserisco la lista pazienti
         
         
-        JList lp = new JList(); //Lista pazienti
-        JList lprof = new JList(); //Lista professioni medici
+        JList<String> lp = new JList<String>(); //Lista pazienti
+        JList<String> lprof = new JList<String>(); //Lista professioni medici
         
         SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy hh:mm"); // Formattazione data
         JFormattedTextField data_prenotazione = new JFormattedTextField(sdf1);

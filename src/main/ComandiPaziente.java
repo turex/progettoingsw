@@ -2,8 +2,6 @@ package main;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-
 import javax.swing.DefaultListModel;
 
 public class ComandiPaziente {
@@ -41,10 +39,10 @@ public class ComandiPaziente {
 			System.out.println("Lista pazienti vuota");
 	}
 	
-	DefaultListModel listaPazientitoString() {
+	DefaultListModel<String> listaPazientitoString() {
 		
 		
-		final DefaultListModel model = new DefaultListModel();
+		final DefaultListModel<String> model = new DefaultListModel<String>();
 		
 		for (int list = 0; list < pazi.size(); list++) {
 			

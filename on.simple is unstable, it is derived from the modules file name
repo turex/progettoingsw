@@ -1,0 +1,109 @@
+[1mdiff --git a/pom.xml b/pom.xml[m
+[1mindex 3282467..9c337e6 100644[m
+[1m--- a/pom.xml[m
+[1m+++ b/pom.xml[m
+[36m@@ -3,6 +3,11 @@[m
+   <groupId>progettoingsw</groupId>[m
+   <artifactId>progettoingsw</artifactId>[m
+   <version>0.0.1-SNAPSHOT</version>[m
+[32m+[m[41m  [m
+[32m+[m[32m  <properties>[m
+[32m+[m[32m    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>[m
+[32m+[m[32m</properties>[m
+[32m+[m[41m  [m
+   <build>[m
+     <sourceDirectory>src</sourceDirectory>[m
+    [m
+[36m@@ -19,10 +24,13 @@[m
+   </build>[m
+   [m
+    <dependencies>[m
+[32m+[m[41m	   	   [m
+     <dependency>[m
+     <groupId>com.github.cliftonlabs</groupId>[m
+     <artifactId>json-simple</artifactId>[m
+     <version>3.1.0</version>[m
+ </dependency>[m
+[32m+[m
+[32m+[m
+ </dependencies>[m
+ </project>[m
+\ No newline at end of file[m
+[1mdiff --git a/src/main/ComandiMedico.java b/src/main/ComandiMedico.java[m
+[1mindex 5f69b21..442fae3 100644[m
+[1m--- a/src/main/ComandiMedico.java[m
+[1m+++ b/src/main/ComandiMedico.java[m
+[36m@@ -23,10 +23,10 @@[m [mpublic class ComandiMedico {[m
+ [m
+ 	}[m
+ 	[m
+[31m-DefaultListModel listaMedicitoString() { // Inserisco in una lista modello le professioni[m
+[32m+[m[32mDefaultListModel<String> listaMedicitoString() { // Inserisco in una lista modello le professioni[m
+ 		[m
+ 		[m
+[31m-		final DefaultListModel model = new DefaultListModel();[m
+[32m+[m		[32mfinal DefaultListModel<String> model = new DefaultListModel<String>();[m
+ 		[m
+ 		for (int list = 0; list < medi.size(); list++) {[m
+ 			[m
+[1mdiff --git a/src/main/ComandiPaziente.java b/src/main/ComandiPaziente.java[m
+[1mindex 60602a3..640fcb1 100644[m
+[1m--- a/src/main/ComandiPaziente.java[m
+[1m+++ b/src/main/ComandiPaziente.java[m
+[36m@@ -2,8 +2,6 @@[m [mpackage main;[m
+ [m
+ import java.util.ArrayList;[m
+ import java.util.List;[m
+[31m-import java.util.stream.Collectors;[m
+[31m-[m
+ import javax.swing.DefaultListModel;[m
+ [m
+ public class ComandiPaziente {[m
+[36m@@ -41,10 +39,10 @@[m [mpublic class ComandiPaziente {[m
+ 			System.out.println("Lista pazienti vuota");[m
+ 	}[m
+ 	[m
+[31m-	DefaultListModel listaPazientitoString() {[m
+[32m+[m	[32mDefaultListModel<String> listaPazientitoString() {[m
+ 		[m
+ 		[m
+[31m-		final DefaultListModel model = new DefaultListModel();[m
+[32m+[m		[32mfinal DefaultListModel<String> model = new DefaultListModel<String>();[m
+ 		[m
+ 		for (int list = 0; list < pazi.size(); list++) {[m
+ 			[m
+[1mdiff --git a/src/main/Interface.java b/src/main/Interface.java[m
+[1mindex cbd942e..f68abbe 100644[m
+[1m--- a/src/main/Interface.java[m
+[1m+++ b/src/main/Interface.java[m
+[36m@@ -152,8 +152,8 @@[m [mpublic class Interface {[m
+         JPanel centro = new JPanel(new BorderLayout());//Inserisco la lista pazienti[m
+         [m
+         [m
+[31m-        JList lp = new JList(); //Lista pazienti[m
+[31m-        JList lprof = new JList(); //Lista professioni medici[m
+[32m+[m[32m        JList<String> lp = new JList<String>(); //Lista pazienti[m
+[32m+[m[32m        JList<String> lprof = new JList<String>(); //Lista professioni medici[m
+         [m
+         SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy hh:mm"); // Formattazione data[m
+         JFormattedTextField data_prenotazione = new JFormattedTextField(sdf1);[m
+[1mdiff --git a/src/main/JsonHelper.java b/src/main/JsonHelper.java[m
+[1mindex 384c46f..8531f54 100644[m
+[1m--- a/src/main/JsonHelper.java[m
+[1m+++ b/src/main/JsonHelper.java[m
+[36m@@ -1,15 +1,8 @@[m
+ package main;[m
+ [m
+[31m-import java.io.BufferedWriter;[m
+ import java.io.FileWriter;[m
+ import java.io.IOException;[m
+[31m-import java.nio.file.Files;[m
+[31m-import java.nio.file.Paths;[m
+[31m-import java.util.Arrays;[m
+[31m-[m
+[31m-import com.github.cliftonlabs.json_simple.JsonArray;[m
+ import com.github.cliftonlabs.json_simple.JsonObject;[m
+[31m-import com.github.cliftonlabs.json_simple.Jsoner;[m
+ [m
+ public class JsonHelper {[m
+ [m

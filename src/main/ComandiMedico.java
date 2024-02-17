@@ -23,10 +23,10 @@ public class ComandiMedico {
 
 	}
 	
-DefaultListModel listaMedicitoString() { // Inserisco in una lista modello le professioni
+DefaultListModel<String> listaMedicitoString() { // Inserisco in una lista modello le professioni
 		
 		
-		final DefaultListModel model = new DefaultListModel();
+		final DefaultListModel<String> model = new DefaultListModel<String>();
 		
 		for (int list = 0; list < medi.size(); list++) {
 			
