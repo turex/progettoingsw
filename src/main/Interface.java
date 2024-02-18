@@ -45,7 +45,7 @@ public class Interface {
 		final String TITOLO = "OCM Opensource clinic manager";
 		final int x = 500;//dimensioni finestra applicazione
 		final int y = 500;
-
+		
         JFrame frame = new JFrame(TITOLO);
                 
         ComandiPaziente command = new ComandiPaziente();

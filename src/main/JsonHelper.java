@@ -4,13 +4,24 @@ import java.io.FileWriter;
 import java.io.IOException;
 import com.github.cliftonlabs.json_simple.JsonObject;
 
-public class JsonHelper {
+//Uso il Singleton e il wrapper per creare piu JSon (Medico, paziente)
 
-	JsonHelper(){
-    JsonObject customer = new JsonObject();
-    
+public final class JsonHelper {
+	
+	private static JsonHelper istance;
+
+
+	private JsonHelper(){
 
 }
+	
+	public static JsonHelper getIstance() {
+		if(istance == null) {
+			istance = new JsonHelper();
+		}
+		
+		return istance;
+	}
 	
 	void writetest() {
 		 //Creating a JSONObject object
