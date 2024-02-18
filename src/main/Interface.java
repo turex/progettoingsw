@@ -46,6 +46,9 @@ public class Interface {
 		final int x = 500;//dimensioni finestra applicazione
 		final int y = 500;
 		
+		JsonHelper n = JsonHelper.getIstance();
+		n.writetest();
+		
         JFrame frame = new JFrame(TITOLO);
                 
         ComandiPaziente command = new ComandiPaziente();
