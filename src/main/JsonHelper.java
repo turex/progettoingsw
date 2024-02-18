@@ -3,7 +3,6 @@ package main;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import org.junit.jupiter.api.Test;
 
 import com.github.cliftonlabs.json_simple.JsonObject;
 
@@ -33,7 +32,6 @@ public class JsonHelper {
 		
 	}
 	
-	@Test
 	void writetest() {
 		 //Creating a JSONObject object
 	      JsonObject jsonObject = new JsonObject();
