@@ -21,7 +21,8 @@ import org.json.simple.parser.JSONParser;
 public class JsonHelper {
 	
 	private static JsonHelper istance; //Singleton istance
-	private static JSONArray employeeList = new JSONArray(); //inserisco qui l'array del JSON
+	private static JSONArray medico = new JSONArray(); //inserisco qui l'array del JSON per i medici
+	private static JSONArray paziente = new JSONArray(); //inserisco qui l'array del JSON per i medici
 	
 
 	private JsonHelper() {
@@ -35,22 +36,42 @@ public class JsonHelper {
 	 * @obj : componenti del JSON (esempio : nome paziente ecc..)
 	 * @typeobj : inserisco nell'array se é medico o paziente
 	 * @employeeList : contiene il database 
-	 * @typeobjstring : parametrizzo il database, qui viene inserito se é medico o paziente
+	 * @typeofdb : parametrizzo il database, qui viene inserito se é medico o paziente
 	 */
 	
-	 void addtoJson(String firstname, String lastname, String typeobjstring ) {
-		JSONObject obj = new JSONObject();
-		JSONObject typeobj = new JSONObject();
-		obj.put("firstName", firstname);
-		obj.put("lastName", lastname);
-		typeobj.put(typeobjstring, obj);
-		employeeList.add(typeobj);
+	 void addtoJson(String firstname, String lastname, String typeofdb) {
+		JSONObject obj_med = new JSONObject();
+		JSONObject typeobj_med = new JSONObject();
+		
+		JSONObject obj_paz = new JSONObject();
+		JSONObject typeobj_paz = new JSONObject();
+		
+		
+		switch(typeofdb) {
+		
+		case "Medico":
+			obj_med.put("firstName", firstname);
+			obj_med.put("lastName", lastname);
+			typeobj_med.put("Medico", obj_med);
+			medico.add(typeobj_med);
+			
+			
+		case "Paziente":
+			typeobj_paz.put("Paziente", obj_paz);
+			paziente.add(typeobj_paz);
+		}
+		
 	}
-	
-	 void readJson(String typeobj) {
+	/*
+	 * 
+	 * Parametri :
+	 * 
+	 * @typeofdb: semplifichiamo la gestione suddividendo i daatabase
+	 */
+	 void readJson(String typeofdb) {
 		JSONParser jsonParser = new JSONParser();
         
-        try (FileReader reader = new FileReader("database.json"))
+        try (FileReader reader = new FileReader(typeofdb + ".json"))
         {
             //Read JSON file
             try {
@@ -61,7 +82,8 @@ public class JsonHelper {
 			}
  
             //Iterate over employee array
-            employeeList.forEach( emp -> parseEmployeeObject( (JSONObject) emp, typeobj ) );
+            medico.forEach( emp -> parseEmployeeObject( (JSONObject) emp, typeofdb ) );
+            
  
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -70,12 +92,12 @@ public class JsonHelper {
         }
 	}
 	
-	void writeJson() {
+	void writeJson(String typeofdb) {
 		
 		//Write JSON file
-        try (FileWriter file = new FileWriter("database.json")) {
+        try (FileWriter file = new FileWriter(typeofdb + ".json")) {
             //We can write any JSONArray or JSONObject instance to the file
-            file.write(employeeList.toJSONString()); 
+            file.write(medico.toJSONString()); 
             file.flush();
  
         } catch (IOException e) {
