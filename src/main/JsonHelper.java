@@ -22,71 +22,79 @@ public class JsonHelper {
 	
 	private static JsonHelper istance;
 	private final String PATH = System.getProperty("user.dir"); // prendo il path corrente
+	private static JSONArray employeeList = new JSONArray(); //inserisco qui l'array del JSON
 	
 
 	@SuppressWarnings({ "unchecked" })
 	private JsonHelper() {
-		
-		 JSONObject employeeDetails = new JSONObject();
-	        employeeDetails.put("firstName", "Lokesh");
-	        employeeDetails.put("lastName", "Gupta");
-	        employeeDetails.put("website", "howtodoinjava.com");
-	         
-	        JSONObject employeeObject = new JSONObject(); 
-	        employeeObject.put("employee", employeeDetails);
-	         
-	        //Second Employee
-	        JSONObject employeeDetails2 = new JSONObject();
-	        employeeDetails2.put("firstName", "Brian");
-	        employeeDetails2.put("lastName", "Schultz");
-	        employeeDetails2.put("website", "example.com");
-	         
-	        JSONObject employeeObject2 = new JSONObject(); 
-	        employeeObject2.put("employee", employeeDetails2);
-	         
-	        //Add employees to list
-	        JSONArray employeeList = new JSONArray();
-	        employeeList.add(employeeObject);
-	        employeeList.add(employeeObject2);
-	         
-	        //Write JSON file
-	        try (FileWriter file = new FileWriter("employees.json")) {
-	            //We can write any JSONArray or JSONObject instance to the file
-	            file.write(employeeList.toJSONString()); 
-	            file.flush();
-	 
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
 	        
 	        
-	        JSONParser jsonParser = new JSONParser();
-	         
-	        try (FileReader reader = new FileReader("employees.json"))
-	        {
-	            //Read JSON file
-	            try {
-					Object obj = jsonParser.parse(reader);
-				} catch (org.json.simple.parser.ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	 
-	            //JSONArray employeeList = (JSONArray) obj;
-	            System.out.println(employeeList);
-	             
-	            //Iterate over employee array
-	            employeeList.forEach( emp -> parseEmployeeObject( (JSONObject) emp ) );
-	 
-	        } catch (FileNotFoundException e) {
-	            e.printStackTrace();
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
+	        
+	        
 	        
 	        
 	    }
 	
+	/*
+	 * 
+	 * Paramatri :
+	 * 
+	 * @obj : componenti del JSON (esempio : nome paziente)
+	 * @typeobj : setto se é medico o paziente
+	 * @array : "creo array del oggetto"
+	 */
+	
+	 void addtoJson(String firstname, String lastname ) {
+		JSONObject obj = new JSONObject();
+		JSONObject typeobj = new JSONObject();
+		JSONArray array = new JSONArray();
+		obj.put("firstName", firstname);
+		obj.put("lastName", lastname);
+		//obj.put("website", "howtodoinjava.com");
+		typeobj.put("employee", obj);
+		employeeList.add(typeobj);
+	}
+	
+	 void readJson() {
+		JSONParser jsonParser = new JSONParser();
+        
+        try (FileReader reader = new FileReader("employees.json"))
+        {
+            //Read JSON file
+            try {
+				Object obj = jsonParser.parse(reader);
+			} catch (org.json.simple.parser.ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+ 
+            //JSONArray employeeList = (JSONArray) obj;
+            System.out.println(employeeList);
+             
+            //Iterate over employee array
+            employeeList.forEach( emp -> parseEmployeeObject( (JSONObject) emp ) );
+ 
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+	}
+	
+	void writeJson() {
+		
+		//Write JSON file
+        try (FileWriter file = new FileWriter("employees.json")) {
+            //We can write any JSONArray or JSONObject instance to the file
+            file.write(employeeList.toJSONString()); 
+            file.flush();
+ 
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+	
+	}
 	
     private static void parseEmployeeObject(JSONObject employee) 
     {
