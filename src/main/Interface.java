@@ -28,7 +28,7 @@ import javax.swing.event.ListSelectionListener;
  * Gestionale di una clinica, viene simulata la gestione dei pazienti, 
  * dei medici, dei macchinari e delle prenotazioni di una clinica. 
  * 
- * Usiamo il Builder pattern
+ * Usiamo il Builder pattern per medico, paziente e prenotazione
  * 
  */
 
@@ -36,19 +36,21 @@ public class Interface {
 	static String selectPaziente; //mi da l'item del paziente
 	static String selectionProfessione;// mi da l'item della professione
 	
+	static JsonHelper n = JsonHelper.getIstance(); // creo oggetto JSON
+	
 	Interface(){
-		
+		n.writeTest1();
+		//n.readPazienti();
 	}
 	
 	public static void main(String[] args) {
 		
+		new Interface();
+		
 		final String TITOLO = "OCM Opensource clinic manager";
 		final int x = 500;//dimensioni finestra applicazione
 		final int y = 500;
-		
-		JsonHelper n = JsonHelper.getIstance();
-		n.writetest();
-		
+				
         JFrame frame = new JFrame(TITOLO);
                 
         ComandiPaziente command = new ComandiPaziente();
