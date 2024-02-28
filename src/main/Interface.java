@@ -42,6 +42,7 @@ public class Interface {
 		n.addtoJson("Ciao", "Ciao");
 		n.addtoJson("Ciao1", "Ciao1");
 		n.writeJson();
+		n.readJson();
 		//n.readPazienti();
 	}
 	

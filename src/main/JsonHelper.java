@@ -25,14 +25,8 @@ public class JsonHelper {
 	private static JSONArray employeeList = new JSONArray(); //inserisco qui l'array del JSON
 	
 
-	@SuppressWarnings({ "unchecked" })
 	private JsonHelper() {
-	        
-	        
-	        
-	        
-	        
-	        
+	         
 	    }
 	
 	/*
@@ -47,7 +41,6 @@ public class JsonHelper {
 	 void addtoJson(String firstname, String lastname ) {
 		JSONObject obj = new JSONObject();
 		JSONObject typeobj = new JSONObject();
-		JSONArray array = new JSONArray();
 		obj.put("firstName", firstname);
 		obj.put("lastName", lastname);
 		//obj.put("website", "howtodoinjava.com");
@@ -58,7 +51,7 @@ public class JsonHelper {
 	 void readJson() {
 		JSONParser jsonParser = new JSONParser();
         
-        try (FileReader reader = new FileReader("employees.json"))
+        try (FileReader reader = new FileReader("database.json"))
         {
             //Read JSON file
             try {
@@ -84,7 +77,7 @@ public class JsonHelper {
 	void writeJson() {
 		
 		//Write JSON file
-        try (FileWriter file = new FileWriter("employees.json")) {
+        try (FileWriter file = new FileWriter("database.json")) {
             //We can write any JSONArray or JSONObject instance to the file
             file.write(employeeList.toJSONString()); 
             file.flush();
