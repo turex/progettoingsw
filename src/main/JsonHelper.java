@@ -20,8 +20,7 @@ import org.json.simple.parser.JSONParser;
 
 public class JsonHelper {
 	
-	private static JsonHelper istance;
-	private final String PATH = System.getProperty("user.dir"); // prendo il path corrente
+	private static JsonHelper istance; //Singleton istance
 	private static JSONArray employeeList = new JSONArray(); //inserisco qui l'array del JSON
 	
 
@@ -33,22 +32,22 @@ public class JsonHelper {
 	 * 
 	 * Paramatri :
 	 * 
-	 * @obj : componenti del JSON (esempio : nome paziente)
-	 * @typeobj : setto se é medico o paziente
-	 * @array : "creo array del oggetto"
+	 * @obj : componenti del JSON (esempio : nome paziente ecc..)
+	 * @typeobj : inserisco nell'array se é medico o paziente
+	 * @employeeList : contiene il database 
+	 * @typeobjstring : parametrizzo il database, qui viene inserito se é medico o paziente
 	 */
 	
-	 void addtoJson(String firstname, String lastname ) {
+	 void addtoJson(String firstname, String lastname, String typeobjstring ) {
 		JSONObject obj = new JSONObject();
 		JSONObject typeobj = new JSONObject();
 		obj.put("firstName", firstname);
 		obj.put("lastName", lastname);
-		//obj.put("website", "howtodoinjava.com");
-		typeobj.put("employee", obj);
+		typeobj.put(typeobjstring, obj);
 		employeeList.add(typeobj);
 	}
 	
-	 void readJson() {
+	 void readJson(String typeobj) {
 		JSONParser jsonParser = new JSONParser();
         
         try (FileReader reader = new FileReader("database.json"))
@@ -61,11 +60,8 @@ public class JsonHelper {
 				e.printStackTrace();
 			}
  
-            //JSONArray employeeList = (JSONArray) obj;
-            System.out.println(employeeList);
-             
             //Iterate over employee array
-            employeeList.forEach( emp -> parseEmployeeObject( (JSONObject) emp ) );
+            employeeList.forEach( emp -> parseEmployeeObject( (JSONObject) emp, typeobj ) );
  
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -89,10 +85,10 @@ public class JsonHelper {
 	
 	}
 	
-    private static void parseEmployeeObject(JSONObject employee) 
+    private static void parseEmployeeObject(JSONObject database, String typeobj) 
     {
         //Get employee object within list
-        JSONObject employeeObject = (JSONObject) employee.get("employee");
+        JSONObject employeeObject = (JSONObject) database.get(typeobj);
          
         //Get employee first name
         String firstName = (String) employeeObject.get("firstName");    
@@ -102,9 +98,6 @@ public class JsonHelper {
         String lastName = (String) employeeObject.get("lastName");  
         System.out.println(lastName);
          
-        //Get employee website name
-        String website = (String) employeeObject.get("website");    
-        System.out.println(website);
     }
 		
 
@@ -123,69 +116,7 @@ public class JsonHelper {
 		
 	}
 	
-	void writeTest1() {
-		pazienteComposer countryObj = new pazienteComposer();  
-	    countryObj.name = "India";
-	    countryObj.population = 1000000;
 
-	    List<String> listOfStates = new ArrayList<String>();  
-	    listOfStates.add("Madhya Pradesh");  
-	    listOfStates.add("Maharastra");  
-	    listOfStates.add("Rajasthan");  
-
-	    countryObj.states = listOfStates ;  
-	    //ObjectMapper mapper = new ObjectMapper();
-
-	    try {  
-
-	        // Writing to a file   
-	    	Files.write( // write to file
-			        Paths.get(PATH + "\\" + "output.json"), // get path from file
-			        Collections.singleton(countryObj.toString()), // transform array to collection using singleton
-			        Charset.forName("UTF-8")); // formatting
-	    } catch (IOException e) {  
-	        e.printStackTrace();  
-	    }  
-
-	  }  
-	
-	
-	void writetest() { // inserisco tutto su un singolo Array JSON , per prendere i dati li splitto
-		
-		
-		// Riferimento Paziente : String nome,String cognome,String ID,String nascita,String sesso, String prenotazione
-		//arrpaz.add("Mario Rossi HDHDHD 15/08/89 M SI");
-		//arr.add("age: 36");
-		
-		//arrpaz.add("Aldo Verdi");
-		//arr.add("age: 20");
-		
-		//jpazz.put("Paziente", arrpaz);
-	//	System.out.println(jpazz.get("Paziente"));
-
-		
-	
-	  //  try {
-	//.write( // write to file
-	//.get(PATH + "\\" + "output.json"), // get path from file
-	//.singleton(jpazz.toJson()), // transform array to collection using singleton
-	//.forName("UTF-8") // formatting
-	//	    );
-	//    }
-	//    catch (IOException e) {
-	    	
-	//    }
-	   }
-	
-	/*
-	 * 
-	 * Parametri 
-	 * @split = variabile splittata in input prelevata dal json
-	 * @i = indice divisione
-	 * 
-	 * @clean = stringa ripulita
-	 * 
-	 */
 	String cleanString(String[] split, int i) {
 		
 		String clean = "";
@@ -202,36 +133,6 @@ public class JsonHelper {
 		
 	}
 
-	public void readPazienti() { //Paziente
-		
-		//Test splitting
-				
-		//String[] split = jpazz.get("Paziente ").toString().split(" "); // inserisco lo "splitting" sul Array split
-		
-		//System.out.println(jpazz.size());
-		
-		try {
-			//System.out.println("Nome : " + cleanString(split,0) + " " + "Cognome : " + cleanString(split,1)+ " " + "ID : " + cleanString(split,2));
-		}
-		catch(Exception e) {
-			System.out.println(e.getMessage());
-		}
-
-		
-	
-	}
-
-	public class pazienteComposer{
-		  public String name;
-		  public Integer population;
-		  public List<String> states;
-		@Override
-		public String toString() {
-			return "Paziente [name=" + name + ", population=" + population + ", states=" + states + "]";
-		}
-		  
-		  
-		}
 }
 
 
