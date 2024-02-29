@@ -1,0 +1,20 @@
+package main;
+
+import javax.swing.JOptionPane;
+
+public class Popup {
+	
+	String title,testo = "";
+	
+	Popup(String title, String testo){
+		
+		this.title= title;
+		this.testo = testo;
+		
+		
+		JOptionPane.showMessageDialog(
+		        null, testo, title, JOptionPane.INFORMATION_MESSAGE);
+		
+	}
+
+}
