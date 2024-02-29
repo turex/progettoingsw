@@ -39,11 +39,7 @@ public class Interface {
 	static JsonHelper n = JsonHelper.getIstance(); // creo oggetto JSON
 	
 	Interface(){
-		n.addtoJson("Ciao", "Ciao", "Paziente");
-		n.addtoJson("Ciao1", "Ciao1", "Medico");
-		n.addtoJson("Ciao12", "Ciao2", "Medico");
-		n.writeJson("Medico");
-		n.readJson("Medico");
+		
 		//n.readPazienti();
 	}
 	
