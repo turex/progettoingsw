@@ -4,14 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.charset.Charset;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -39,7 +31,8 @@ public class JsonHelper {
 	 * @typeofdb : parametrizzo il database, qui viene inserito se é medico o paziente
 	 */
 	
-	 void addtoJson(String firstname, String lastname, String typeofdb) {
+	 @SuppressWarnings("unchecked")
+	void addtoJson(String firstname, String lastname, String typeofdb) {
 		JSONObject obj_med = new JSONObject();
 		JSONObject typeobj_med = new JSONObject();
 		
@@ -66,9 +59,10 @@ public class JsonHelper {
 	 * 
 	 * Parametri :
 	 * 
-	 * @typeofdb: semplifichiamo la gestione suddividendo i daatabase
+	 * @typeofdb: semplifichiamo la gestione suddividendo i database
 	 */
-	 void readJson(String typeofdb) {
+	 @SuppressWarnings("unchecked")
+	void readJson(String typeofdb) {
 		JSONParser jsonParser = new JSONParser();
         
         try (FileReader reader = new FileReader(typeofdb + ".json"))
@@ -81,8 +75,17 @@ public class JsonHelper {
 				e.printStackTrace();
 			}
  
+            switch(typeofdb) {
+    		
+    		case "Medico":
+    			medico.forEach( emp -> parseEmployeeObject( (JSONObject) emp, typeofdb ) );
+    			
+    			
+    		case "Paziente":
+    			paziente.forEach( emp -> parseEmployeeObject( (JSONObject) emp, typeofdb ) );
+    		}
             //Iterate over employee array
-            medico.forEach( emp -> parseEmployeeObject( (JSONObject) emp, typeofdb ) );
+            
             
  
         } catch (FileNotFoundException e) {
@@ -97,8 +100,19 @@ public class JsonHelper {
 		//Write JSON file
         try (FileWriter file = new FileWriter(typeofdb + ".json")) {
             //We can write any JSONArray or JSONObject instance to the file
-            file.write(medico.toJSONString()); 
-            file.flush();
+        	
+        	switch(typeofdb) {
+    		
+    		case "Medico":
+    			file.write(medico.toJSONString()); 
+                file.flush();
+    			
+    			
+    		case "Paziente":
+    			file.write(paziente.toJSONString()); 
+                file.flush();
+    		}
+            
  
         } catch (IOException e) {
             e.printStackTrace();
@@ -132,13 +146,8 @@ public class JsonHelper {
 		return istance;
 	}
 	
-	
-	private void writeMedico() {
-		
-		
-	}
-	
 
+    //cleanString is not used
 	String cleanString(String[] split, int i) {
 		
 		String clean = "";
