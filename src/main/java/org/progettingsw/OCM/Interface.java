@@ -1,4 +1,4 @@
-package main;
+package org.progettingsw.OCM;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;

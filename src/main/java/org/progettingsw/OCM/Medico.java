@@ -1,4 +1,4 @@
-package main;
+package org.progettingsw.OCM;
 
 public class Medico{
 	
