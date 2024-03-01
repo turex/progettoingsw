@@ -133,11 +133,11 @@ public class JsonHelper {
          
         //Get employee first name
         String firstName = (String) employeeObject.get("firstName");    
-        System.out.println(firstName);
+        //System.out.println(firstName);
          
         //Get employee last name
         String lastName = (String) employeeObject.get("lastName");  
-        System.out.println(lastName);
+        //System.out.println(lastName);
          
     }
 		
