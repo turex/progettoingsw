@@ -47,11 +47,13 @@ public class JsonHelper {
 			obj_med.put("lastName", lastname);
 			typeobj_med.put("Medico", obj_med);
 			medico.add(typeobj_med);
+			break;
 			
 			
 		case "Paziente":
 			typeobj_paz.put("Paziente", obj_paz);
 			paziente.add(typeobj_paz);
+			break;
 		}
 		
 	}
@@ -79,10 +81,11 @@ public class JsonHelper {
     		
     		case "Medico":
     			medico.forEach( emp -> parseEmployeeObject( (JSONObject) emp, typeofdb ) );
-    			
+    			break;
     			
     		case "Paziente":
     			paziente.forEach( emp -> parseEmployeeObject( (JSONObject) emp, typeofdb ) );
+    			break;
     		}
             //Iterate over employee array
             
@@ -106,11 +109,13 @@ public class JsonHelper {
     		case "Medico":
     			file.write(medico.toJSONString()); 
                 file.flush();
+                break;
     			
     			
     		case "Paziente":
     			file.write(paziente.toJSONString()); 
                 file.flush();
+                break;
     		}
             
  
