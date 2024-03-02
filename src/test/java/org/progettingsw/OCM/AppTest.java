@@ -5,7 +5,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.io.File;
 
-import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,8 +16,9 @@ public class AppTest
 {
 	JsonHelper n;
 	MedicoBuilder a = new MedicoBuilder();
-	final String PATH = System.getProperty("user.dir");
-	File f = new File(PATH + "\\Medico.json");
+	static final String PATH = System.getProperty("user.dir");
+	static File m = new File(PATH + "\\Medico.json");
+	static File p = new File(PATH + "\\Paziente.json");
 	
 
 	@Before
@@ -27,33 +28,35 @@ public class AppTest
 	
     @Test
     public void testJson() {
-       	n.addtoJson("Ciao", "Ciao", "Paziente");
-		n.addtoJson("Ciao1", "Ciao1", "Medico");
-		n.addtoJson("Ciao12", "Ciao2", "Medico");
+       	n.addtoJson("Ciao", "Ciao", null,null,null,null,null,"Paziente");
+		n.addtoJson("Ciao1", "Ciao1", null,null,null,null,null, "Medico");
+		n.addtoJson("Ciao12", "Ciao2", null,null,null,null,null, "Medico");
 		n.writeJson("Medico");
-		n.readJson("Medico");
-		System.out.println("JSon creato correttamente");
-		System.out.println("Nel path : " + PATH);
+		n.writeJson("Paziente");
 		System.out.println("Struttura json per 'Medico' :");
-		String tt = (String) n.readJson("Medico");
-		System.out.println(n.readJson("Medico"));
-		assertTrue(f.exists());
+		n.readJson("Medico");
+		n.readJson("Paziente");
+		System.out.println("JSon 'Medico' creato correttamente" + " nel path : " + PATH);
+		assertTrue(m.exists());
 		
     }
     
     @Test
     public void testbuildMedico() {
+    	System.out.println("Inizio test del building di 'Medico'");
     	a.setNome("Test").setCognome("Uno").setID("RAND").setProfessione("Medico").getMedico();
-    	System.out.println(a.getMedico().getNome());
-    	  assertEquals("Test", a.getMedico().getNome());
+    	System.out.println("Nome medico : " + a.getMedico().getNome());
+    	assertEquals("Test", a.getMedico().getNome());
     	
     }
     
     
-    @After
-    public void cleantestJson() {
+    @AfterClass
+    static public void cleantestJson() {
     	System.out.println("Pulizia del database di prova");
-    	if(f.exists())
-    	f.delete();
+    	if(m.exists())
+    	m.delete();
+    	if(p.exists())
+        	p.delete();
     }
 }

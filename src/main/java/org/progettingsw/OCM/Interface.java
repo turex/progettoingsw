@@ -5,8 +5,6 @@ import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -36,10 +34,11 @@ import javax.swing.event.ListSelectionListener;
  */
 
 public class Interface {
+	
 	static String selectPaziente; //mi da l'item del paziente
 	static String selectionProfessione;// mi da l'item della professione
-	final String PATH = System.getProperty("user.dir");
-	File f;
+	final String PATH = System.getProperty("user.dir"); //Path corrente dell'eseguibile
+	File p,m; //file f
 
 			
 	static JsonHelper n = JsonHelper.getIstance(); // creo oggetto JSON
@@ -52,11 +51,14 @@ public class Interface {
      * 
      */
 		
-		f = new File(PATH + "Paziente.json");
-		if(f.exists())
+		p = new File(PATH + "Paziente.json");
+		m = new File(PATH + "Medico.json");
+		if(p.exists())
 			n.readJson("Paziente");
+		else if(m.exists())
+			n.readJson("Medico");
 		else
-			System.out.println("Database pazienti non esistente");
+			System.out.println("Errore su database");
 			
 		
 	}

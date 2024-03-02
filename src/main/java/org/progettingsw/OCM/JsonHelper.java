@@ -32,7 +32,9 @@ public class JsonHelper {
 	 */
 	
 	 @SuppressWarnings("unchecked")
-	void addtoJson(String firstname, String lastname, String typeofdb) {
+	void addtoJson(String nome, String cognome, String id, String professione,String nascita, String sesso,
+					String prenotazione, String typeofdb) {
+		 
 		JSONObject obj_med = new JSONObject();
 		JSONObject typeobj_med = new JSONObject();
 		
@@ -43,14 +45,21 @@ public class JsonHelper {
 		switch(typeofdb) {
 		
 		case "Medico":
-			obj_med.put("firstName", firstname);
-			obj_med.put("lastName", lastname);
+			obj_med.put("nome", nome);
+			obj_med.put("cognome", cognome);
+			obj_med.put("id", id);
+			obj_med.put("professione", professione);
 			typeobj_med.put("Medico", obj_med);
 			medico.add(typeobj_med);
 			break;
 			
 			
 		case "Paziente":
+			obj_paz.put("nome", nome);
+			obj_paz.put("cognome", cognome);
+			obj_paz.put("nascita", nascita);
+			obj_paz.put("sesso", sesso);
+			obj_paz.put("prenotazione", prenotazione);
 			typeobj_paz.put("Paziente", obj_paz);
 			paziente.add(typeobj_paz);
 			break;
@@ -65,30 +74,20 @@ public class JsonHelper {
 	 */
 	 @SuppressWarnings("unchecked")
 	void readJson(String typeofdb) {
-		JSONParser jsonParser = new JSONParser();
         
         try (FileReader reader = new FileReader(typeofdb + ".json"))
         {
-            //Read JSON file
-            try {
-				Object obj = jsonParser.parse(reader);
-			} catch (org.json.simple.parser.ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
  
             switch(typeofdb) {
     		
     		case "Medico":
-    			medico.forEach( emp -> parseEmployeeObject( (JSONObject) emp, typeofdb ) );
+    			medico.forEach(emp -> parseObject((JSONObject)emp,typeofdb));
     			break;
     			
     		case "Paziente":
-    			paziente.forEach( emp -> parseEmployeeObject( (JSONObject) emp, typeofdb ) );
+    			paziente.forEach(emp -> parseObject((JSONObject)emp,typeofdb));
     			break;
-    		}
-            //Iterate over employee array
-            
+    		}            
             
  
         } catch (FileNotFoundException e) {
@@ -102,7 +101,6 @@ public class JsonHelper {
 		
 		//Write JSON file
         try (FileWriter file = new FileWriter(typeofdb + ".json")) {
-            //We can write any JSONArray or JSONObject instance to the file
         	
         	switch(typeofdb) {
     		
@@ -126,18 +124,29 @@ public class JsonHelper {
 	
 	}
 	
-    private static void parseEmployeeObject(JSONObject database, String typeobj) 
+	/*
+	 * Parser dati Json
+	 * 
+	 * Parametri :
+	 * 
+	 * @database : oggetto Json
+	 * @typeobj : parametro distinzione databse (Medico e Paziente)
+	 */
+    private static void parseObject(JSONObject database, String typeobj) 
     {
-        //Get employee object within list
-        JSONObject employeeObject = (JSONObject) database.get(typeobj);
+        //Get object within list
+        JSONObject Object = (JSONObject) database.get(typeobj);
          
-        //Get employee first name
-        String firstName = (String) employeeObject.get("firstName");    
-        //System.out.println(firstName);
-         
-        //Get employee last name
-        String lastName = (String) employeeObject.get("lastName");  
-        //System.out.println(lastName);
+			String firstName = (String) Object.get("nome");    
+	        System.out.println(firstName);
+	         
+	        //Get last name
+	        String lastName = (String) Object.get("cognome");  
+	        System.out.println(lastName);
+       
+        
+        //Get first name
+        
          
     }
 		
