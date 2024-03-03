@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 //Uso il Singleton e il wrapper per creare piu JSon (Medico, paziente)
 
