@@ -28,10 +28,11 @@ DefaultListModel<String> listaMedicitoString() { // Inserisco in una lista model
 		
 		final DefaultListModel<String> model = new DefaultListModel<String>();
 		
+		
 		for (int list = 0; list < medi.size(); list++) {
 			
 			model.addElement(medi.get(list).nome + " " + medi.get(list).cognome + " " + medi.get(list).professione);
-		} 
+		}
 		
 		
 		return model;
@@ -77,9 +78,14 @@ boolean checkMedico(String nome, String cognome , String professione) {
 	
 	void listMedici() {  
 		
-		for (int list = 0; list < medi.size(); list++) {
-		System.out.println(medi.get(list));
+		if(medi.size() > 0) {
+			for (int list = 0; list < medi.size(); list++) 
+				System.out.println(medi.get(list));
 		}
+			else
+				System.out.println("Lista medici vuota!");
+
+		
 	}
 
 }
