@@ -50,6 +50,14 @@ public class AppTest
     	
     }
     
+    @Test
+    public void testarrayDB() {
+    	System.out.println("Testo il funzionamento della lettura array del DB 'Medico' per test");
+    	n.readJson("Medico");
+    	assertEquals("Ciao1",n.np.get(0));
+    
+    }
+    
     
     @AfterClass
     static public void cleantestJson() {
