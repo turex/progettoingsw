@@ -4,6 +4,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -16,6 +18,7 @@ public class JsonHelper {
 	private static JSONArray medico = new JSONArray(); //inserisco qui l'array del JSON per i medici
 	private static JSONArray paziente = new JSONArray(); //inserisco qui l'array del JSON per i medici
 	
+	public static ArrayList<String> np = new ArrayList<String>();
 
 	private JsonHelper() {
 	         
@@ -26,7 +29,7 @@ public class JsonHelper {
 	 * Paramatri :
 	 * 
 	 * @obj : componenti del JSON (esempio : nome paziente ecc..)
-	 * @typeobj : inserisco nell'array se é medico o paziente
+	 * @typeofdb : inserisco nell'array se é medico o paziente
 	 * @employeeList : contiene il database 
 	 * @typeofdb : parametrizzo il database, qui viene inserito se é medico o paziente
 	 */
@@ -36,10 +39,10 @@ public class JsonHelper {
 					String prenotazione, String typeofdb) {
 		 
 		JSONObject obj_med = new JSONObject();
-		JSONObject typeobj_med = new JSONObject();
+		JSONObject typeofdb_med = new JSONObject();
 		
 		JSONObject obj_paz = new JSONObject();
-		JSONObject typeobj_paz = new JSONObject();
+		JSONObject typeofdb_paz = new JSONObject();
 		
 		
 		switch(typeofdb) {
@@ -49,8 +52,8 @@ public class JsonHelper {
 			obj_med.put("cognome", cognome);
 			obj_med.put("id", id);
 			obj_med.put("professione", professione);
-			typeobj_med.put("Medico", obj_med);
-			medico.add(typeobj_med);
+			typeofdb_med.put("Medico", obj_med);
+			medico.add(typeofdb_med);
 			break;
 			
 			
@@ -60,8 +63,8 @@ public class JsonHelper {
 			obj_paz.put("nascita", nascita);
 			obj_paz.put("sesso", sesso);
 			obj_paz.put("prenotazione", prenotazione);
-			typeobj_paz.put("Paziente", obj_paz);
-			paziente.add(typeobj_paz);
+			typeofdb_paz.put("Paziente", obj_paz);
+			paziente.add(typeofdb_paz);
 			break;
 		}
 		
@@ -130,22 +133,28 @@ public class JsonHelper {
 	 * Parametri :
 	 * 
 	 * @database : oggetto Json
-	 * @typeobj : parametro distinzione databse (Medico e Paziente)
+	 * @typeofdb : parametro distinzione databse (Medico e Paziente)
 	 */
-    private static void parseObject(JSONObject database, String typeobj) 
+    private static void parseObject(JSONObject database, String typeofdb) 
     {
-        //Get object within list
-        JSONObject Object = (JSONObject) database.get(typeobj);
+        	//Get object within list
+        	JSONObject Object = (JSONObject) database.get(typeofdb);
+        	String nome;
+        	
+        	switch(typeofdb) {
+    		
+    			case "Medico":
+    				nome = (String) Object.get("nome");   
+    				np.add(nome);
+    				break;
+    			
+    			
+    			case "Paziente":
+    				nome = (String) Object.get("nome");   
+    				np.add(nome);
+    				break;
+    		}
          
-			String firstName = (String) Object.get("nome");    
-	        System.out.println(firstName);
-	         
-	        //Get last name
-	        String lastName = (String) Object.get("cognome");  
-	        System.out.println(lastName);
-       
-        
-        //Get first name
         
          
     }
