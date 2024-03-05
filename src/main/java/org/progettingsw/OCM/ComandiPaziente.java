@@ -19,7 +19,12 @@ public class ComandiPaziente {
 		
 		p.ID = p.nome.substring(0,len_nome).toUpperCase() + p.cognome.substring(0, len_cognome).toUpperCase() + p.nascita.replace("/", "");
         pazi.add(p.getPaziente());
+        
 
+	}
+	
+	String getID(PazienteBuilder p) {
+		return p.getPaziente().getID();
 	}
 	
 	
@@ -46,7 +51,7 @@ public class ComandiPaziente {
 		
 		for (int list = 0; list < pazi.size(); list++) {
 			
-			model.addElement(pazi.get(list).nome + " " + pazi.get(list).cognome);
+			model.addElement(pazi.get(list).nome + " " + pazi.get(list).cognome + " " + pazi.get(list).ID);
 		}
 		
 		

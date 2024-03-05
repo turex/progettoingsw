@@ -11,13 +11,53 @@ import org.json.simple.JSONObject;
 
 //Uso il Singleton e il wrapper per creare piu JSon (Medico, paziente)
 
+
+/*
+ * 
+ * Struttura Medico :
+ * 
+ * String nome = "";
+	String cognome = "";
+	String ID = "";
+	String professione = "";
+ * 
+ */
+
+
+
+/*
+ * Struttura Paziente :
+ * 
+ * 	String nome = "";
+	String cognome = "";
+	String ID = "";
+	String nascita = "";
+	String sesso = "";
+	String prenotazione = "";
+ * 
+ */
+
 public class JsonHelper {
 	
 	private static JsonHelper istance; //Singleton istance
 	private static JSONArray medico = new JSONArray(); //inserisco qui l'array del JSON per i medici
 	private static JSONArray paziente = new JSONArray(); //inserisco qui l'array del JSON per i medici
+	private static JSONArray prenotazioni = new JSONArray(); //inserisco qui l'array del JSON per le prenotazioni
+
 	
-	public static ArrayList<String> np = new ArrayList<String>();
+	int i = 0; //Index prenotazione paziente per array prenotazioni multiple
+	public static ArrayList<String> np = new ArrayList<String>(); //array del nome paziente
+	public static ArrayList<String> cp = new ArrayList<String>(); //array cognome paziente
+	public static ArrayList<String> ip = new ArrayList<String>(); //array ID paziente
+	public static ArrayList<String> nap = new ArrayList<String>(); //array nascita paziente
+	public static ArrayList<String> sp = new ArrayList<String>(); //array sesso paziente
+	public static ArrayList<String> pp = new ArrayList<String>(); //array prenotazione paziente
+	
+	
+	public static ArrayList<String> nm = new ArrayList<String>(); //array del nome paziente
+	public static ArrayList<String> cm = new ArrayList<String>(); //array cognome paziente
+	public static ArrayList<String> im = new ArrayList<String>(); //array ID paziente
+	public static ArrayList<String> prop = new ArrayList<String>(); //array nascita paziente
 
 	private JsonHelper() {
 	         
@@ -25,7 +65,7 @@ public class JsonHelper {
 	
 	/*
 	 * 
-	 * Paramatri :
+	 * Parametri :
 	 * 
 	 * @obj : componenti del JSON (esempio : nome paziente ecc..)
 	 * @typeofdb : inserisco nell'array se é medico o paziente
@@ -39,11 +79,10 @@ public class JsonHelper {
 		 
 		JSONObject obj_med = new JSONObject();
 		JSONObject typeofdb_med = new JSONObject();
-		
+				
 		JSONObject obj_paz = new JSONObject();
-		JSONObject typeofdb_paz = new JSONObject();
-		
-		
+		JSONObject typeofdb_paz = new JSONObject();		
+				
 		switch(typeofdb) {
 		
 		case "Medico":
@@ -59,9 +98,11 @@ public class JsonHelper {
 		case "Paziente":
 			obj_paz.put("nome", nome);
 			obj_paz.put("cognome", cognome);
-			obj_paz.put("nascita", nascita);
+			obj_paz.put("id", id);
+			obj_paz.put("nascita", nascita.replace("/","-"));
 			obj_paz.put("sesso", sesso);
-			obj_paz.put("prenotazione", prenotazione);
+			obj_paz.put("prenotazioni", prenotazione);
+			prenotazioni.add(obj_paz.get(prenotazioni));
 			typeofdb_paz.put("Paziente", obj_paz);
 			paziente.add(typeofdb_paz);
 			break;
@@ -106,14 +147,14 @@ public class JsonHelper {
         	
         	switch(typeofdb) {
     		
-    		case "Medico":
-    			file.write(medico.toJSONString()); 
+    		case "Medico":    			
+    			file.append(medico.toJSONString()); 
                 file.flush();
                 break;
     			
     			
     		case "Paziente":
-    			file.write(paziente.toJSONString()); 
+    			file.append(paziente.toJSONString()); 
                 file.flush();
                 break;
     		}
@@ -138,19 +179,24 @@ public class JsonHelper {
     {
         	//Get object within list
         	JSONObject Object = (JSONObject) database.get(typeofdb);
-        	String nome;
         	
         	switch(typeofdb) {
     		
     			case "Medico":
-    				nome = (String) Object.get("nome");   
-    				np.add(nome);
+    				nm.add((String) Object.get("nome"));
+    				cm.add((String) Object.get("cognome"));
+    				im.add((String) Object.get("id"));
+    				prop.add((String) Object.get("professione"));
     				break;
     			
     			
-    			case "Paziente":
-    				nome = (String) Object.get("nome");   
-    				np.add(nome);
+    			case "Paziente":  
+    				np.add((String) Object.get("nome"));
+    				cp.add((String) Object.get("cognome"));
+    				ip.add((String) Object.get("id"));
+    				nap.add((String) Object.get("nascita"));
+    				sp.add((String) Object.get("sesso"));
+    				pp.add((String) Object.get("prenotazione"));
     				break;
     		}
          

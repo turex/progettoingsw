@@ -28,7 +28,7 @@ public class AppTest
 	
     @Test
     public void testJson() {
-       	n.addtoJson("Ciao", "Ciao", null,null,null,null,null,"Paziente");
+       	n.addtoJson("Ciao", "Ciao", null,null,"01/10/2022",null,null,"Paziente");
 		n.addtoJson("Ciao1", "Ciao1", null,null,null,null,null, "Medico");
 		n.addtoJson("Ciao12", "Ciao2", null,null,null,null,null, "Medico");
 		n.writeJson("Medico");
@@ -50,11 +50,15 @@ public class AppTest
     	
     }
     
-    @Test
+    @SuppressWarnings("static-access")
+	@Test
     public void testarrayDB() {
     	System.out.println("Testo il funzionamento della lettura array del DB 'Medico' per test");
     	n.readJson("Medico");
-    	assertEquals("Ciao1",n.np.get(0));
+    	
+    	System.out.println(n.nm.get(0));
+    	
+    	assertEquals("Ciao1",n.nm.get(0));
     
     }
     

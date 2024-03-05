@@ -38,10 +38,11 @@ public class Interface {
 	static String selectPaziente; //mi da l'item del paziente
 	static String selectionProfessione;// mi da l'item della professione
 	final String PATH = System.getProperty("user.dir"); //Path corrente dell'eseguibile
-	File p,m; //file f
+	File p,m; //file per check db()p paziente , m medico
+	
+	static String Id; //inserisco in questa variabile ID di medico o paziente durante la "Creazione"
 
-			
-	static JsonHelper n = JsonHelper.getIstance(); // creo oggetto JSON
+	static JsonHelper dbs = JsonHelper.getIstance(); // creo oggetto JSON
 	
 	Interface(){
 		
@@ -51,14 +52,14 @@ public class Interface {
      * 
      */
 		
-		p = new File(PATH + "Paziente.json");
-		m = new File(PATH + "Medico.json");
+		p = new File(PATH + "\\Paziente.json");
+		m = new File(PATH + "\\Medico.json");
 		if(p.exists())
-			n.readJson("Paziente");
+			dbs.readJson("Paziente");
 		else if(m.exists())
-			n.readJson("Medico");
+			dbs.readJson("Medico");
 		else
-			System.out.println("Errore su database");
+			System.out.println("Errore sui database");
 			
 		
 	}
@@ -96,6 +97,7 @@ public class Interface {
        
         JButton addPaziente = new JButton("Aggiungi paziente");
         JButton listPaziente = new JButton("Lista pazienti");
+        JButton saveDBP = new JButton("Salva Database");
        
         JTextField nome = new JTextField(30);
         JTextField cognome = new JTextField(30);
@@ -125,8 +127,10 @@ public class Interface {
         panel1.add(data, BorderLayout.CENTER);
         panel1.add(label13,BorderLayout.WEST);
         panel1.add(sesso, BorderLayout.CENTER);
+        
         panel1.add(addPaziente);
         panel1.add(listPaziente);
+        panel1.add(saveDBP, BorderLayout.LINE_END);
         
         
         // Fine tab pazienti
@@ -135,6 +139,7 @@ public class Interface {
         
         JButton addMedico = new JButton("Aggiungi medico");
         JButton listMedici = new JButton("Lista medici");
+        JButton saveDBM = new JButton("Salva Database");
        
         JTextField nome2 = new JTextField(30);
         JTextField cognome2 = new JTextField(30);
@@ -153,6 +158,7 @@ public class Interface {
        
         panel2.add(addMedico);
         panel2.add(listMedici);
+        panel2.add(saveDBM, BorderLayout.PAGE_END);
         
         
         // Fine tab Medici
@@ -170,6 +176,7 @@ public class Interface {
         
         JButton addPrenotazione = new JButton("Aggiungi prenotazione");
         JButton listPrenotazioni = new JButton("Lista prenotazioni");
+
         
         JPanel sinistro = new JPanel(new BorderLayout());//Inserisco la lista pazienti
         JPanel giu = new JPanel(new BorderLayout()); // Inserisco i bottoni
@@ -228,11 +235,17 @@ public class Interface {
         	
         	public void actionPerformed(ActionEvent e) {
         		
+        		
         		// We require at least Name, Surname and date
         		
         		if(!command.checkPaziente(nome.getText(),cognome.getText(),data.getText())) { //check if nome , cognome and data are empty and if is not still on database
-        		command.addPaziente(p.setNome(nome.getText()).setCognome(cognome.getText()).setNascita(data.getText()).setSesso(sesso.getText()));
+        		 command.addPaziente(p.setNome(nome.getText()).setCognome(cognome.getText()).setNascita(data.getText()).setSesso(sesso.getText()));
 
+        		String Id = command.getID(p);
+        		
+        		dbs.addtoJson(nome.getText(), cognome.getText(),Id ,null , data.getText(), sesso.getText(), null, "Paziente");
+        		
+        		
         		lp.setModel(command.listaPazientitoString()); //ottengo la lista pazienti e la inserisco nella listbox
         		
         		JOptionPane.showMessageDialog(
@@ -257,6 +270,16 @@ public class Interface {
         		command.listPazienti();
         	}
         	
+        });
+        
+        saveDBP.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dbs.writeJson("Paziente");
+				
+			}
+        		
         });
         
         
@@ -294,6 +317,17 @@ addMedico.addActionListener(new ActionListener(){
         		medcommand.listMedici();
         	}
         	
+        });
+        
+        
+        saveDBM.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				dbs.writeJson("Medico");
+				
+			}
+        		
         });
         
         //ADD Macchinario
@@ -363,11 +397,15 @@ addMedico.addActionListener(new ActionListener(){
         			split_paziente = selectPaziente.split(" ");
         			split_medico = selectionProfessione.split(" ");
         			        		
-        			if(!prencommand.checkPrenotazione(split_paziente[0],split_paziente[1], split_medico[0],split_medico[1], split_medico[2], data_prenotazione.getText())&&
+        			if(!prencommand.checkPrenotazione(split_paziente[2],split_medico[3],split_medico[1], data_prenotazione.getText())&&
         					!prencommand.checkdispoMedico(split_medico[0],split_medico[1], split_medico[2], data_prenotazione.getText())) { //se il check é false allora mi aggiunge la prenotazione
         				//System.out.println(prencommand.checkPrenotazione(split_paziente[0],split_paziente[1], split_medico[0],split_medico[1], split_medico[2], data_prenotazione.getText())); //DEBUG
-        				prencommand.addPrenotazione(pb.setnomePaziente(split_paziente[0]).setcognomePaziente(split_paziente[1]).setnomeMedico(split_medico[0]).setcognomeMedico(split_medico[1]).setProfessione(split_medico[2]).setData(data_prenotazione.getText()));
-        		
+
+        				
+        				prencommand.addPrenotazione(pb.setidPaziente(split_paziente[2]).setidMedico(split_medico[3]).setProfessione(split_medico[2]).setData(data_prenotazione.getText()));
+
+        				
+        				
         				new Popup("SUCCESSO","Prenotazione aggiunta!");
         			}
         			else

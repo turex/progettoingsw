@@ -23,6 +23,10 @@ public class ComandiMedico {
 
 	}
 	
+	String getID(MedicoBuilder m) {
+		return m.getMedico().getID();
+	}
+	
 DefaultListModel<String> listaMedicitoString() { // Inserisco in una lista modello le professioni
 		
 		
@@ -31,7 +35,7 @@ DefaultListModel<String> listaMedicitoString() { // Inserisco in una lista model
 		
 		for (int list = 0; list < medi.size(); list++) {
 			
-			model.addElement(medi.get(list).nome + " " + medi.get(list).cognome + " " + medi.get(list).professione);
+			model.addElement(medi.get(list).nome + " " + medi.get(list).cognome + " " + medi.get(list).professione + " " + medi.get(list).ID);
 		}
 		
 		
