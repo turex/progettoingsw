@@ -2,48 +2,34 @@ package org.progettingsw.OCM;
 
 public class Prenotazione {
 	
-	String nome_paziente ="";
-	String cognome_paziente ="";
-	String nome_medico ="";
-	String cognome_medico ="";
+	String id_paziente ="";
+	String id_medico ="";
 	String professione ="";
 	String data="";	
 		
 
-	public Prenotazione(String nome_paziente, String cognome_paziente, String nome_medico, String cognome_medico, String professione, String data) {
-		this.nome_paziente = nome_paziente;
-		this.cognome_paziente = cognome_paziente;
-		this.nome_medico = nome_medico;
-		this.cognome_medico = cognome_medico;
+	public Prenotazione(String id_paziente, String id_medico,String professione, String data) {
+		this.id_paziente = id_paziente;
+		this.id_medico = id_medico;
 		this.professione = professione;
 		this.data = data;
 	}
 	
 	
 	
-	public String getNomePaziente() {
+	public String getidPaziente() {
 		// TODO Auto-generated method stub
-		return nome_paziente;
+		return id_paziente;
 		
 	}
 	
-	public String getCognomePaziente() {
+
+	public String getidMedico() {
 		// TODO Auto-generated method stub
-		return cognome_paziente;
+		return id_medico;
 		
 	}
 	
-	public String getNomeMedico() {
-		// TODO Auto-generated method stub
-		return nome_medico;
-		
-	}
-	
-	public String getCognomeMedico() {
-		// TODO Auto-generated method stub
-		return cognome_medico;
-		
-	}
 	
 	public String getProfessione() {
 		// TODO Auto-generated method stub
@@ -57,12 +43,7 @@ public class Prenotazione {
 		
 	}
 	
-	@Override
-	public String toString() {
-		return "Prenotazione [nome_paziente=" + nome_paziente + ", cognome_paziente=" + cognome_paziente
-				+ ", nome_medico=" + nome_medico + ", cognome_medico=" + cognome_medico + ", professione=" + professione
-				+ ", data=" + data + "]";
-	}
+	
 		
 
 }
@@ -72,30 +53,19 @@ public class Prenotazione {
 
 class PrenotazioneBuilder{
 	
-	String nome_paziente ="";
-	String cognome_paziente ="";
-	String nome_medico ="";
-	String cognome_medico ="";
+	String id_paziente ="";
+	String id_medico ="";
 	String professione ="";
 	String data="";
 	
-	public PrenotazioneBuilder setnomePaziente(String nome_paziente) {
-		this.nome_paziente = nome_paziente;
+	public PrenotazioneBuilder setidPaziente(String id_paziente) {
+		this.id_paziente = id_paziente;
 		return this;	
 	}
 	
-	public PrenotazioneBuilder setcognomePaziente(String cognome_paziente) {
-		this.cognome_paziente = cognome_paziente;
-		return this;	
-	}
 	
-	public PrenotazioneBuilder setnomeMedico(String nome_medico) {
-		this.nome_medico = nome_medico;
-		return this;	
-	}
-	
-	public PrenotazioneBuilder setcognomeMedico(String cognome_medico) {
-		this.cognome_medico = cognome_medico;
+	public PrenotazioneBuilder setidMedico(String id_medico) {
+		this.id_medico = id_medico;
 		return this;	
 	}
 	
@@ -110,7 +80,7 @@ class PrenotazioneBuilder{
 	}
 	
 	public Prenotazione getPrenotazione() {
-		return new Prenotazione(nome_paziente,cognome_paziente, nome_medico, cognome_medico,professione,data);
+		return new Prenotazione(id_paziente, id_medico,professione,data);
 	}
 	
 	

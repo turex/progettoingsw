@@ -58,7 +58,7 @@ boolean checkdispoMedico(String nome_medico, String cognome_medico, String profe
 		//System.out.println(medi.get(z));
 	}
 	
-boolean checkPrenotazione(String nome_paziente, String cognome_paziente, String nome_medico, String cognome_medico, String professione , String data_prenotazione) {
+boolean checkPrenotazione(String id_paziente, String id_medico, String professione , String data_prenotazione) {
 		
 		// True se esiste o ci sono errori
 	
@@ -69,7 +69,7 @@ boolean checkPrenotazione(String nome_paziente, String cognome_paziente, String 
 		 * 
 		 */
 				
-		if (nome_paziente.isEmpty() || nome_medico.isEmpty() || professione.isEmpty() || data_prenotazione.isEmpty())
+		if (id_paziente.isEmpty() || id_medico.isEmpty() || professione.isEmpty() || data_prenotazione.isEmpty())
 			return true;
 		
 		for (int i = 0; i< pren.size(); i++) {
@@ -81,7 +81,7 @@ boolean checkPrenotazione(String nome_paziente, String cognome_paziente, String 
 			String check_dataprenotazione="";
 			
 			
-			check_nomepaziente = pren.get(i).nome_paziente.toUpperCase();
+			check_nomepaziente = pren.get(i)..toUpperCase();
 			check_cognomepaziente = pren.get(i).cognome_paziente.toUpperCase();
 			check_nomemedico = pren.get(i).nome_medico.toUpperCase();
 			check_cognomemedico = pren.get(i).cognome_medico.toUpperCase();
