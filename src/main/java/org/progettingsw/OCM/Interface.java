@@ -422,11 +422,14 @@ addMedico.addActionListener(new ActionListener(){
         listPrenotazioni.addActionListener(new ActionListener(){
         	
         	public void actionPerformed(ActionEvent e) {
+        		
+        		String[] split_paziente = selectPaziente.split(" ");
+
         		try
         		{
         			
         		if(!(selectPaziente == null))
-        		prencommand.listPrenotazioni(selectPaziente);
+        		prencommand.listPrenotazioni(split_paziente[2]);
         		else
         			new Popup("ERROE", "Seleziona Paziente");
         		}

@@ -29,17 +29,15 @@ boolean checkdispoMedico(String nome_medico, String cognome_medico, String profe
 			return true;
 		
 		for (int i = 0; i< pren.size(); i++) {
-			String check_nomemedico="";
-			String check_cognomemedico="";
+			String check_idmedico="";
 			String check_professione="";
 			String check_dataprenotazione="";
 			
-			check_nomemedico = pren.get(i).nome_medico.toUpperCase();
-			check_cognomemedico = pren.get(i).cognome_medico.toUpperCase();
+			check_idmedico = pren.get(i).id_medico.toUpperCase();
 			check_professione = pren.get(i).professione.toUpperCase();
 			check_dataprenotazione = pren.get(i).data;
 			
-			if(check_nomemedico.equals(nome_medico.toUpperCase()) && check_cognomemedico.equals(cognome_medico.toUpperCase()) &&
+			if(check_idmedico.equals(nome_medico.toUpperCase()) &&
 					check_professione.equals(professione.toUpperCase()) && check_dataprenotazione.equals(data_prenotazione))
 			
 				return true;
@@ -73,23 +71,19 @@ boolean checkPrenotazione(String id_paziente, String id_medico, String professio
 			return true;
 		
 		for (int i = 0; i< pren.size(); i++) {
-			String check_nomepaziente="";
-			String check_cognomepaziente="";
-			String check_nomemedico="";
-			String check_cognomemedico="";
+			String check_idpaziente="";
+			String check_idmedico="";
 			String check_professione="";
 			String check_dataprenotazione="";
 			
 			
-			check_nomepaziente = pren.get(i)..toUpperCase();
-			check_cognomepaziente = pren.get(i).cognome_paziente.toUpperCase();
-			check_nomemedico = pren.get(i).nome_medico.toUpperCase();
-			check_cognomemedico = pren.get(i).cognome_medico.toUpperCase();
+			check_idpaziente = pren.get(i).id_paziente.toUpperCase();
+			check_idmedico = pren.get(i).id_medico.toUpperCase();
 			check_professione = pren.get(i).professione.toUpperCase();
 			check_dataprenotazione = pren.get(i).data;
 			
-			if(check_nomepaziente.equals(nome_paziente.toUpperCase()) && check_cognomepaziente.equals(cognome_paziente.toUpperCase()) && 
-					check_nomemedico.equals(nome_medico.toUpperCase()) && check_cognomemedico.equals(cognome_medico.toUpperCase()) &&
+			if(check_idpaziente.equals(id_paziente.toUpperCase())  && 
+					check_idmedico.equals(id_medico.toUpperCase())&&
 					check_professione.equals(professione.toUpperCase()) && check_dataprenotazione.equals(data_prenotazione))
 			
 				return true;
@@ -99,14 +93,14 @@ boolean checkPrenotazione(String id_paziente, String id_medico, String professio
 	
 }
 	
-	void listPrenotazioni(String nome_paziente) {  
+	void listPrenotazioni(String id_paziente) {  
 		
 		boolean stato_lista = false; // default la setto false per dire che é vuota
 		
 		for (int list = 0; list < pren.size(); list++) {
-			String check_nome="";
-			check_nome = pren.get(list).nome_paziente.toUpperCase() + " " + pren.get(list).cognome_paziente.toUpperCase();
-			if(check_nome.equals(nome_paziente.toUpperCase())) {
+			String check_id="";
+			check_id = pren.get(list).id_paziente.toUpperCase();
+			if(check_id.equals(id_paziente.toUpperCase())) {
 				System.out.println(pren.get(list));
 				stato_lista = true;
 			
