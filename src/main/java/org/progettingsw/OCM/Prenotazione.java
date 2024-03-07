@@ -42,9 +42,15 @@ public class Prenotazione {
 		return data;
 		
 	}
+
+
+
+	@Override
+	public String toString() {
+		return "Prenotazione [id_paziente=" + id_paziente + ", id_medico=" + id_medico + ", professione=" + professione
+				+ ", data=" + data + "]";
+	}
 	
-	
-		
 
 }
 
@@ -52,11 +58,12 @@ public class Prenotazione {
 //Creo il builder 
 
 class PrenotazioneBuilder{
-	
+		
 	String id_paziente ="";
 	String id_medico ="";
 	String professione ="";
 	String data="";
+	
 	
 	public PrenotazioneBuilder setidPaziente(String id_paziente) {
 		this.id_paziente = id_paziente;

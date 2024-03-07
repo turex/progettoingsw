@@ -84,10 +84,6 @@ public class ComandiPaziente {
 			
 		}
 			return false;
-		
-		
-	
-
 }
 	
 	

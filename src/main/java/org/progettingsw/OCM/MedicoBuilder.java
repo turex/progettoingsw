@@ -1,13 +1,14 @@
 package org.progettingsw.OCM;
 
+import java.util.ArrayList;
+
 public class MedicoBuilder {
 	
 	String nome = "";
 	String cognome = "";
 	String ID = "";
 	String professione = "";
-	//String sesso = "";
-	//String prenotazione = "";
+	ArrayList<String> dataslot = new ArrayList<>();
 
 	public MedicoBuilder setNome(String nome) {
 		this.nome = nome;
@@ -34,12 +35,12 @@ public class MedicoBuilder {
 		return this;
 
 	}
-	/*
-	public MedicoBuilder setSesso(String sesso) {
-		this.sesso = sesso;
+	
+	public MedicoBuilder setdataSlot(String dataslot) {
+		this.dataslot.add(dataslot);
 		return this;
 	}
-	
+/*	
 	public MedicoBuilder setPrenotazione(String prenotazione) {
 		this.prenotazione = prenotazione;
 		return this;
@@ -47,7 +48,7 @@ public class MedicoBuilder {
 	*/
 	
 	public Medico getMedico() {
-		return new Medico(nome,cognome,ID,professione);
+		return new Medico(nome,cognome,ID,professione,dataslot);
 	}
 	
 	

@@ -2,12 +2,12 @@ package org.progettingsw.OCM;
 
 public class PazienteBuilder {
 	
+	
 	String nome = "";
 	String cognome = "";
 	String ID = "";
 	String nascita = "";
 	String sesso = "";
-	String prenotazione = "";
 
 	public PazienteBuilder setNome(String nome) {
 		this.nome = nome;
@@ -39,13 +39,9 @@ public class PazienteBuilder {
 		return this;
 	}
 	
-	public PazienteBuilder setPrenotazione(String prenotazione) {
-		this.prenotazione = prenotazione;
-		return this;
-	}
 	
 	public Paziente getPaziente() {
-		return new Paziente(nome,cognome,ID,nascita,sesso,prenotazione);
+		return new Paziente(nome,cognome,ID,nascita,sesso);
 	}
 	
 	

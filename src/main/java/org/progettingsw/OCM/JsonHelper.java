@@ -42,7 +42,8 @@ public class JsonHelper {
 	private static JsonHelper istance; //Singleton istance
 	private static JSONArray medico = new JSONArray(); //inserisco qui l'array del JSON per i medici
 	private static JSONArray paziente = new JSONArray(); //inserisco qui l'array del JSON per i medici
-	private static JSONArray prenotazioni = new JSONArray(); //inserisco qui l'array del JSON per le prenotazioni
+	private static JSONArray prenotazione = new JSONArray(); //inserisco qui l'array del JSON per le prenotazioni
+	private static JSONArray prenotazioni = new JSONArray(); //inserisco qui l'array per array delle prenotazioni
 
 	
 	int i = 0; //Index prenotazione paziente per array prenotazioni multiple
@@ -54,10 +55,24 @@ public class JsonHelper {
 	public static ArrayList<String> pp = new ArrayList<String>(); //array prenotazione paziente
 	
 	
-	public static ArrayList<String> nm = new ArrayList<String>(); //array del nome paziente
-	public static ArrayList<String> cm = new ArrayList<String>(); //array cognome paziente
-	public static ArrayList<String> im = new ArrayList<String>(); //array ID paziente
-	public static ArrayList<String> prop = new ArrayList<String>(); //array nascita paziente
+	public static ArrayList<String> nm = new ArrayList<String>(); //array del nome medico
+	public static ArrayList<String> cm = new ArrayList<String>(); //array cognome medico
+	public static ArrayList<String> im = new ArrayList<String>(); //array ID medico
+	public static ArrayList<String> prop = new ArrayList<String>(); //array nascita medico
+	
+	public static ArrayList<String> id_p = new ArrayList<String>(); //array del id_paziente per prenotazione
+	public static ArrayList<String> id_m = new ArrayList<String>(); //array del id_medico per prenotazione
+	public static ArrayList<String> ppren = new ArrayList<String>(); //array dprenotazioni per prenotazione
+	
+	
+	JSONObject obj_med;
+	JSONObject typeofdb_med;
+			
+	JSONObject obj_paz;
+	JSONObject typeofdb_paz;
+	
+	JSONObject obj_pren;
+	JSONObject typeofdb_pren;
 
 	private JsonHelper() {
 	         
@@ -75,17 +90,14 @@ public class JsonHelper {
 	
 	 @SuppressWarnings("unchecked")
 	void addtoJson(String nome, String cognome, String id, String professione,String nascita, String sesso,
-					String prenotazione, String typeofdb) {
-		 
-		JSONObject obj_med = new JSONObject();
-		JSONObject typeofdb_med = new JSONObject();
-				
-		JSONObject obj_paz = new JSONObject();
-		JSONObject typeofdb_paz = new JSONObject();		
+					 String typeofdb) {
+		 		
 				
 		switch(typeofdb) {
 		
 		case "Medico":
+			obj_med = new JSONObject();
+			typeofdb_med = new JSONObject();
 			obj_med.put("nome", nome);
 			obj_med.put("cognome", cognome);
 			obj_med.put("id", id);
@@ -94,21 +106,36 @@ public class JsonHelper {
 			medico.add(typeofdb_med);
 			break;
 			
-			
 		case "Paziente":
+			obj_paz = new JSONObject();
+			typeofdb_paz = new JSONObject();
 			obj_paz.put("nome", nome);
 			obj_paz.put("cognome", cognome);
 			obj_paz.put("id", id);
 			obj_paz.put("nascita", nascita.replace("/","-"));
 			obj_paz.put("sesso", sesso);
-			obj_paz.put("prenotazioni", prenotazione);
-			prenotazioni.add(obj_paz.get(prenotazioni));
 			typeofdb_paz.put("Paziente", obj_paz);
 			paziente.add(typeofdb_paz);
 			break;
+						
+			
 		}
 		
 	}
+	 
+	 
+	 @SuppressWarnings("unchecked")
+	void addPrenotazioni(String id_paziente, String id_medico,  String typeofdb) {
+		 
+			obj_pren.put("id_paziente", id_paziente);
+			obj_pren.put("id_medico", id_medico);
+			obj_pren.put("prenotazioni", prenotazioni.get(i));
+			i++;
+			typeofdb_pren.put("Prenotazione", obj_pren);
+			prenotazione.add(typeofdb_paz);
+			
+	 }
+	 
 	/*
 	 * 
 	 * Parametri :
@@ -130,6 +157,10 @@ public class JsonHelper {
     		case "Paziente":
     			paziente.forEach(emp -> parseObject((JSONObject)emp,typeofdb));
     			break;
+    			
+    		case "Prenotazione":
+    			prenotazione.forEach(emp -> parseObject((JSONObject)emp,typeofdb));
+    			break;
     		}            
             
  
@@ -147,7 +178,7 @@ public class JsonHelper {
         	
         	switch(typeofdb) {
     		
-    		case "Medico":    			
+    		case "Medico":    	
     			file.append(medico.toJSONString()); 
                 file.flush();
                 break;
@@ -155,6 +186,11 @@ public class JsonHelper {
     			
     		case "Paziente":
     			file.append(paziente.toJSONString()); 
+                file.flush();
+                break;
+                
+    		case "Prenotazione":
+    			file.append(prenotazione.toJSONString()); 
                 file.flush();
                 break;
     		}
@@ -194,6 +230,15 @@ public class JsonHelper {
     				np.add((String) Object.get("nome"));
     				cp.add((String) Object.get("cognome"));
     				ip.add((String) Object.get("id"));
+    				nap.add((String) Object.get("nascita"));
+    				sp.add((String) Object.get("sesso"));
+    				pp.add((String) Object.get("prenotazione"));
+    				break;
+    				
+    			case "Prenotazione":  
+    				id_p.add((String) Object.get("id_paziente"));
+    				id_m.add((String) Object.get("id_medico"));
+    				ppren.add((String) Object.get("prenotazione"));
     				nap.add((String) Object.get("nascita"));
     				sp.add((String) Object.get("sesso"));
     				pp.add((String) Object.get("prenotazione"));

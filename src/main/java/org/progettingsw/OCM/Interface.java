@@ -60,6 +60,7 @@ public class Interface {
 			dbs.readJson("Medico");
 		else
 			System.out.println("Errore sui database");
+		
 			
 		
 	}
@@ -243,7 +244,7 @@ public class Interface {
 
         		String Id = command.getID(p);
         		
-        		dbs.addtoJson(nome.getText(), cognome.getText(),Id ,null , data.getText(), sesso.getText(), null, "Paziente");
+        		dbs.addtoJson(nome.getText(), cognome.getText(),Id ,null , data.getText(), sesso.getText(), "Paziente");
         		
         		
         		lp.setModel(command.listaPazientitoString()); //ottengo la lista pazienti e la inserisco nella listbox
@@ -403,7 +404,7 @@ addMedico.addActionListener(new ActionListener(){
 
         				
         				prencommand.addPrenotazione(pb.setidPaziente(split_paziente[2]).setidMedico(split_medico[3]).setProfessione(split_medico[2]).setData(data_prenotazione.getText()));
-
+        				dbs.addPrenotazioni(split_paziente[2], split_medico[3], split_medico[2]);
         				
         				
         				new Popup("SUCCESSO","Prenotazione aggiunta!");
@@ -423,13 +424,14 @@ addMedico.addActionListener(new ActionListener(){
         	
         	public void actionPerformed(ActionEvent e) {
         		
-        		String[] split_paziente = selectPaziente.split(" ");
-
         		try
         		{
         			
-        		if(!(selectPaziente == null))
+        		String[] split_paziente = selectPaziente.split(" ");
+        			
+        		if(!(selectPaziente == null) && !(split_paziente == null)) {
         		prencommand.listPrenotazioni(split_paziente[2]);
+        		}
         		else
         			new Popup("ERROE", "Seleziona Paziente");
         		}

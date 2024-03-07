@@ -28,9 +28,9 @@ public class AppTest
 	
     @Test
     public void testJson() {
-       	n.addtoJson("Ciao", "Ciao", null,null,"01/10/2022",null,null,"Paziente");
-		n.addtoJson("Ciao1", "Ciao1", null,null,null,null,null, "Medico");
-		n.addtoJson("Ciao12", "Ciao2", null,null,null,null,null, "Medico");
+       	n.addtoJson("Ciao", "Ciao", null,null,"01/10/2022",null,"Paziente");
+		n.addtoJson("Pippo", "Verdi", null,null,null,null, "Medico");
+		n.addtoJson("Mario", "Rossi", null,null,null,null,"Medico");
 		n.writeJson("Medico");
 		n.writeJson("Paziente");
 		System.out.println("Struttura json per 'Medico' :");
@@ -38,7 +38,7 @@ public class AppTest
 		n.readJson("Paziente");
 		System.out.println("JSon 'Medico' creato correttamente" + " nel path : " + PATH);
 		assertTrue(m.exists());
-		
+				
     }
     
     @Test
@@ -58,14 +58,14 @@ public class AppTest
     	
     	System.out.println(n.nm.get(0));
     	
-    	assertEquals("Ciao1",n.nm.get(0));
+    	assertEquals("Pippo",n.nm.get(0));
     
     }
     
     
     @AfterClass
     static public void cleantestJson() {
-    	System.out.println("Pulizia del database di prova");
+    	System.out.println("Pulizia dei database di prova");
     	if(m.exists())
     	m.delete();
     	if(p.exists())

@@ -9,7 +9,7 @@ public class ComandiPrenotazione {
 	
 	
 	void addPrenotazione(PrenotazioneBuilder p) {       
-		
+
 		pren.add(p.getPrenotazione());
 
 	}
@@ -84,7 +84,8 @@ boolean checkPrenotazione(String id_paziente, String id_medico, String professio
 			
 			if(check_idpaziente.equals(id_paziente.toUpperCase())  && 
 					check_idmedico.equals(id_medico.toUpperCase())&&
-					check_professione.equals(professione.toUpperCase()) && check_dataprenotazione.equals(data_prenotazione))
+					check_professione.equals(professione.toUpperCase()) && check_dataprenotazione.equals(data_prenotazione)
+					|| check_idmedico.equals(id_medico) && check_dataprenotazione.equals(data_prenotazione))
 			
 				return true;
 			

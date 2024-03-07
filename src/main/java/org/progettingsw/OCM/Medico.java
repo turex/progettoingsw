@@ -1,20 +1,22 @@
 package org.progettingsw.OCM;
 
+import java.util.ArrayList;
+
 public class Medico{
 	
 	String nome = "";
 	String cognome = "";
 	String ID = "";
 	String professione = "";
-	//String sesso = "";
+	ArrayList<String> dataslot = new ArrayList<>();
 	
-	public Medico(String nome,String cognome,String ID,String professione) {
+	public Medico(String nome,String cognome,String ID,String professione, ArrayList<String> dataslot) {
 		
 		this.nome = nome;
 		this.cognome = cognome;
 		this.ID = ID;
 		this.professione = professione;
-		//this.sesso = sesso;
+		this.dataslot.addAll(dataslot);
 		
 	}
 
@@ -38,6 +40,11 @@ public class Medico{
 	public String getProfessione() {
 		// TODO Auto-generated method stub
 		return professione;
+	}
+	
+	public ArrayList<String> getdataSlot() {
+		// TODO Auto-generated method stub
+		return dataslot;
 	}
 
 	@Override
