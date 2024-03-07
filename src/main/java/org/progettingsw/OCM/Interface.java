@@ -48,7 +48,7 @@ public class Interface {
 	
 	ArrayList<String> lista_medico = new ArrayList<String>();
 	
-	Interface(){
+	public Interface(){
 		
     /*
      * 

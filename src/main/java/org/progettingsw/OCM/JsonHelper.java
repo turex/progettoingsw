@@ -250,7 +250,6 @@ public class JsonHelper {
     				sp.add((String) Object.get("sesso"));
     				pp.add((String) Object.get("prenotazione"));
     				
-    				System.out.println(np);
     				break;
     				
     			case "Prenotazione":  
