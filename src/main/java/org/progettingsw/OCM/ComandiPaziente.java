@@ -7,6 +7,7 @@ import javax.swing.DefaultListModel;
 public class ComandiPaziente {
 	
 	List<Paziente> pazi = new ArrayList<>();
+	PazienteBuilder p;
 	
 	
 	void addPaziente(PazienteBuilder p) {
@@ -21,6 +22,11 @@ public class ComandiPaziente {
         pazi.add(p.getPaziente());
         
 
+	}
+	
+	void addfromJson(String nome, String cognome) {
+		
+		pazi.add(p.setNome(nome).getPaziente());
 	}
 	
 	String getID(PazienteBuilder p) {
@@ -85,6 +91,16 @@ public class ComandiPaziente {
 		}
 			return false;
 }
+	/*
+	 * 
+	 * Funzione per aggiungere i Pazienti dal JSON
+	 * 
+	 */
+	
+	void addtoList() {
+		
+		
+	}
 	
 	
 }

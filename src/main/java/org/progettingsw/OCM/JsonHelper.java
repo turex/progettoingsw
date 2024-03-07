@@ -40,10 +40,10 @@ import org.json.simple.JSONObject;
 public class JsonHelper {
 	
 	private static JsonHelper istance; //Singleton istance
-	private static JSONArray medico = new JSONArray(); //inserisco qui l'array del JSON per i medici
-	private static JSONArray paziente = new JSONArray(); //inserisco qui l'array del JSON per i medici
-	private static JSONArray prenotazione = new JSONArray(); //inserisco qui l'array del JSON per le prenotazioni
-	private static JSONArray prenotazioni = new JSONArray(); //inserisco qui l'array per array delle prenotazioni
+	public static JSONArray medico = new JSONArray(); //inserisco qui l'array del JSON per i medici
+	public static JSONArray paziente = new JSONArray(); //inserisco qui l'array del JSON per i medici
+	public static JSONArray prenotazione = new JSONArray(); //inserisco qui l'array del JSON per le prenotazioni
+	public static JSONArray prenotazioni = new JSONArray(); //inserisco qui l'array per array delle prenotazioni
 
 	
 	int i = 0; //Index prenotazione paziente per array prenotazioni multiple
@@ -143,23 +143,35 @@ public class JsonHelper {
 	 * @typeofdb: semplifichiamo la gestione suddividendo i database
 	 */
 	 @SuppressWarnings("unchecked")
-	void readJson(String typeofdb) {
+	ArrayList<String> readJson(String typeofdb) {
+		 
+		 ArrayList<String> list = new ArrayList<String>();
         
         try (FileReader reader = new FileReader(typeofdb + ".json"))
         {
  
             switch(typeofdb) {
+            
+            /*
+             * 
+             * Equivalente di for (String med : medico){}
+             * 
+             */
     		
     		case "Medico":
-    			medico.forEach(emp -> parseObject((JSONObject)emp,typeofdb));
+    			medico.forEach(med -> {
+    				parseObject((JSONObject)med,typeofdb);
+    					
+    			});
+    			
     			break;
     			
     		case "Paziente":
-    			paziente.forEach(emp -> parseObject((JSONObject)emp,typeofdb));
+    			paziente.forEach(paz -> parseObject((JSONObject)paz,typeofdb));
     			break;
     			
     		case "Prenotazione":
-    			prenotazione.forEach(emp -> parseObject((JSONObject)emp,typeofdb));
+    			prenotazione.forEach(pren -> parseObject((JSONObject)pren,typeofdb));
     			break;
     		}            
             
@@ -169,6 +181,10 @@ public class JsonHelper {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        System.out.println("Test lista : " + list);
+        
+        return list;
 	}
 	
 	void writeJson(String typeofdb) {
@@ -233,6 +249,8 @@ public class JsonHelper {
     				nap.add((String) Object.get("nascita"));
     				sp.add((String) Object.get("sesso"));
     				pp.add((String) Object.get("prenotazione"));
+    				
+    				System.out.println(np);
     				break;
     				
     			case "Prenotazione":  

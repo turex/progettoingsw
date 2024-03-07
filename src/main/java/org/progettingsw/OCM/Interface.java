@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.swing.JButton;
@@ -43,6 +44,9 @@ public class Interface {
 	static String Id; //inserisco in questa variabile ID di medico o paziente durante la "Creazione"
 
 	static JsonHelper dbs = JsonHelper.getIstance(); // creo oggetto JSON
+	ComandiPaziente cm = new ComandiPaziente();
+	
+	ArrayList<String> lista_medico = new ArrayList<String>();
 	
 	Interface(){
 		
@@ -54,13 +58,23 @@ public class Interface {
 		
 		p = new File(PATH + "\\Paziente.json");
 		m = new File(PATH + "\\Medico.json");
-		if(p.exists())
+		if(p.exists()) {
 			dbs.readJson("Paziente");
+			//System.out.println(dbs.np.size());
+			//cm.addfromJson(dbs.np.get(0),null);
+			
+			System.out.println(lista_medico);
+		}
 		else if(m.exists())
 			dbs.readJson("Medico");
 		else
 			System.out.println("Errore sui database");
 		
+		/*
+		 * 
+		 * Carico il database
+		 * 
+		 */
 			
 		
 	}

@@ -63,7 +63,7 @@ public class AppTest
     }
     
     
-    @AfterClass
+    //@AfterClass
     static public void cleantestJson() {
     	System.out.println("Pulizia dei database di prova");
     	if(m.exists())
