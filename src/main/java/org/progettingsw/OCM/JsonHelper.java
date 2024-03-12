@@ -141,12 +141,14 @@ public class JsonHelper {
 	 * Parametri :
 	 * 
 	 * @typeofdb: semplifichiamo la gestione suddividendo i database
+	 * 
+	 * @return statement indicate size of each list
 	 */
 	 @SuppressWarnings("unchecked")
-	ArrayList<String> readJson(String typeofdb) {
+	int readJson(String typeofdb) {
 		 
-		 ArrayList<String> list = new ArrayList<String>();
-        
+		 int size = 0;
+		         
         try (FileReader reader = new FileReader(typeofdb + ".json"))
         {
  
@@ -161,17 +163,19 @@ public class JsonHelper {
     		case "Medico":
     			medico.forEach(med -> {
     				parseObject((JSONObject)med,typeofdb);
-    					
     			});
-    			
+    			size = nm.size();
     			break;
     			
     		case "Paziente":
     			paziente.forEach(paz -> parseObject((JSONObject)paz,typeofdb));
+    			size = np.size();
+    			System.out.println(size);
     			break;
     			
     		case "Prenotazione":
     			prenotazione.forEach(pren -> parseObject((JSONObject)pren,typeofdb));
+    			size = id_p.size();
     			break;
     		}            
             
@@ -181,10 +185,8 @@ public class JsonHelper {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
-        System.out.println("Test lista : " + list);
-        
-        return list;
+                
+        return size;
 	}
 	
 	void writeJson(String typeofdb) {
@@ -195,18 +197,18 @@ public class JsonHelper {
         	switch(typeofdb) {
     		
     		case "Medico":    	
-    			file.append(medico.toJSONString()); 
+    			file.write(medico.toJSONString()); 
                 file.flush();
                 break;
     			
     			
     		case "Paziente":
-    			file.append(paziente.toJSONString()); 
+    			file.write(paziente.toJSONString()); 
                 file.flush();
                 break;
                 
     		case "Prenotazione":
-    			file.append(prenotazione.toJSONString()); 
+    			file.write(prenotazione.toJSONString()); 
                 file.flush();
                 break;
     		}
@@ -216,7 +218,11 @@ public class JsonHelper {
             e.printStackTrace();
         }
         
+	}
 	
+	void printnomePaz()
+	{
+		np.forEach(nomi -> System.out.println(nomi));
 	}
 	
 	/*

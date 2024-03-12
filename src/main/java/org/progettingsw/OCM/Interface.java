@@ -8,6 +8,7 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField;
@@ -39,16 +40,24 @@ public class Interface {
 	static String selectPaziente; //mi da l'item del paziente
 	static String selectionProfessione;// mi da l'item della professione
 	final String PATH = System.getProperty("user.dir"); //Path corrente dell'eseguibile
-	File p,m; //file per check db()p paziente , m medico
+	File pf,mf; //file per check db()p paziente , m medico
 	
 	static String Id; //inserisco in questa variabile ID di medico o paziente durante la "Creazione"
 
 	static JsonHelper dbs = JsonHelper.getIstance(); // creo oggetto JSON
-	ComandiPaziente cm = new ComandiPaziente();
+	static ComandiPaziente command = new ComandiPaziente();
+    static ComandiMedico medcommand = new ComandiMedico();
+    static ComandiPrenotazione prencommand = new ComandiPrenotazione();
+     
+    static PazienteBuilder p = new PazienteBuilder();
+    static MedicoBuilder m = new MedicoBuilder();
+    static PrenotazioneBuilder pb = new PrenotazioneBuilder();
 	
 	ArrayList<String> lista_medico = new ArrayList<String>();
 	
 	public Interface(){
+		
+		int list_size;
 		
     /*
      * 
@@ -56,18 +65,31 @@ public class Interface {
      * 
      */
 		
-		p = new File(PATH + "\\Paziente.json");
-		m = new File(PATH + "\\Medico.json");
-		if(p.exists()) {
-			dbs.readJson("Paziente");
-			//System.out.println(dbs.np.size());
-			//cm.addfromJson(dbs.np.get(0),null);
+		pf = new File(PATH + "\\Paziente.json");
+		mf = new File(PATH + "\\Medico.json");
+		if(pf.exists()) {
+			list_size = 0;
+			list_size = dbs.readJson("Paziente");
+			System.out.println(list_size);
+			for(int i = 0; i < list_size; i++) {
+			command.addPaziente(p.setNome(dbs.np.get(i)).setCognome(dbs.cp.get(i)).setID(dbs.ip.get(i)).setNascita(dbs.nap.get(i))
+					.setSesso(dbs.sp.get(i)));
+
+ 
 			
-			System.out.println(lista_medico);
+   		dbs.addtoJson(dbs.np.get(i), dbs.cp.get(i),dbs.ip.get(i) ,null , dbs.nap.get(i), dbs.sp.get(i), "Paziente");
+   		
+			}
+			
 		}
-		else if(m.exists())
-			dbs.readJson("Medico");
-		else
+		else if(mf.exists()) {
+			list_size = 0;
+			list_size = dbs.readJson("Medico");
+			
+			
+
+		}
+			else
 			System.out.println("Errore sui database");
 		
 		/*
@@ -89,13 +111,7 @@ public class Interface {
 				
         JFrame frame = new JFrame(TITOLO);
                 
-        ComandiPaziente command = new ComandiPaziente();
-        ComandiMedico medcommand = new ComandiMedico();
-        ComandiPrenotazione prencommand = new ComandiPrenotazione();
-        
-        PazienteBuilder p = new PazienteBuilder();
-        MedicoBuilder m = new MedicoBuilder();
-        PrenotazioneBuilder pb = new PrenotazioneBuilder();
+       
         
          
         // Define the panel 
@@ -256,8 +272,9 @@ public class Interface {
         		if(!command.checkPaziente(nome.getText(),cognome.getText(),data.getText())) { //check if nome , cognome and data are empty and if is not still on database
         		 command.addPaziente(p.setNome(nome.getText()).setCognome(cognome.getText()).setNascita(data.getText()).setSesso(sesso.getText()));
 
-        		String Id = command.getID(p);
-        		
+        		 String Id = "";
+				 Id = command.assignID(p);
+				
         		dbs.addtoJson(nome.getText(), cognome.getText(),Id ,null , data.getText(), sesso.getText(), "Paziente");
         		
         		

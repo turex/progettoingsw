@@ -33,9 +33,10 @@ public class AppTest
 		n.addtoJson("Mario", "Rossi", null,null,null,null,"Medico");
 		n.writeJson("Medico");
 		n.writeJson("Paziente");
-		System.out.println("Struttura json per 'Medico' :");
+		System.out.println("Struttura json per 'Paziente' :");
 		n.readJson("Medico");
 		n.readJson("Paziente");
+		n.printnomePaz();
 		System.out.println("JSon 'Medico' creato correttamente" + " nel path : " + PATH);
 		assertTrue(m.exists());
 				

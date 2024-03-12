@@ -2,6 +2,8 @@ package org.progettingsw.OCM;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+
 import javax.swing.DefaultListModel;
 
 public class ComandiPaziente {
@@ -12,28 +14,35 @@ public class ComandiPaziente {
 	
 	void addPaziente(PazienteBuilder p) {
 		
+		
+		
+		p.ID = assignID(p);
+        pazi.add(p.getPaziente());
+        
+
+	}
+	
+	String assignID(PazienteBuilder p) {
+		
+		String ID = "";
+		
+		Random entropy = new Random();
+		final int entropy_lenght = 3;
+		int x = entropy.nextInt(entropy_lenght) + 5;
+		
 		int len_n = p.nome.length();
 		int len_c = p.cognome.length();
 		
 		final int len_nome = (len_n > 5) ? len_n/2 : len_n;
 		final int len_cognome = (len_c > 5) ? len_c/2 : len_c;
 		
-		p.ID = p.nome.substring(0,len_nome).toUpperCase() + p.cognome.substring(0, len_cognome).toUpperCase() + p.nascita.replace("/", "");
-        pazi.add(p.getPaziente());
-        
-
-	}
-	
-	void addfromJson(String nome, String cognome) {
 		
-		pazi.add(p.setNome(nome).getPaziente());
+		ID = p.nome.substring(0,len_nome).toUpperCase() + p.cognome.substring(0, len_cognome).toUpperCase() + p.nascita.replace("/", "") + x;		
+		
+		return ID;
 	}
 	
-	String getID(PazienteBuilder p) {
-		return p.getPaziente().getID();
-	}
-	
-	
+
 	void printPaziente(int z) {  
 		
 		System.out.println(pazi.get(z));
@@ -90,18 +99,7 @@ public class ComandiPaziente {
 			
 		}
 			return false;
-}
-	/*
-	 * 
-	 * Funzione per aggiungere i Pazienti dal JSON
-	 * 
-	 */
-	
-	void addtoList() {
-		
-		
 	}
-	
-	
+
 }
 
