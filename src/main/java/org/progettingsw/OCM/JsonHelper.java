@@ -5,9 +5,12 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 //Uso il Singleton e il wrapper per creare piu JSon (Medico, paziente)
 
@@ -64,6 +67,7 @@ public class JsonHelper {
 	public static ArrayList<String> id_m = new ArrayList<String>(); //array del id_medico per prenotazione
 	public static ArrayList<String> ppren = new ArrayList<String>(); //array dprenotazioni per prenotazione
 	
+	final String PATH = System.getProperty("user.dir"); //Path corrente dell'eseguibile
 	
 	JSONObject obj_med;
 	JSONObject typeofdb_med;
@@ -73,6 +77,8 @@ public class JsonHelper {
 	
 	JSONObject obj_pren;
 	JSONObject typeofdb_pren;
+	
+	static int size = 0; // variabile globale per la dimesione delle liste array dei vari DB
 
 	private JsonHelper() {
 	         
@@ -136,22 +142,46 @@ public class JsonHelper {
 			
 	 }
 	 
+	 void readfromJson(String typeofdb) {
+		 
+		 MedicoBuilder med = new MedicoBuilder();
+		 
+		 JSONParser parser = new JSONParser();
+		 
+		 
+		 try {
+		        Object obj = parser.parse(new FileReader(PATH + "\\" + typeofdb + ".json"));
+		        JSONArray jsonArray = (JSONArray) obj;
+
+		        // Utilizziamo un solo ciclo for per iterare sugli elementi dell'array
+		        for (int i = 0; i < jsonArray.size(); i++) {
+		            JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+		            JSONObject db = (JSONObject) jsonObject.get(typeofdb);
+		            String cognome = (String) db.get("cognome");
+		            String nome = (String) db.get("nome");
+		            // E così via per gli altri campi...
+		            System.out.println("cognome=" + cognome + "; nome=" + nome);
+		            med.setCognome(cognome).setNome(nome).getMedico();
+		        }
+		    } catch (Exception e) {
+		        System.out.println("Error: " + e.getMessage());
+		        e.printStackTrace(); // Stampa lo stack trace per avere maggiori dettagli sull'errore
+		    }
+}
+	    
+	 
+	 
 	/*
 	 * 
 	 * Parametri :
 	 * 
 	 * @typeofdb: semplifichiamo la gestione suddividendo i database
 	 * 
-	 * @return statement indicate size of each list
 	 */
 	 @SuppressWarnings("unchecked")
-	int readJson(String typeofdb) {
-		 
-		 int size = 0;
+	void readDb(String typeofdb) {
 		         
-        try (FileReader reader = new FileReader(typeofdb + ".json"))
-        {
- 
+        
             switch(typeofdb) {
             
             /*
@@ -164,29 +194,35 @@ public class JsonHelper {
     			medico.forEach(med -> {
     				parseObject((JSONObject)med,typeofdb);
     			});
-    			size = nm.size();
     			break;
     			
     		case "Paziente":
     			paziente.forEach(paz -> parseObject((JSONObject)paz,typeofdb));
-    			size = np.size();
-    			System.out.println(size);
     			break;
     			
     		case "Prenotazione":
     			prenotazione.forEach(pren -> parseObject((JSONObject)pren,typeofdb));
-    			size = id_p.size();
     			break;
     		}            
             
  
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        
                 
-        return size;
+	}
+	 
+	 int getlistSize(String type) {
+		 
+		 size = 0;
+		 
+		 switch(type) {
+ 		
+ 		case "Medico":
+ 			size = nm.size();
+ 			break;
+		 }
+		 
+		 return size;
+		 
 	}
 	
 	void writeJson(String typeofdb) {
@@ -241,7 +277,9 @@ public class JsonHelper {
         	switch(typeofdb) {
     		
     			case "Medico":
+    				System.out.println("Parsing");
     				nm.add((String) Object.get("nome"));
+    				System.out.println(nm.get(0));
     				cm.add((String) Object.get("cognome"));
     				im.add((String) Object.get("id"));
     				prop.add((String) Object.get("professione"));

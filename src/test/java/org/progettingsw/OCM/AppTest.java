@@ -34,9 +34,12 @@ public class AppTest
 		n.writeJson("Medico");
 		n.writeJson("Paziente");
 		System.out.println("Struttura json per 'Paziente' :");
-		n.readJson("Medico");
-		n.readJson("Paziente");
+		n.readDb("Medico");
+		n.readDb("Paziente");
 		n.printnomePaz();
+		System.out.println("Leggo dal file");
+		n.readfromJson("Medico");
+		n.nm.get(0);
 		System.out.println("JSon 'Medico' creato correttamente" + " nel path : " + PATH);
 		assertTrue(m.exists());
 				
@@ -55,7 +58,7 @@ public class AppTest
 	@Test
     public void testarrayDB() {
     	System.out.println("Testo il funzionamento della lettura array del DB 'Medico' per test");
-    	n.readJson("Medico");
+    	n.readDb("Medico");
     	
     	System.out.println(n.nm.get(0));
     	
