@@ -53,7 +53,7 @@ public class ComandiPaziente {
 			System.out.println("Lista pazienti vuota");
 	}
 	
-	public DefaultListModel<String> listaPazientitoString() {
+	public DefaultListModel<String> listaPazientitoModel() {
 		
 		
 		final DefaultListModel<String> model = new DefaultListModel<String>();
@@ -62,8 +62,7 @@ public class ComandiPaziente {
 			
 			model.addElement(pazi.get(list).nome + " " + pazi.get(list).cognome + " " + pazi.get(list).ID);
 		}
-		
-		
+				
 		return model;
 		
 	}

@@ -67,7 +67,7 @@ public class MedicoPanel {
                 if (!nomeValue.isEmpty() && !cognomeValue.isEmpty() && !professioneValue.isEmpty()) {
                     if (!medcommand.checkMedico(nomeValue, cognomeValue, professioneValue)) {
                         medcommand.addMedico(m.setNome(nomeValue).setCognome(cognomeValue).setProfessione(professioneValue));
-                        lprof.setModel(medcommand.listaMedicitoString());
+            			//pp.lprof.setModel(medcommand.listaMedicitoString());
                         JOptionPane.showMessageDialog(null, "Medico aggiunto!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         JOptionPane.showMessageDialog(null, "Errore!\nTutti i campi sono necessari", "ERRORE", JOptionPane.ERROR_MESSAGE);
@@ -88,21 +88,6 @@ public class MedicoPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dbs.writeJson("Medico");
-            }
-        });
-
-        lprof.addListSelectionListener(new ListSelectionListener() { //Setto il Listener per selezione dati da JList MEDICO
-            public void valueChanged(ListSelectionEvent arg0) {
-                if (!arg0.getValueIsAdjusting()) {
-                    try {
-                        if (!(lprof.getSelectedValue() == null)) {
-                            pp.selectProfessione = lprof.getSelectedValue().toString();
-                        }
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
-                    }
-                    System.out.println(selectionProfessione);
-                }
             }
         });
 

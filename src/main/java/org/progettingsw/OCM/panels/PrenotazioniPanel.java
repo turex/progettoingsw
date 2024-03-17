@@ -6,14 +6,19 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
+import javax.swing.ListModel;
 import javax.swing.SpinnerDateModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import org.progettingsw.OCM.ComandiPrenotazione;
 import org.progettingsw.OCM.JsonHelper;
@@ -24,10 +29,13 @@ public class PrenotazioniPanel {
 	
 	String selectProfessione;
 	String selectPaziente;
-	
+		
     static ComandiPrenotazione prencommand = new ComandiPrenotazione();
 	static PrenotazioneBuilder pb = new PrenotazioneBuilder();
 	static JsonHelper dbs = JsonHelper.getIstance(); // creo oggetto JSON
+	
+	JList<String> pazientiList = new JList<>();
+    JList<String> professionistiList = new JList<>();
 
 	
 	static PrenotazioniPanel istance;
@@ -48,7 +56,7 @@ public class PrenotazioniPanel {
         JPanel pazientiPanel = new JPanel();
         pazientiPanel.setLayout(new BorderLayout());
         pazientiPanel.add(new JLabel("Lista Pazienti:"), BorderLayout.NORTH);
-        JList<String> pazientiList = new JList<>();
+        
         JScrollPane pazientiScrollPane = new JScrollPane(pazientiList);
         pazientiPanel.add(pazientiScrollPane, BorderLayout.CENTER);
 
@@ -56,7 +64,6 @@ public class PrenotazioniPanel {
         JPanel professionistiPanel = new JPanel();
         professionistiPanel.setLayout(new BorderLayout());
         professionistiPanel.add(new JLabel("Lista Professionisti:"), BorderLayout.NORTH);
-        JList<String> professionistiList = new JList<>();
         JScrollPane professionistiScrollPane = new JScrollPane(professionistiList);
         professionistiPanel.add(professionistiScrollPane, BorderLayout.CENTER);
 
@@ -140,17 +147,45 @@ public class PrenotazioniPanel {
         	}
         	
         });
+        
+        
+        pazientiList.addListSelectionListener(new ListSelectionListener() { //Setto il Listener per selezione dati da JList PAZIENTEL
+            public void valueChanged(ListSelectionEvent arg0) {
+                if (!arg0.getValueIsAdjusting()) {
+                	try {
+                		if(!(pazientiList.getSelectedValue() == null))
+                			selectPaziente = pazientiList.getSelectedValue().toString();
+                	} catch (NullPointerException e) {
+                		e.printStackTrace();
+                	}
+                    System.out.println(selectPaziente);
+                }
+            }
+        });
+        
+        
+        professionistiList.addListSelectionListener(new ListSelectionListener() { //Setto il Listener per selezione dati da JList MEDICO
+            public void valueChanged(ListSelectionEvent arg0) {
+                if (!arg0.getValueIsAdjusting()) {
+                    try {
+                        if (!(professionistiList.getSelectedValue() == null)) {
+                            selectProfessione = professionistiList.getSelectedValue().toString();
+                        }
+                    } catch (NullPointerException e) {
+                        e.printStackTrace();
+                    }
+                    System.out.println(selectProfessione);
+                }
+            }
+        });
+        
 
         return panel;
     }
     
-    @SuppressWarnings("unused")
-	private void setPaziente(String selectPaziente) {
-    	this.selectPaziente = selectPaziente;
+    public void setPazientiListModel(DefaultListModel<String> model) {
+    	pazientiList.setModel(model);
+    	pazientiList.repaint();
     }
     
-    @SuppressWarnings("unused")
-    private void setProfessione(String selectProfessione) {
-    	this.selectProfessione = selectProfessione;
-    }
 }

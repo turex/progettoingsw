@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -39,7 +40,6 @@ public class PazientePanel {
 	
 	JTextField nome,cognome;
 	JSpinner dateSpinner, genderSpinner;
-	JList<String> lp = new JList<String>(); //Lista pazienti
 
     
     public JPanel createPanel() {
@@ -73,6 +73,8 @@ public class PazientePanel {
             	Date selectedDate = (Date) dateSpinner.getValue();
                 String formattedDate = dateFormat.format(selectedDate);            	 
                 String sessoValue = genderSpinner.getValue().toString();
+                
+                DefaultListModel<String> model = new DefaultListModel();
             	
             	// Esegui le azioni necessarie con i valori ottenuti
             	if (!nomeValue.isEmpty() && !cognomeValue.isEmpty() && !formattedDate.isEmpty()) {
@@ -80,7 +82,8 @@ public class PazientePanel {
             			command.addPaziente(p.setNome(nomeValue).setCognome(cognomeValue).setNascita(formattedDate).setSesso(sessoValue));
             			String Id = command.assignID(p);
             			dbs.addtoJson(nomeValue, cognomeValue, Id ,null , formattedDate, sessoValue, "Paziente");
-            			lp.setModel(command.listaPazientitoString());
+            			model = command.listaPazientitoModel();
+            			pp.setPazientiListModel(model);
             			new Popup("Paziente aggiunto!",Popup.msg.OK);
             		} else {
             			new Popup("Errore!\nNome, cognome e data di nascita sono necessari o paziente gia registrato",Popup.msg.ERR);
@@ -104,20 +107,7 @@ public class PazientePanel {
 			}
         });
         
-        lp.addListSelectionListener(new ListSelectionListener() { //Setto il Listener per selezione dati da JList PAZIENTEL
-            @Override
-            public void valueChanged(ListSelectionEvent arg0) {
-                if (!arg0.getValueIsAdjusting()) {
-                	try {
-                		if(!(lp.getSelectedValue() == null))
-                			pp.selectPaziente = lp.getSelectedValue().toString();
-                	} catch (NullPointerException e) {
-                		e.printStackTrace();
-                	}
-                    System.out.println(selectPaziente);
-                }
-            }
-        });
+        
         
         return panel;
     }

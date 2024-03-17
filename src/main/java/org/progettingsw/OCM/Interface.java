@@ -27,16 +27,8 @@ public class Interface {
 	final String PATH = System.getProperty("user.dir"); // Path corrente dell'eseguibile
 	File pf, mf; // file per check db()p paziente , m medico
 
-	static String Id; // inserisco in questa variabile ID di medico o paziente durante la "Creazione"
-
 	static JsonHelper dbs = JsonHelper.getIstance(); // creo oggetto JSON
 	
-	
-	
-
-	ArrayList<String> lista_medico = new ArrayList<String>();
-	
-	int list_size;
 
 	private final String TITOLO = "OCM Opensource clinic manager";
 
@@ -61,14 +53,16 @@ public class Interface {
 		frame.setResizable(false);
 		frame.pack();
 		
-		loadDB();
-
 		/*
 		 * 
 		 * All'avvio dell'interfaccia cerco di caricare interfaccia grafica e database
 		 * 
 		 */
 
+		
+		loadDB();
+
+		
 
 	}
 
@@ -96,13 +90,9 @@ public class Interface {
 		}
 		if (mf.exists()) {
 			dbs.readDb("Medico");
-			list_size = 0;
-			list_size = dbs.getlistSize("Medico");
-			System.out.println(list_size);
+			dbs.getlistSize("Medico");
 
-		} else
-			System.out.println("Errore sui database");
+		} 
 	}
 	
 }
-// End class
