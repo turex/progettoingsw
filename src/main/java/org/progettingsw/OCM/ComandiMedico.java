@@ -10,7 +10,7 @@ public class ComandiMedico {
 	List<Medico> medi = new ArrayList<>();
 	
 	
-	void addMedico(MedicoBuilder m) {
+	public void addMedico(MedicoBuilder m) {
 		
 		int len_n = m.nome.length();
 		int len_c = m.cognome.length();
@@ -27,7 +27,7 @@ public class ComandiMedico {
 		return m.getMedico().getID();
 	}
 	
-DefaultListModel<String> listaMedicitoString() { // Inserisco in una lista modello le professioni
+public DefaultListModel<String> listaMedicitoString() { // Inserisco in una lista modello le professioni
 		
 		
 		final DefaultListModel<String> model = new DefaultListModel<String>();
@@ -43,7 +43,7 @@ DefaultListModel<String> listaMedicitoString() { // Inserisco in una lista model
 		
 	}
 
-boolean checkMedico(String nome, String cognome , String professione) {
+public boolean checkMedico(String nome, String cognome , String professione) {
 	
 	// True se esiste o ci sono errori
 			
@@ -80,7 +80,7 @@ boolean checkMedico(String nome, String cognome , String professione) {
 		System.out.println(medi.get(z));
 	}
 	
-	void listMedici() {  
+	public void listMedici() {  
 		
 		if(medi.size() > 0) {
 			for (int list = 0; list < medi.size(); list++) 

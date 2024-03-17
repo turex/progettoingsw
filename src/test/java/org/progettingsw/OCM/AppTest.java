@@ -26,7 +26,8 @@ public class AppTest
 	  n = JsonHelper.getIstance(); // creo oggetto JSON
 	}
 	
-    @Test
+    @SuppressWarnings("static-access")
+	@Test
     public void testJson() {
        	n.addtoJson("Ciao", "Ciao", null,null,"01/10/2022",null,"Paziente");
 		n.addtoJson("Pippo", "Verdi", null,null,null,null, "Medico");
@@ -69,7 +70,7 @@ public class AppTest
     
     
     
-    //@AfterClass
+    @AfterClass
     static public void cleantestJson() {
     	System.out.println("Pulizia dei database di prova");
     	if(m.exists())

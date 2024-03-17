@@ -6,7 +6,7 @@ public class Popup {
 	
 	String title,testo = "";
 	
-	Popup(String title, String testo){
+	public Popup(String title, String testo){
 		
 		this.title= title;
 		this.testo = testo;

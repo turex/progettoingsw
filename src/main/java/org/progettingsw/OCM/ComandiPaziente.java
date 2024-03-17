@@ -12,9 +12,7 @@ public class ComandiPaziente {
 	PazienteBuilder p;
 	
 	
-	void addPaziente(PazienteBuilder p) {
-		
-		
+	public void addPaziente(PazienteBuilder p) {
 		
 		p.ID = assignID(p);
         pazi.add(p.getPaziente());
@@ -22,13 +20,9 @@ public class ComandiPaziente {
 
 	}
 	
-	String assignID(PazienteBuilder p) {
+	public String assignID(PazienteBuilder p) {
 		
 		String ID = "";
-		
-		Random entropy = new Random();
-		final int entropy_lenght = 3;
-		int x = entropy.nextInt(entropy_lenght) + 5;
 		
 		int len_n = p.nome.length();
 		int len_c = p.cognome.length();
@@ -37,18 +31,18 @@ public class ComandiPaziente {
 		final int len_cognome = (len_c > 5) ? len_c/2 : len_c;
 		
 		
-		ID = p.nome.substring(0,len_nome).toUpperCase() + p.cognome.substring(0, len_cognome).toUpperCase() + p.nascita.replace("/", "") + x;		
+		ID = p.nome.substring(0,len_nome).toUpperCase() + p.cognome.substring(0, len_cognome).toUpperCase() + p.nascita.replace("/", "");		
 		
 		return ID;
 	}
 	
 
-	void printPaziente(int z) {  
+	public void printPaziente(int z) {  
 		
 		System.out.println(pazi.get(z));
 	}
 	
-	void listPazienti() {  
+	public void listPazienti() {  
 		
 		if(pazi.size() > 0) {
 		for (int list = 0; list < pazi.size(); list++) {
@@ -59,7 +53,7 @@ public class ComandiPaziente {
 			System.out.println("Lista pazienti vuota");
 	}
 	
-	DefaultListModel<String> listaPazientitoString() {
+	public DefaultListModel<String> listaPazientitoString() {
 		
 		
 		final DefaultListModel<String> model = new DefaultListModel<String>();
@@ -74,7 +68,7 @@ public class ComandiPaziente {
 		
 	}
 	
-	boolean checkPaziente(String nome, String cognome , String nascita) {
+	public boolean checkPaziente(String nome, String cognome , String nascita) {
 		
 		// True se esiste o ci sono errori
 				

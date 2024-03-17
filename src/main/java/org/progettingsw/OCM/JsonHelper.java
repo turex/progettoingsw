@@ -91,7 +91,7 @@ public class JsonHelper {
 	 */
 	
 	 @SuppressWarnings("unchecked")
-	void addtoJson(String nome, String cognome, String id, String professione,String nascita, String sesso,
+	public void addtoJson(String nome, String cognome, String id, String professione,String nascita, String sesso,
 					 String typeofdb) {
 		 		
 				
@@ -127,6 +127,7 @@ public class JsonHelper {
 	 
 	 
 	 @SuppressWarnings("unchecked")
+	public
 	void addPrenotazioni(String id_paziente, String id_medico,  String typeofdb) {
 		 
 			obj_pren.put("id_paziente", id_paziente);
@@ -221,7 +222,7 @@ public class JsonHelper {
 		 
 	}
 	
-	void writeJson(String typeofdb) {
+	public void writeJson(String typeofdb) {
 		
 		//Write JSON file
         try (FileWriter file = new FileWriter(typeofdb + ".json")) {

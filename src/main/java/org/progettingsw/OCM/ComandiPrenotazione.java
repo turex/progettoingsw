@@ -8,13 +8,13 @@ public class ComandiPrenotazione {
 	List<Prenotazione> pren = new ArrayList<>();
 	
 	
-	void addPrenotazione(PrenotazioneBuilder p) {       
+	public void addPrenotazione(PrenotazioneBuilder p) {       
 
 		pren.add(p.getPrenotazione());
 
 	}
 	
-boolean checkdispoMedico(String nome_medico, String cognome_medico, String professione , String data_prenotazione) {
+public boolean checkdispoMedico(String nome_medico, String cognome_medico, String professione , String data_prenotazione) {
 		
 		// True se esiste o ci sono errori
 	
@@ -56,7 +56,7 @@ boolean checkdispoMedico(String nome_medico, String cognome_medico, String profe
 		//System.out.println(medi.get(z));
 	}
 	
-boolean checkPrenotazione(String id_paziente, String id_medico, String professione , String data_prenotazione) {
+public boolean checkPrenotazione(String id_paziente, String id_medico, String professione , String data_prenotazione) {
 		
 		// True se esiste o ci sono errori
 	
@@ -94,7 +94,7 @@ boolean checkPrenotazione(String id_paziente, String id_medico, String professio
 	
 }
 	
-	void listPrenotazioni(String id_paziente) {  
+	public void listPrenotazioni(String id_paziente) {  
 		
 		boolean stato_lista = false; // default la setto false per dire che é vuota
 		

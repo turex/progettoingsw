@@ -1,9 +1,13 @@
 package org.progettingsw.OCM.panels;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
+
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
@@ -11,10 +15,34 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 
+import org.progettingsw.OCM.ComandiPrenotazione;
+import org.progettingsw.OCM.JsonHelper;
+import org.progettingsw.OCM.Popup;
+import org.progettingsw.OCM.PrenotazioneBuilder;
+
 public class PrenotazioniPanel {
+	
+	String selectProfessione;
+	String selectPaziente;
+	
+    static ComandiPrenotazione prencommand = new ComandiPrenotazione();
+	static PrenotazioneBuilder pb = new PrenotazioneBuilder();
+	static JsonHelper dbs = JsonHelper.getIstance(); // creo oggetto JSON
+
+	
+	static PrenotazioniPanel istance;
+	
+	public static PrenotazioniPanel getIstance() {
+		if(istance == null)
+			istance = new PrenotazioniPanel();
+		
+		return istance;
+	}
 
     public JPanel createPanel() {
         JPanel panel = new JPanel(new BorderLayout());
+        
+        JButton addPrenotazione, listPrenotazioni = new JButton();
 
         // Creazione del pannello per i pazienti a sinistra
         JPanel pazientiPanel = new JPanel();
@@ -34,15 +62,16 @@ public class PrenotazioniPanel {
 
         // Pannello per i bottoni
         JPanel buttonPanel = new JPanel();
-        buttonPanel.add(new JButton("Aggiungi prenotazione"));
-        buttonPanel.add(new JButton("Lista prenotazioni"));
+        buttonPanel.add(addPrenotazione = new JButton("Aggiungi prenotazione"));
+        buttonPanel.add(listPrenotazioni = new JButton("Lista prenotazioni"));
 
         // Pannello per la selezione della data e dell'ora
         JPanel prenotazioniPanel = new JPanel(new BorderLayout());
         SpinnerDateModel spinnerModel = new SpinnerDateModel();
         spinnerModel.setCalendarField(Calendar.MINUTE); // Impostazione del campo del calendario su minuti
         JSpinner spinner = new JSpinner(spinnerModel);
-        JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(spinner, "dd/MM/yyyy HH:mm:ss");
+        JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(spinner, "dd/MM/yyyy HH:mm");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         spinner.setEditor(dateEditor);
         prenotazioniPanel.add(new JLabel("Data e ora prenotazione:"), BorderLayout.NORTH);
         prenotazioniPanel.add(spinner, BorderLayout.CENTER);
@@ -52,7 +81,76 @@ public class PrenotazioniPanel {
         panel.add(professionistiPanel, BorderLayout.EAST);
         panel.add(buttonPanel, BorderLayout.NORTH);
         panel.add(prenotazioniPanel, BorderLayout.SOUTH);
+        
+
+        addPrenotazione.addActionListener(new ActionListener(){
+        	
+        	public void actionPerformed(ActionEvent e) {
+        		String[] split_paziente= {};
+        		String[] split_medico= {};
+        		Date selectedDate = (Date) spinner.getValue();
+                String formattedDate = dateFormat.format(selectedDate);
+        		
+        		if(!(selectProfessione == null) && !(selectPaziente == null)) { // aggiungo la prenotazione se ho selezionato sia paziente che medico ma
+        			//non é presente gia una prenotazion
+        			split_paziente = selectPaziente.split(" ");
+        			split_medico = selectProfessione.split(" ");
+        			        		
+        			if(!prencommand.checkPrenotazione(split_paziente[2],split_medico[3],split_medico[1], formattedDate)&&
+        					!prencommand.checkdispoMedico(split_medico[0],split_medico[1], split_medico[2], formattedDate)) { //se il check é false allora mi aggiunge la prenotazione
+        				//System.out.println(prencommand.checkPrenotazione(split_paziente[0],split_paziente[1], split_medico[0],split_medico[1], split_medico[2], data_prenotazione.getText())); //DEBUG
+
+        				
+        				prencommand.addPrenotazione(pb.setidPaziente(split_paziente[2]).setidMedico(split_medico[3]).setProfessione(split_medico[2]).setData(formattedDate));
+        				dbs.addPrenotazioni(split_paziente[2], split_medico[3], split_medico[2]);
+        				
+        				
+        				new Popup("SUCCESSO","Prenotazione aggiunta!");
+        			}
+        			else
+        				new Popup("ERRORE","Prenotazione gia presente , medico non disponibile o campi vuoti");
+        		}
+        		else
+        			new Popup("ERRORE", "Seleziona medico e paziente!");
+        		
+        		
+        	}
+        	
+        });
+        
+        listPrenotazioni.addActionListener(new ActionListener(){
+        	
+        	public void actionPerformed(ActionEvent e) {
+        		
+        		try
+        		{
+        			
+        		String[] split_paziente = selectPaziente.split(" ");
+        			
+        		if(!(selectPaziente == null) && !(split_paziente == null)) {
+        		prencommand.listPrenotazioni(split_paziente[2]);
+        		}
+        		else
+        			new Popup("ERROE", "Seleziona Paziente");
+        		}
+        		catch (NullPointerException e1)
+        		{
+        			e1.printStackTrace();
+        		}
+        	}
+        	
+        });
 
         return panel;
+    }
+    
+    @SuppressWarnings("unused")
+	private void setPaziente(String selectPaziente) {
+    	this.selectPaziente = selectPaziente;
+    }
+    
+    @SuppressWarnings("unused")
+    private void setProfessione(String selectProfessione) {
+    	this.selectProfessione = selectProfessione;
     }
 }
