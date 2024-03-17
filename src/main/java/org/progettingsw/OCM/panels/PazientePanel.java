@@ -83,12 +83,12 @@ public class PazientePanel {
             			String Id = command.assignID(p);
             			dbs.addtoJson(nomeValue, cognomeValue, Id ,null , formattedDate, sessoValue, "Paziente");
             			lp.setModel(command.listaPazientitoString());
-            			new Popup("SUCCESS", "Paziente aggiunto!");
+            			new Popup("SUCCESS", "Paziente aggiunto!",Popup.msg.OK);
             		} else {
-            			new Popup("ERRORE", "Errore!\nNome, cognome e data di nascita sono necessari o paziente gia registrato");
+            			new Popup("ERRORE", "Errore!\nNome, cognome e data di nascita sono necessari o paziente gia registrato",Popup.msg.ERR);
             		}
             	} else {
-            		new Popup("ERRORE", "Errore!\nInserire tutti i campi obbligatori");
+            		new Popup("ERRORE", "Errore!\nInserire tutti i campi obbligatori", Popup.msg.ERR);
             	}
             }
         });
