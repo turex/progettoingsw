@@ -1,144 +1,131 @@
 package org.progettingsw.OCM;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import org.progettingsw.OCM.panels.MacchinarioPanel;
+import org.progettingsw.OCM.panels.MedicoPanel;
+import org.progettingsw.OCM.panels.PazientePanel;
+import org.progettingsw.OCM.panels.PrenotazioniPanel;
+
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
-
+import javax.swing.SwingUtilities;
 
 /*
  * 
  * Classe contenente il main e la parte grafica
  * OCM Opensource clinical manager
  * Gestionale di una clinica, viene simulata la gestione dei pazienti, 
- * dei medici, dei macchinari e delle prenotazioni di una clinica. 
+ * dei medici e delle prenotazioni di una clinica. 
  * 
  * Usiamo il Builder pattern per medico, paziente e prenotazione
  * 
  */
 
 public class Interface {
-	
-	static String selectPaziente; //mi da l'item del paziente
+
+	static String selectPaziente; // mi da l'item del paziente
 	static String selectionProfessione;// mi da l'item della professione
-	final String PATH = System.getProperty("user.dir"); //Path corrente dell'eseguibile
-	File pf,mf; //file per check db()p paziente , m medico
-	
-	static String Id; //inserisco in questa variabile ID di medico o paziente durante la "Creazione"
+	final String PATH = System.getProperty("user.dir"); // Path corrente dell'eseguibile
+	File pf, mf; // file per check db()p paziente , m medico
+
+	static String Id; // inserisco in questa variabile ID di medico o paziente durante la "Creazione"
 
 	static JsonHelper dbs = JsonHelper.getIstance(); // creo oggetto JSON
 	static ComandiPaziente command = new ComandiPaziente();
-    static ComandiMedico medcommand = new ComandiMedico();
-    static ComandiPrenotazione prencommand = new ComandiPrenotazione();
-     
-    static PazienteBuilder p = new PazienteBuilder();
-    static MedicoBuilder m = new MedicoBuilder();
-    static PrenotazioneBuilder pb = new PrenotazioneBuilder();
-	
+	static ComandiMedico medcommand = new ComandiMedico();
+	static ComandiPrenotazione prencommand = new ComandiPrenotazione();
+
+	static PazienteBuilder p = new PazienteBuilder();
+	static MedicoBuilder m = new MedicoBuilder();
+	static PrenotazioneBuilder pb = new PrenotazioneBuilder();
+
 	ArrayList<String> lista_medico = new ArrayList<String>();
+
+	final String TITOLO = "OCM Opensource clinic manager";
+
+	int X = 500;
+	int Y = 500;
 	
-	public Interface(){
-		
+	public Interface() {
+
+		JFrame frame = new JFrame(TITOLO);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(X, Y);
+
+		JTabbedPane tabbedPane = new JTabbedPane();
+
+		tabbedPane.addTab("Pazienti", new PazientePanel().createPanel());
+		tabbedPane.addTab("Medici", new MedicoPanel().createPanel());
+		tabbedPane.addTab("Macchinari", new MacchinarioPanel().createPanel());
+		tabbedPane.addTab("Prenotazioni", new PrenotazioniPanel().createPanel());
+
+		frame.add(tabbedPane);
+		frame.setVisible(true);
+		frame.setResizable(false);
+		frame.pack();
+
 		int list_size;
-		
-    /*
-     * 
-     * All'avvio dell'interfaccia cerco di caricare i database
-     * 
-     */
-		
+
+		/*
+		 * 
+		 * All'avvio dell'interfaccia cerco di caricare i database
+		 * 
+		 */
+
 		pf = new File(PATH + "\\Paziente.json");
 		mf = new File(PATH + "\\Medico.json");
-		if(pf.exists()) {
-			
-			//for(int i = 0; i < list_size; i++) {
-			//command.addPaziente(p.setNome(dbs.np.get(i)).setCognome(dbs.cp.get(i)).setID(dbs.ip.get(i)).setNascita(dbs.nap.get(i))
-				//	.setSesso(dbs.sp.get(i)));
+		if (pf.exists()) {
 
- 
-			
-   		//dbs.addtoJson(dbs.np.get(i), dbs.cp.get(i),dbs.ip.get(i) ,null , dbs.nap.get(i), dbs.sp.get(i), "Paziente");
-   		
-			//}
-			
+			// for(int i = 0; i < list_size; i++) {
+			// command.addPaziente(p.setNome(dbs.np.get(i)).setCognome(dbs.cp.get(i)).setID(dbs.ip.get(i)).setNascita(dbs.nap.get(i))
+			// .setSesso(dbs.sp.get(i)));
+
+			// dbs.addtoJson(dbs.np.get(i), dbs.cp.get(i),dbs.ip.get(i) ,null ,
+			// dbs.nap.get(i), dbs.sp.get(i), "Paziente");
+
+			// }
+
 		}
-		if(mf.exists()) {
+		if (mf.exists()) {
 			dbs.readDb("Medico");
 			list_size = 0;
 			list_size = dbs.getlistSize("Medico");
 			System.out.println(list_size);
-			
-			
 
-		}
-			else
+		} else
 			System.out.println("Errore sui database");
-		
+
 		/*
 		 * 
 		 * Carico il database
 		 * 
 		 */
-			
-		
+
 	}
-	
+
 	public static void main(String[] args) {
 		
-		new Interface();
+		SwingUtilities.invokeLater(() -> new Interface());
 		
-		final String TITOLO = "OCM Opensource clinic manager";
-		final int x = 500;//dimensioni finestra applicazione
-		final int y = 500;
-				
-        JFrame frame = new JFrame(TITOLO);
+        
+      /*  
                 
-       
-        
-         
-        // Define the panel 
-        JTabbedPane tabPane = new JTabbedPane();//TAB Panel
-        
-        JPanel panel1 = new JPanel();// Pannello "Paziente" dove vengono inseriti i dati del paziente
-        JPanel panel2 = new JPanel();// Pannello "Medico" dove vengono inseriti i dati del Medico
-        JPanel panel3 = new JPanel();// Pannello "Macchinario" dove vengono inseriti i dati dei macchinari
-        JPanel panel4 = new JPanel(new BorderLayout());// Pannello "Prenotazioni" dove vengono inseriti i dati delle prenotazioni
-        
-        
-        
       //Impostazioni della tab 1 relativa ai pazienti
        
-        JButton addPaziente = new JButton("Aggiungi paziente");
-        JButton listPaziente = new JButton("Lista pazienti");
-        JButton saveDBP = new JButton("Salva Database");
+        //JButton addPaziente = new JButton("Aggiungi paziente");
+        //JButton listPaziente = new JButton("Lista pazienti");
+        //JButton saveDBP = new JButton("Salva Database");
        
-        JTextField nome = new JTextField(30);
-        JTextField cognome = new JTextField(30);
-        JTextField sesso = new JTextField(1);
+        //JTextField nome = new JTextField(30);
+        //JTextField cognome = new JTextField(30);
+        //JTextField sesso = new JTextField(1);
         
         /*
          * 
          * Il SimpledataFormat mi crea una formattazione utile per le date
          * Poi creo un TextField formattato con formattazione creata in precedenza
-         */
+         
         
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy"); // Formattazione data
         JFormattedTextField data = new JFormattedTextField(sdf);
@@ -150,18 +137,18 @@ public class Interface {
         JLabel label12 = new JLabel("Data di nascita : ");
         JLabel label13 = new JLabel("Sesso : ");
         
-        panel1.add(label1,BorderLayout.WEST);
-        panel1.add(nome,BorderLayout.CENTER);
-        panel1.add(label11,BorderLayout.WEST);
-        panel1.add(cognome,BorderLayout.CENTER);
-        panel1.add(label12,BorderLayout.WEST);
-        panel1.add(data, BorderLayout.CENTER);
-        panel1.add(label13,BorderLayout.WEST);
-        panel1.add(sesso, BorderLayout.CENTER);
+        //panel1.add(label1,BorderLayout.WEST);
+        //panel1.add(nome,BorderLayout.CENTER);
+        //panel1.add(label11,BorderLayout.WEST);
+        //panel1.add(cognome,BorderLayout.CENTER);
+        //panel1.add(label12,BorderLayout.WEST);
+        //panel1.add(data, BorderLayout.CENTER);
+        //panel1.add(label13,BorderLayout.WEST);
+        //panel1.add(sesso, BorderLayout.CENTER);
         
-        panel1.add(addPaziente);
-        panel1.add(listPaziente);
-        panel1.add(saveDBP, BorderLayout.LINE_END);
+        //panel1.add(addPaziente);
+        //panel1.add(listPaziente);
+        //panel1.add(saveDBP, BorderLayout.LINE_END);
         
         
         // Fine tab pazienti
@@ -258,61 +245,13 @@ public class Interface {
         frame.add(tabPane);
 
         frame.setLocationRelativeTo(null);
-        frame.setSize(new Dimension(x, y));
+        
         frame.setVisible(true);
         frame.setResizable(false);
         
-        addPaziente.addActionListener(new ActionListener(){
-        	
-        	public void actionPerformed(ActionEvent e) {
-        		
-        		
-        		// We require at least Name, Surname and date
-        		
-        		if(!command.checkPaziente(nome.getText(),cognome.getText(),data.getText())) { //check if nome , cognome and data are empty and if is not still on database
-        		 command.addPaziente(p.setNome(nome.getText()).setCognome(cognome.getText()).setNascita(data.getText()).setSesso(sesso.getText()));
-
-        		 String Id = "";
-				 Id = command.assignID(p);
-				
-        		dbs.addtoJson(nome.getText(), cognome.getText(),Id ,null , data.getText(), sesso.getText(), "Paziente");
-        		
-        		
-        		lp.setModel(command.listaPazientitoString()); //ottengo la lista pazienti e la inserisco nella listbox
-        		
-        		JOptionPane.showMessageDialog(
-        		        null, "Paziente aggiunto!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
-        		
-        		
-        		//Lo aggiungo alla lista
-        		
-        		}
-        		//}
-        		else
-        			JOptionPane.showMessageDialog(
-            		        null, "Errore!\nNome, cognome e data di nascita sono necessari o paziente gia registrato", "ERRORE", JOptionPane.ERROR_MESSAGE);
-        		
-        	}
-        	
-        });
         
-        listPaziente.addActionListener(new ActionListener(){
-        	
-        	public void actionPerformed(ActionEvent e) {
-        		command.listPazienti();
-        	}
-        	
-        });
         
-        saveDBP.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dbs.writeJson("Paziente");
-				
-			}
-        		
-        });
+        
         
         
         
@@ -477,6 +416,10 @@ addMedico.addActionListener(new ActionListener(){
 		
 		 
     }// end Main
-	
 
-}//End class
+	*/
+
+
+	}
+}
+// End class

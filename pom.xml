@@ -9,13 +9,12 @@
   <version>0.0.1-SNAPSHOT</version>
 
   <name>OCM</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+  <url>https://github.com/turex/progettoingsw</url>
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <maven.compiler.source>1.7</maven.compiler.source>
-    <maven.compiler.target>1.7</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+    <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
 
   <dependencies>
@@ -25,9 +24,6 @@
       <version>4.11</version>
       <scope>test</scope>
     </dependency>
-
-
-
 
     <dependency>
     	<groupId>com.googlecode.json-simple</groupId>

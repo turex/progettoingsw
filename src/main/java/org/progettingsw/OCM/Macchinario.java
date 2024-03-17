@@ -1,5 +1,5 @@
 package org.progettingsw.OCM;
 
-public class Macchinario {
+abstract class Macchinario {
 
 }
