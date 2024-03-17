@@ -21,11 +21,13 @@ import org.progettingsw.OCM.MedicoBuilder;
 
 public class MedicoPanel {
     
-	TextFieldWithLabel nome, cognome, professione;
+	JTextField nome, cognome, professione;
     
     JButton addMedico = new JButton("Aggiungi medico");
     JButton listMedici = new JButton("Lista medici");
     JButton saveDBM = new JButton("Salva database");
+    
+	CommonPanelUtils common = new CommonPanelUtils();
     
     static ComandiMedico medcommand = new ComandiMedico();
     static MedicoBuilder m = new MedicoBuilder();
@@ -39,15 +41,15 @@ public class MedicoPanel {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 2, 10, 10)); // GridLayout con 2 colonne e 10 pixel di spazio tra le righe e le colonne
 
-        nome = createTextField("Nome:", 150); // Lunghezza preferita per il campo Nome
-        cognome = createTextField("Cognome:", 150); // Lunghezza preferita per il campo Cognome
-        professione = createTextField("Professione:", 100); // Lunghezza preferita per il campo Data di nascita
+        nome = common.createTextField("Nome:"); // Lunghezza preferita per il campo Nome
+        cognome = common.createTextField("Cognome:"); // Lunghezza preferita per il campo Cognome
+        professione = common.createTextField("Professione:"); // Lunghezza preferita per il campo Data di nascita
 
-        panel.add(nome.getLabel());
+        panel.add(new JLabel("Nome:"));
         panel.add(nome);
-        panel.add(cognome.getLabel());
+        panel.add(new JLabel("Cognome:"));
         panel.add(cognome);
-        panel.add(professione.getLabel());
+        panel.add(new JLabel("Data di nascita:"));
         panel.add(professione);
 
         panel.add(addMedico);
@@ -105,33 +107,6 @@ public class MedicoPanel {
         });
 
         return panel;
-    }
-
-    private TextFieldWithLabel createTextField(String labelText, int preferredWidth) {
-        return new TextFieldWithLabel(labelText, preferredWidth);
-    }
-
-    private class TextFieldWithLabel extends JPanel {
-        private JLabel label;
-        private JTextField textField;
-
-        public TextFieldWithLabel(String labelText, int preferredWidth) {
-            setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-            label = new JLabel(labelText);
-            textField = new JTextField();
-            textField.setPreferredSize(new Dimension(preferredWidth, 20));
-            add(label);
-            add(Box.createRigidArea(new Dimension(10, 0))); // Spazio orizzontale tra la label e il textField
-            add(textField);
-        }
-
-        public JLabel getLabel() {
-            return label;
-        }
-
-        public String getText() {
-            return textField.getText();
-        }
    
 }
 }

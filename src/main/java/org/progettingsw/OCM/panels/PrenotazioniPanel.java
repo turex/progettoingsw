@@ -105,13 +105,13 @@ public class PrenotazioniPanel {
         				dbs.addPrenotazioni(split_paziente[2], split_medico[3], split_medico[2]);
         				
         				
-        				new Popup("SUCCESSO","Prenotazione aggiunta!",Popup.msg.OK);
+        				new Popup("Prenotazione aggiunta!",Popup.msg.OK);
         			}
         			else
-        				new Popup("ERRORE","Prenotazione gia presente , medico non disponibile o campi vuoti", Popup.msg.ERR);
+        				new Popup("Prenotazione gia presente , medico non disponibile o campi vuoti", Popup.msg.ERR);
         		}
         		else
-        			new Popup("ERRORE", "Seleziona medico e paziente!",Popup.msg.ERR);
+        			new Popup("Seleziona medico e paziente!",Popup.msg.ERR);
         		
         		
         	}
@@ -131,7 +131,7 @@ public class PrenotazioniPanel {
         		prencommand.listPrenotazioni(split_paziente[2]);
         		}
         		else
-        			new Popup("ERROE", "Seleziona Paziente",Popup.msg.ERR);
+        			new Popup("Seleziona Paziente",Popup.msg.ERR);
         		}
         		catch (NullPointerException e1)
         		{

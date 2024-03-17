@@ -1,14 +1,11 @@
 package org.progettingsw.OCM.panels;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -36,6 +33,7 @@ public class PazientePanel {
 	static ComandiPaziente command = new ComandiPaziente();
 	static PazienteBuilder p = new PazienteBuilder();
 	static JsonHelper dbs = JsonHelper.getIstance(); // creo oggetto JSON
+	CommonPanelUtils common = new CommonPanelUtils();
 	
 	PrenotazioniPanel pp =  PrenotazioniPanel.getIstance();
 	
@@ -48,11 +46,11 @@ public class PazientePanel {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 2, 10, 10)); // GridLayout con 2 colonne e 10 pixel di spazio tra le righe e le colonne
         
-        nome = createTextField("Nome:"); // Lunghezza preferita per il campo Nome
-        cognome = createTextField("Cognome:"); // Lunghezza preferita per il campo Cognome
-        dateSpinner = createSpinner("Data di nascita:", "dd/MM/yyyy");
+        nome = common.createTextField("Nome:"); // Lunghezza preferita per il campo Nome
+        cognome = common.createTextField("Cognome:"); // Lunghezza preferita per il campo Cognome
+        dateSpinner = common.createSpinner("Data di nascita:", "dd/MM/yyyy");
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        genderSpinner = createSpinner("Sesso:", new String[]{"M", "F"});
+        genderSpinner = common.createSpinner("Sesso:", new String[]{"M", "F"});
         
         panel.add(new JLabel("Nome:"));
         panel.add(nome);
@@ -83,12 +81,12 @@ public class PazientePanel {
             			String Id = command.assignID(p);
             			dbs.addtoJson(nomeValue, cognomeValue, Id ,null , formattedDate, sessoValue, "Paziente");
             			lp.setModel(command.listaPazientitoString());
-            			new Popup("SUCCESS", "Paziente aggiunto!",Popup.msg.OK);
+            			new Popup("Paziente aggiunto!",Popup.msg.OK);
             		} else {
-            			new Popup("ERRORE", "Errore!\nNome, cognome e data di nascita sono necessari o paziente gia registrato",Popup.msg.ERR);
+            			new Popup("Errore!\nNome, cognome e data di nascita sono necessari o paziente gia registrato",Popup.msg.ERR);
             		}
             	} else {
-            		new Popup("ERRORE", "Errore!\nInserire tutti i campi obbligatori", Popup.msg.ERR);
+            		new Popup("Errore!\nInserire tutti i campi obbligatori", Popup.msg.ERR);
             	}
             }
         });
@@ -124,21 +122,5 @@ public class PazientePanel {
         return panel;
     }
     
-    private JTextField createTextField(String labelText) {
-        JTextField textField = new JTextField();
-        return textField;
-    }
-    
-    private JSpinner createSpinner(String labelText, Object values) {
-    	JSpinner spinner = new JSpinner();
-    	if (values instanceof String[]) {
-    		spinner.setModel(new SpinnerListModel((String[]) values));
-    	} else if (values instanceof String) {
-    		SpinnerDateModel model = new SpinnerDateModel();
-    		spinner.setModel(model);
-    		JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(spinner, (String) values);
-    		spinner.setEditor(dateEditor);
-    	}
-    	return spinner;
-    }
+   
 }
