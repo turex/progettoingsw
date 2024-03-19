@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.file.attribute.PosixFilePermission;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
@@ -19,6 +21,7 @@ import javax.swing.event.ListSelectionListener;
 import org.progettingsw.OCM.ComandiMedico;
 import org.progettingsw.OCM.JsonHelper;
 import org.progettingsw.OCM.MedicoBuilder;
+import org.progettingsw.OCM.Popup;
 
 public class MedicoPanel {
     
@@ -32,7 +35,7 @@ public class MedicoPanel {
     
 	CommonPanelUtils common = new CommonPanelUtils();
     
-    static ComandiMedico medcommand = new ComandiMedico();
+    static ComandiMedico medcommand = ComandiMedico.getIstance(); //obbligato per design di PrenotazionePanel
     static MedicoBuilder m = new MedicoBuilder();
     static JsonHelper dbs = JsonHelper.getIstance(); // creo oggetto JSON
     PrenotazioniPanel pp = PrenotazioniPanel.getIstance();
@@ -69,13 +72,15 @@ public class MedicoPanel {
                 if (!nomeValue.isEmpty() && !cognomeValue.isEmpty() && !professioneValue.isEmpty()) {
                     if (!medcommand.checkMedico(nomeValue, cognomeValue, professioneValue)) {
                         medcommand.addMedico(m.setNome(nomeValue).setCognome(cognomeValue).setProfessione(professioneValue));
-            			pp.professionistiList.setModel(medcommand.listaMedicitoString());
-                        JOptionPane.showMessageDialog(null, "Medico aggiunto!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
+                        String Id = medcommand.assignID(m);
+            			dbs.addtoJson(nomeValue, cognomeValue, Id ,professioneValue , null, null, "Medico");
+            			pp.setMediciListModel(m.getMedico().getNome() + " " + m.getMedico().getCognome() + " " + professioneValue);
+            			new Popup("Medico aggiunto!", Popup.msg.OK);
                     } else {
-                        JOptionPane.showMessageDialog(null, "Errore!\nTutti i campi sono necessari", "ERRORE", JOptionPane.ERROR_MESSAGE);
+            			new Popup("Errore!\nNome, cognome e data di nascita sono necessari o medico gia registrato",Popup.msg.ERR);
                     }
                 } else {
-                    JOptionPane.showMessageDialog(null, "Errore!\nInserire tutti i campi obbligatori", "ERRORE", JOptionPane.ERROR_MESSAGE);
+                	new Popup("Errore!\nInserire tutti i campi obbligatori", Popup.msg.ERR);
                 }
             }
         });
@@ -90,6 +95,7 @@ public class MedicoPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dbs.writeJson("Medico");
+                new Popup("Database salvato con successo!", Popup.msg.OK);
             }
         });
 

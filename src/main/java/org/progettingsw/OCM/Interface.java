@@ -81,15 +81,7 @@ public class Interface {
 		mf = new File(PATH + "\\Medico.json");
 		if (pf.exists()) {
 
-			// for(int i = 0; i < list_size; i++) {
-			// command.addPaziente(p.setNome(dbs.np.get(i)).setCognome(dbs.cp.get(i)).setID(dbs.ip.get(i)).setNascita(dbs.nap.get(i))
-			// .setSesso(dbs.sp.get(i)));
-
-			// dbs.addtoJson(dbs.np.get(i), dbs.cp.get(i),dbs.ip.get(i) ,null ,
-			// dbs.nap.get(i), dbs.sp.get(i), "Paziente");
-
-			// }
-
+			dbs.readfromJson("Paziente");
 		}
 		if (mf.exists()) {
 			dbs.readDb("Medico");

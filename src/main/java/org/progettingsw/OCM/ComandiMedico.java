@@ -8,9 +8,28 @@ import javax.swing.DefaultListModel;
 public class ComandiMedico {
 	
 	List<Medico> medi = new ArrayList<>();
+	private static ComandiMedico istance;
+	CommonCommand common = new CommonCommand();
+	
+	public static ComandiMedico getIstance() {
+		if(istance == null) {
+			istance = new ComandiMedico();
+		}
+		
+		return istance;
+	}
 	
 	
 	public void addMedico(MedicoBuilder m) {
+		
+		m.ID = assignID(m);
+		medi.add(m.getMedico());
+
+	}
+	
+public String assignID(MedicoBuilder m) {
+		
+		String ID = "";
 		
 		int len_n = m.nome.length();
 		int len_c = m.cognome.length();
@@ -18,13 +37,12 @@ public class ComandiMedico {
 		final int len_nome = (len_n > 5) ? len_n/2 : len_n;
 		final int len_cognome = (len_c > 5) ? len_c/2 : len_c;
 		
-		m.ID = m.nome.substring(0,len_nome).toUpperCase() + m.cognome.substring(0, len_cognome).toUpperCase() + m.professione.substring(0,2).toUpperCase();        
-		medi.add(m.getMedico());
-
-	}
-	
-	String getID(MedicoBuilder m) {
-		return m.getMedico().getID();
+		String addEntropy = common.generateRandomString(3);
+		
+		
+		ID = m.nome.substring(0,len_nome).toUpperCase() + m.cognome.substring(0, len_cognome).toUpperCase() + m.professione.substring(0,2).toUpperCase() + addEntropy;        
+		
+		return ID;
 	}
 	
 public DefaultListModel<String> listaMedicitoString() { // Inserisco in una lista modello le professioni
@@ -73,9 +91,31 @@ public boolean checkMedico(String nome, String cognome , String professione) {
 
 
 }
+
+public String getID(String nome, String cognome, String professione) {
+    String ID = null;
+    String nomeUpper = nome.toUpperCase();
+    String cognomeUpper = cognome.toUpperCase();
+    String professioneUpper = professione.toUpperCase();
+
+    for (Medico medico : medi) {
+        String checkNome = medico.getNome().toUpperCase();
+        String checkCognome = medico.getCognome().toUpperCase();
+        String checkProfessione = medico.getProfessione().toUpperCase();
+
+        if (checkNome.equals(nomeUpper) && checkCognome.equals(cognomeUpper) && checkProfessione.equals(professioneUpper)) {
+            ID = medico.getID();
+            break;
+        }
+    }
+
+    return ID;
+}
+
+
 	
 	
-	void printMedico(int z) {  
+	public void printMedico(int z) {  
 		
 		System.out.println(medi.get(z));
 	}

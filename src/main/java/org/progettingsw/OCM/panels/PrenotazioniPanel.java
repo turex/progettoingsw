@@ -22,6 +22,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+import org.progettingsw.OCM.ComandiMedico;
 import org.progettingsw.OCM.ComandiPrenotazione;
 import org.progettingsw.OCM.Interface;
 import org.progettingsw.OCM.JsonHelper;
@@ -36,6 +37,7 @@ public class PrenotazioniPanel {
     static ComandiPrenotazione prencommand = new ComandiPrenotazione();
 	static PrenotazioneBuilder pb = new PrenotazioneBuilder();
 	static JsonHelper dbs = JsonHelper.getIstance(); // creo oggetto JSON
+	static ComandiMedico med = ComandiMedico.getIstance();
 	
     DefaultListModel<String> model_paz = new DefaultListModel<String>();
     DefaultListModel<String> model_med = new DefaultListModel<String>();
@@ -106,20 +108,32 @@ public class PrenotazioniPanel {
         		String[] split_paziente= {};
         		String[] split_medico= {};
         		Date selectedDate = (Date) spinner.getValue();
+        		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm"); // Nuovo formato desiderato (per confronto database)
                 String formattedDate = dateFormat.format(selectedDate);
         		
         		if(!(selectProfessione == null) && !(selectPaziente == null)) { // aggiungo la prenotazione se ho selezionato sia paziente che medico ma
         			//non é presente gia una prenotazion
         			split_paziente = selectPaziente.split(" ");
         			split_medico = selectProfessione.split(" ");
-        			        		
-        			if(!prencommand.checkPrenotazione(split_paziente[2],split_medico[3],split_medico[1], formattedDate)&&
-        					!prencommand.checkdispoMedico(split_medico[0],split_medico[1], split_medico[2], formattedDate)) { //se il check é false allora mi aggiunge la prenotazione
-        				System.out.println(prencommand.checkPrenotazione(split_paziente[0],split_paziente[1], split_medico[0],split_medico[1])); //DEBUG
+        			
+        			/*
+        			 * Dato che non voglio nella Jlist dei medici l'ID che non ha funzini utili, allora lo estraggo
+        			 * 
+        			 * dal medcommand.getID
+        			 */
+        			
+        			String ID = med.getID(split_medico[0], split_medico[1], split_medico[2]);
+        			
+        			med.printMedico(0);
+        			
+        			System.out.println(ID);
+        			if(!prencommand.checkPrenotazione(split_paziente[2],ID,split_medico[2], formattedDate.toString()) &&
+        					!prencommand.checkdispoMedico(split_medico[0],split_medico[1], split_medico[2], formattedDate.toString())) { //se il check é false allora mi aggiunge la prenotazione
+        				//DEBUGSystem.out.println(prencommand.checkPrenotazione(split_paziente[0],split_paziente[1], split_medico[0],split_medico[1])); //DEBUG
 
         				
-        				prencommand.addPrenotazione(pb.setidPaziente(split_paziente[2]).setidMedico(split_medico[3]).setProfessione(split_medico[2]).setData(formattedDate.toString()));
-        				dbs.addPrenotazioni(split_paziente[2], split_medico[3], split_medico[2], formattedDate.toString());
+        				prencommand.addPrenotazione(pb.setidPaziente(split_paziente[2]).setidMedico(ID).setProfessione(split_medico[2]).setData(formattedDate.toString()));
+        				dbs.addPrenotazioni(split_paziente[2], ID, split_medico[2], formattedDate.toString());
         				
         				
         				new Popup("Prenotazione aggiunta!",Popup.msg.OK);
@@ -197,7 +211,8 @@ public class PrenotazioniPanel {
 				// TODO Auto-generated method stub
 				
 				dbs.writeJson("Prenotazione");
-				
+                new Popup("Database salvato con successo!", Popup.msg.OK);
+
 			} //Setto il Listener per salvare dati prenotazione
             
         });

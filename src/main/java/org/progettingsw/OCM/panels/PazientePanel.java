@@ -31,7 +31,7 @@ public class PazientePanel {
     
 	static String selectPaziente; // mi da l'item del paziente
 	
-	static ComandiPaziente command = new ComandiPaziente();
+	static ComandiPaziente command = ComandiPaziente.getIstance();
 	static PazienteBuilder p = new PazienteBuilder();
 	static JsonHelper dbs = JsonHelper.getIstance(); // creo oggetto JSON
 	CommonPanelUtils common = new CommonPanelUtils();
@@ -40,9 +40,6 @@ public class PazientePanel {
 	
 	JTextField nome,cognome;
 	JSpinner dateSpinner, genderSpinner;
-	
-	public String modeltoParse = ""; // Stringa da pasare al modello JList
-
     
     public JPanel createPanel() {
         JPanel panel = new JPanel();
@@ -81,10 +78,9 @@ public class PazientePanel {
             	if (!nomeValue.isEmpty() && !cognomeValue.isEmpty() && !formattedDate.isEmpty()) {
             		if (!command.checkPaziente(nomeValue, cognomeValue, formattedDate)) {
             			command.addPaziente(p.setNome(nomeValue).setCognome(cognomeValue).setNascita(formattedDate).setSesso(sessoValue));
-            			String Id = command.assignID(p);
+            			String Id = command.getID(nomeValue, cognomeValue,formattedDate.toString());
             			dbs.addtoJson(nomeValue, cognomeValue, Id ,null , formattedDate, sessoValue, "Paziente");
-            			modeltoParse = command.listaPazientitoModel();
-            			pp.setPazientiListModel(modeltoParse);
+            			pp.setPazientiListModel(p.getPaziente().getNome() + " " + p.getPaziente().getCognome() + " " + Id);
             			new Popup("Paziente aggiunto!",Popup.msg.OK);
             		} else {
             			new Popup("Errore!\nNome, cognome e data di nascita sono necessari o paziente gia registrato",Popup.msg.ERR);
@@ -105,6 +101,8 @@ public class PazientePanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dbs.writeJson("Paziente");
+                new Popup("Database salvato con successo!", Popup.msg.OK);
+
 			}
         });
         

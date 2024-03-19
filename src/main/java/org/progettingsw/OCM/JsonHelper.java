@@ -147,7 +147,7 @@ public class JsonHelper {
 			obj_pren.put("professione", professione);
 			obj_pren.put("data", data);
 			typeofdb_pren.put("Prenotazione", obj_pren);
-			prenotazione.add("Prenotazioni");
+			prenotazione.add(typeofdb_pren);
 			
 	 }
 	 

@@ -11,6 +11,18 @@ public class ComandiPaziente {
 	List<Paziente> pazi = new ArrayList<>();
 	PazienteBuilder p;
 	
+	static ComandiPaziente istance;
+	
+	CommonCommand common = new CommonCommand();
+	
+	
+	public static ComandiPaziente getIstance() {
+		if(istance == null) {
+			istance = new ComandiPaziente();
+		}
+		
+		return istance;
+	}
 	
 	public void addPaziente(PazienteBuilder p) {
 		
@@ -27,11 +39,13 @@ public class ComandiPaziente {
 		int len_n = p.nome.length();
 		int len_c = p.cognome.length();
 		
+		String addEntropy = common.generateRandomString(3);
+		
 		final int len_nome = (len_n > 5) ? len_n/2 : len_n;
 		final int len_cognome = (len_c > 5) ? len_c/2 : len_c;
 		
 		
-		ID = p.nome.substring(0,len_nome).toUpperCase() + p.cognome.substring(0, len_cognome).toUpperCase() + p.nascita.replace("/", "");		
+		ID = p.nome.substring(0,len_nome).toUpperCase() + p.cognome.substring(0, len_cognome).toUpperCase() + p.nascita.replace("/", "") + addEntropy;		
 		
 		return ID;
 	}
@@ -91,6 +105,26 @@ public class ComandiPaziente {
 			
 		}
 			return false;
+	}
+
+	public String getID(String nome, String cognome, String nascita) {
+	    String ID = null;
+	    String nomeUpper = nome.toUpperCase();
+	    String cognomeUpper = cognome.toUpperCase();
+	    String nascitaUpper = nascita.toUpperCase();
+
+	    for (Paziente paziente : pazi) {
+	        String checkNome = paziente.getNome().toUpperCase();
+	        String checkCognome = paziente.getCognome().toUpperCase();
+	        String checkNascita = paziente.getNascita();
+
+	        if (checkNome.equals(nomeUpper) && checkCognome.equals(cognomeUpper) && checkNascita.equals(nascitaUpper)) {
+	            ID = paziente.getID();
+	            break;
+	        }
+	    }
+
+	    return ID;
 	}
 
 }
