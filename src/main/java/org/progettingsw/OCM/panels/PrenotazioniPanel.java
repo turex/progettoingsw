@@ -8,6 +8,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.swing.AbstractListModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -17,10 +18,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.ListModel;
 import javax.swing.SpinnerDateModel;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.progettingsw.OCM.ComandiPrenotazione;
+import org.progettingsw.OCM.Interface;
 import org.progettingsw.OCM.JsonHelper;
 import org.progettingsw.OCM.Popup;
 import org.progettingsw.OCM.PrenotazioneBuilder;
@@ -34,11 +37,16 @@ public class PrenotazioniPanel {
 	static PrenotazioneBuilder pb = new PrenotazioneBuilder();
 	static JsonHelper dbs = JsonHelper.getIstance(); // creo oggetto JSON
 	
-	JList<String> pazientiList = new JList<>();
-    JList<String> professionistiList = new JList<>();
+    DefaultListModel<String> model_paz = new DefaultListModel<String>();
+    DefaultListModel<String> model_med = new DefaultListModel<String>();
 
 	
+	JList<String> pazientiList = new JList<>(model_paz);
+    JList<String> professionistiList = new JList<>(model_med);
+    
+	
 	static PrenotazioniPanel istance;
+	
 	
 	public static PrenotazioniPanel getIstance() {
 		if(istance == null)
@@ -47,10 +55,11 @@ public class PrenotazioniPanel {
 		return istance;
 	}
 
+
     public JPanel createPanel() {
         JPanel panel = new JPanel(new BorderLayout());
-        
-        JButton addPrenotazione, listPrenotazioni = new JButton();
+                
+        JButton addPrenotazione, listPrenotazioni, salvaDB = new JButton();
 
         // Creazione del pannello per i pazienti a sinistra
         JPanel pazientiPanel = new JPanel();
@@ -71,6 +80,7 @@ public class PrenotazioniPanel {
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(addPrenotazione = new JButton("Aggiungi prenotazione"));
         buttonPanel.add(listPrenotazioni = new JButton("Lista prenotazioni"));
+        buttonPanel.add(salvaDB = new JButton("Salva DB"));
 
         // Pannello per la selezione della data e dell'ora
         JPanel prenotazioniPanel = new JPanel(new BorderLayout());
@@ -105,11 +115,11 @@ public class PrenotazioniPanel {
         			        		
         			if(!prencommand.checkPrenotazione(split_paziente[2],split_medico[3],split_medico[1], formattedDate)&&
         					!prencommand.checkdispoMedico(split_medico[0],split_medico[1], split_medico[2], formattedDate)) { //se il check é false allora mi aggiunge la prenotazione
-        				//System.out.println(prencommand.checkPrenotazione(split_paziente[0],split_paziente[1], split_medico[0],split_medico[1], split_medico[2], data_prenotazione.getText())); //DEBUG
+        				System.out.println(prencommand.checkPrenotazione(split_paziente[0],split_paziente[1], split_medico[0],split_medico[1])); //DEBUG
 
         				
-        				prencommand.addPrenotazione(pb.setidPaziente(split_paziente[2]).setidMedico(split_medico[3]).setProfessione(split_medico[2]).setData(formattedDate));
-        				dbs.addPrenotazioni(split_paziente[2], split_medico[3], split_medico[2]);
+        				prencommand.addPrenotazione(pb.setidPaziente(split_paziente[2]).setidMedico(split_medico[3]).setProfessione(split_medico[2]).setData(formattedDate.toString()));
+        				dbs.addPrenotazioni(split_paziente[2], split_medico[3], split_medico[2], formattedDate.toString());
         				
         				
         				new Popup("Prenotazione aggiunta!",Popup.msg.OK);
@@ -179,13 +189,31 @@ public class PrenotazioniPanel {
             }
         });
         
+        
+        salvaDB.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				
+				dbs.writeJson("Prenotazione");
+				
+			} //Setto il Listener per salvare dati prenotazione
+            
+        });
+        
 
         return panel;
     }
     
-    public void setPazientiListModel(DefaultListModel<String> model) {
-    	pazientiList.setModel(model);
-    	pazientiList.repaint();
+    public void setPazientiListModel(String el) {    	
+    		((DefaultListModel<String>)pazientiList.getModel()).addElement(el);
+    		
     }
     
+    public void setMediciListModel(String el) {    	
+		((DefaultListModel<String>)professionistiList.getModel()).addElement(el);
+		
+}
+
 }

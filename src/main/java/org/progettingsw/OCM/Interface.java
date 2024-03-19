@@ -6,7 +6,6 @@ import org.progettingsw.OCM.panels.PazientePanel;
 import org.progettingsw.OCM.panels.PrenotazioniPanel;
 
 import java.io.File;
-import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 import javax.swing.SwingUtilities;
@@ -29,6 +28,7 @@ public class Interface {
 
 	static JsonHelper dbs = JsonHelper.getIstance(); // creo oggetto JSON
 	
+	JFrame frame;
 
 	private final String TITOLO = "OCM Opensource clinic manager";
 
@@ -37,21 +37,24 @@ public class Interface {
 	
 	public Interface() {
 
-		JFrame frame = new JFrame(TITOLO);
+		frame = new JFrame(TITOLO);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(X, Y);
 
 		JTabbedPane tabbedPane = new JTabbedPane();
+		
+		PrenotazioniPanel pren = PrenotazioniPanel.getIstance();
 
 		tabbedPane.addTab("Pazienti", new PazientePanel().createPanel());
 		tabbedPane.addTab("Medici", new MedicoPanel().createPanel());
 		tabbedPane.addTab("Macchinari", new MacchinarioPanel().createPanel());
-		tabbedPane.addTab("Prenotazioni", new PrenotazioniPanel().createPanel());
+		tabbedPane.addTab("Prenotazioni", pren.createPanel());
 
 		frame.add(tabbedPane);
+		
+		frame.pack();
 		frame.setVisible(true);
 		frame.setResizable(false);
-		frame.pack();
 		
 		/*
 		 * 
@@ -68,8 +71,8 @@ public class Interface {
 
 	public static void main(String[] args) {
 		
-		SwingUtilities.invokeLater(() -> new Interface());
-		
+		//SwingUtilities.invokeLater(() -> new Interface());
+		new Interface();
 	}
 	
 	private void loadDB() {
@@ -94,5 +97,8 @@ public class Interface {
 
 		} 
 	}
+	
+	
+	
 	
 }

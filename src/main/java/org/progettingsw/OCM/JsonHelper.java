@@ -38,6 +38,15 @@ import org.json.simple.parser.JSONParser;
 
 public class JsonHelper {
 	
+	enum typeofDB {
+		MEDICO,
+		PAZIENTE,
+		PRENOTAZIONE
+		
+	}
+	
+	private typeofDB dbchoose;
+	
 	private static JsonHelper istance; //Singleton istance
 	public static JSONArray medico = new JSONArray(); //inserisco qui l'array del JSON per i medici
 	public static JSONArray paziente = new JSONArray(); //inserisco qui l'array del JSON per i medici
@@ -128,14 +137,17 @@ public class JsonHelper {
 	 
 	 @SuppressWarnings("unchecked")
 	public
-	void addPrenotazioni(String id_paziente, String id_medico,  String typeofdb) {
+	void addPrenotazioni(String id_paziente, String id_medico, String professione,  String data) {
 		 
-			obj_pren.put("id_paziente", id_paziente);
+		    obj_pren = new JSONObject(); // Inizializzazione dell'oggetto obj_pren
+		    typeofdb_pren = new JSONObject();
+		    
+		    obj_pren.put("id_paziente", id_paziente);
 			obj_pren.put("id_medico", id_medico);
-			obj_pren.put("prenotazioni", prenotazioni.get(i));
-			i++;
+			obj_pren.put("professione", professione);
+			obj_pren.put("data", data);
 			typeofdb_pren.put("Prenotazione", obj_pren);
-			prenotazione.add(typeofdb_paz);
+			prenotazione.add("Prenotazioni");
 			
 	 }
 	 

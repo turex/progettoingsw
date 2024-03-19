@@ -40,6 +40,8 @@ public class PazientePanel {
 	
 	JTextField nome,cognome;
 	JSpinner dateSpinner, genderSpinner;
+	
+	public String modeltoParse = ""; // Stringa da pasare al modello JList
 
     
     public JPanel createPanel() {
@@ -74,7 +76,6 @@ public class PazientePanel {
                 String formattedDate = dateFormat.format(selectedDate);            	 
                 String sessoValue = genderSpinner.getValue().toString();
                 
-                DefaultListModel<String> model = new DefaultListModel();
             	
             	// Esegui le azioni necessarie con i valori ottenuti
             	if (!nomeValue.isEmpty() && !cognomeValue.isEmpty() && !formattedDate.isEmpty()) {
@@ -82,8 +83,8 @@ public class PazientePanel {
             			command.addPaziente(p.setNome(nomeValue).setCognome(cognomeValue).setNascita(formattedDate).setSesso(sessoValue));
             			String Id = command.assignID(p);
             			dbs.addtoJson(nomeValue, cognomeValue, Id ,null , formattedDate, sessoValue, "Paziente");
-            			model = command.listaPazientitoModel();
-            			pp.setPazientiListModel(model);
+            			modeltoParse = command.listaPazientitoModel();
+            			pp.setPazientiListModel(modeltoParse);
             			new Popup("Paziente aggiunto!",Popup.msg.OK);
             		} else {
             			new Popup("Errore!\nNome, cognome e data di nascita sono necessari o paziente gia registrato",Popup.msg.ERR);

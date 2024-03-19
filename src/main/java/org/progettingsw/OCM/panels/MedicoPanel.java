@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -27,6 +28,8 @@ public class MedicoPanel {
     JButton listMedici = new JButton("Lista medici");
     JButton saveDBM = new JButton("Salva database");
     
+
+    
 	CommonPanelUtils common = new CommonPanelUtils();
     
     static ComandiMedico medcommand = new ComandiMedico();
@@ -34,7 +37,6 @@ public class MedicoPanel {
     static JsonHelper dbs = JsonHelper.getIstance(); // creo oggetto JSON
     PrenotazioniPanel pp = PrenotazioniPanel.getIstance();
 
-    JList<String> lprof = new JList<String>(); // Lista medici
     static String selectionProfessione; // mi da l'item della professione
 
     public JPanel createPanel() {
@@ -67,7 +69,7 @@ public class MedicoPanel {
                 if (!nomeValue.isEmpty() && !cognomeValue.isEmpty() && !professioneValue.isEmpty()) {
                     if (!medcommand.checkMedico(nomeValue, cognomeValue, professioneValue)) {
                         medcommand.addMedico(m.setNome(nomeValue).setCognome(cognomeValue).setProfessione(professioneValue));
-            			//pp.lprof.setModel(medcommand.listaMedicitoString());
+            			pp.professionistiList.setModel(medcommand.listaMedicitoString());
                         JOptionPane.showMessageDialog(null, "Medico aggiunto!", "SUCCESS", JOptionPane.INFORMATION_MESSAGE);
                     } else {
                         JOptionPane.showMessageDialog(null, "Errore!\nTutti i campi sono necessari", "ERRORE", JOptionPane.ERROR_MESSAGE);
@@ -94,4 +96,5 @@ public class MedicoPanel {
         return panel;
    
 }
+    
 }

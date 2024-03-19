@@ -53,14 +53,13 @@ public class ComandiPaziente {
 			System.out.println("Lista pazienti vuota");
 	}
 	
-	public DefaultListModel<String> listaPazientitoModel() {
+	public String listaPazientitoModel() {
 		
-		
-		final DefaultListModel<String> model = new DefaultListModel<String>();
-		
+		String model = "";
+				
 		for (int list = 0; list < pazi.size(); list++) {
 			
-			model.addElement(pazi.get(list).nome + " " + pazi.get(list).cognome + " " + pazi.get(list).ID);
+			model = pazi.get(list).nome + " " + pazi.get(list).cognome + " " + pazi.get(list).ID;
 		}
 				
 		return model;
