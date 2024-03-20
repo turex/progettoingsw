@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.progettingsw.OCM.panels.PrenotazioniPanel;
 
 //Uso il Singleton JSon (Medico, paziente)
 
@@ -38,14 +39,6 @@ import org.json.simple.parser.JSONParser;
 
 public class JsonHelper {
 	
-	enum typeofDB {
-		MEDICO,
-		PAZIENTE,
-		PRENOTAZIONE
-		
-	}
-	
-	private typeofDB dbchoose;
 	
 	private static JsonHelper istance; //Singleton istance
 	public static JSONArray medico = new JSONArray(); //inserisco qui l'array del JSON per i medici
@@ -60,7 +53,6 @@ public class JsonHelper {
 	public static ArrayList<String> ip = new ArrayList<String>(); //array ID paziente
 	public static ArrayList<String> nap = new ArrayList<String>(); //array nascita paziente
 	public static ArrayList<String> sp = new ArrayList<String>(); //array sesso paziente
-	public static ArrayList<String> pp = new ArrayList<String>(); //array prenotazione paziente
 	
 	
 	public static ArrayList<String> nm = new ArrayList<String>(); //array del nome medico
@@ -71,6 +63,10 @@ public class JsonHelper {
 	public static ArrayList<String> id_p = new ArrayList<String>(); //array del id_paziente per prenotazione
 	public static ArrayList<String> id_m = new ArrayList<String>(); //array del id_medico per prenotazione
 	public static ArrayList<String> ppren = new ArrayList<String>(); //array dprenotazioni per prenotazione
+	
+	ComandiMedico med_comm = ComandiMedico.getIstance();
+	ComandiPaziente paz_comm = ComandiPaziente.getIstance();
+	PrenotazioniPanel list_helper = PrenotazioniPanel.getIstance();
 	
 	final String PATH = System.getProperty("user.dir"); //Path corrente dell'eseguibile
 	
@@ -154,6 +150,8 @@ public class JsonHelper {
 	 void readfromJson(String typeofdb) {
 		 
 		 MedicoBuilder med = new MedicoBuilder();
+		 PazienteBuilder paz = new PazienteBuilder();
+		 PrenotazioneBuilder pren = new PrenotazioneBuilder();
 		 
 		 JSONParser parser = new JSONParser();
 		 
@@ -166,14 +164,46 @@ public class JsonHelper {
 		        for (int i = 0; i < jsonArray.size(); i++) {
 		            JSONObject jsonObject = (JSONObject) jsonArray.get(i);
 		            JSONObject db = (JSONObject) jsonObject.get(typeofdb);
+		            
+		            switch(typeofdb) {
+		            
+		            case ("Medico"):
 		            String cognome = (String) db.get("cognome");
 		            String nome = (String) db.get("nome");
-		            // E così via per gli altri campi...
-		            System.out.println("cognome=" + cognome + "; nome=" + nome);
-		            med.setCognome(cognome).setNome(nome).getMedico();
+		            String professione = (String) db.get("professione");
+		            
+		            //DEBUGSystem.out.println("cognome=" + cognome + "; nome=" + nome);
+		            med_comm.addMedico(med.setNome(nome).setCognome(cognome).setProfessione(professione));
+		            list_helper.setMediciListModel(nome + " " + cognome + " " + professione);
+		            
+		            break;
+		            
+		            case ("Paziente"):
+		            	
+		            String cognome1 = (String) db.get("cognome");
+		            String nome1 = (String) db.get("nome");
+		            String nascita = (String) db.get("nascita");
+		            String sesso = (String) db.get("sesso");
+		            
+		            //DEBUGSystem.out.println("cognome=" + cognome + "; nome=" + nome);
+		            paz_comm.addPaziente(paz.setNome(nome1).setCognome(cognome1).setNascita(nascita).setSesso(sesso));
+		            
+		            System.out.println(nome1 + cognome1 + nascita + sesso);
+		            
+		            String ID = paz_comm.getID(nome1, cognome1, nascita);
+		            System.out.println(ID);
+		            
+		            list_helper.setPazientiListModel(nome1 + " " + cognome1 + " " + ID);
+		            
+		            break;
+		            
+		            
+		            
+		            
+		            }
 		        }
 		    } catch (Exception e) {
-		        System.out.println("Error: " + e.getMessage());
+		        System.out.println("Errore: " + e.getMessage());
 		        e.printStackTrace(); // Stampa lo stack trace per avere maggiori dettagli sull'errore
 		    }
 }
@@ -195,7 +225,7 @@ public class JsonHelper {
             
             /*
              * 
-             * Equivalente di for (String med : medico){}
+             * Equivalente di for (JSONArray med : medico){}
              * 
              */
     		
@@ -286,9 +316,7 @@ public class JsonHelper {
         	switch(typeofdb) {
     		
     			case "Medico":
-    				System.out.println("Parsing");
     				nm.add((String) Object.get("nome"));
-    				System.out.println(nm.get(0));
     				cm.add((String) Object.get("cognome"));
     				im.add((String) Object.get("id"));
     				prop.add((String) Object.get("professione"));
@@ -301,7 +329,6 @@ public class JsonHelper {
     				ip.add((String) Object.get("id"));
     				nap.add((String) Object.get("nascita"));
     				sp.add((String) Object.get("sesso"));
-    				pp.add((String) Object.get("prenotazione"));
     				
     				break;
     				
@@ -311,7 +338,6 @@ public class JsonHelper {
     				ppren.add((String) Object.get("prenotazione"));
     				nap.add((String) Object.get("nascita"));
     				sp.add((String) Object.get("sesso"));
-    				pp.add((String) Object.get("prenotazione"));
     				break;
     		}
          
@@ -329,23 +355,6 @@ public class JsonHelper {
 		return istance;
 	}
 	
-
-    //cleanString is not used
-	String cleanString(String[] split, int i) {
-		
-		String clean = "";
-		if (split[i].contains("["))
-		clean = split[i].replace("[", "");
-		else if (split[i].contains("]"))
-			clean = split[i].replace("]", "");
-		else if (split[i].contains(","))
-			clean = split[i].replace(",", "");
-		else 
-			clean = split[i];
-		
-		return clean;
-		
-	}
 
 }
 

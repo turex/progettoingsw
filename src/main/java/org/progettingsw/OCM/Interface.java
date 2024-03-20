@@ -84,8 +84,7 @@ public class Interface {
 			dbs.readfromJson("Paziente");
 		}
 		if (mf.exists()) {
-			dbs.readDb("Medico");
-			dbs.getlistSize("Medico");
+			dbs.readfromJson("Medico");
 
 		} 
 	}

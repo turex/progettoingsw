@@ -14,7 +14,7 @@ import org.junit.Test;
  */
 public class AppTest 
 {
-	JsonHelper n;
+	JsonHelper n = JsonHelper.getIstance();
 	MedicoBuilder a = new MedicoBuilder();
 	static final String PATH = System.getProperty("user.dir");
 	static File m = new File(PATH + "\\Medico.json");
@@ -23,15 +23,14 @@ public class AppTest
 
 	@Before
 	public void setup() {
-	  n = JsonHelper.getIstance(); // creo oggetto JSON
 	}
 	
     @SuppressWarnings("static-access")
 	@Test
     public void testJson() {
        	n.addtoJson("Ciao", "Ciao", null,null,"01/10/2022",null,"Paziente");
-		n.addtoJson("Pippo", "Verdi", null,null,null,null, "Medico");
-		n.addtoJson("Mario", "Rossi", null,null,null,null,"Medico");
+		n.addtoJson("Pippo", "Verdi", null,null,"test",null, "Medico");
+		n.addtoJson("Mario", "Rossi", null,null,"Test",null,"Medico");
 		n.writeJson("Medico");
 		n.writeJson("Paziente");
 		System.out.println("Struttura json per 'Paziente' :");
