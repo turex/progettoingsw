@@ -54,7 +54,7 @@ public class MedicoPanel {
         panel.add(nome);
         panel.add(new JLabel("Cognome:"));
         panel.add(cognome);
-        panel.add(new JLabel("Data di nascita:"));
+        panel.add(new JLabel("Professione:"));
         panel.add(professione);
 
         panel.add(addMedico);
@@ -72,7 +72,7 @@ public class MedicoPanel {
                 if (!nomeValue.isEmpty() && !cognomeValue.isEmpty() && !professioneValue.isEmpty()) {
                     if (!medcommand.checkMedico(nomeValue, cognomeValue, professioneValue)) {
                         medcommand.addMedico(m.setNome(nomeValue).setCognome(cognomeValue).setProfessione(professioneValue));
-                        String Id = medcommand.assignID(m);
+                        String Id = medcommand.getID(nomeValue,cognomeValue,professioneValue);
             			dbs.addtoJson(nomeValue, cognomeValue, Id ,professioneValue , null, null, "Medico");
             			pp.setMediciListModel(m.getMedico().getNome() + " " + m.getMedico().getCognome() + " " + professioneValue);
             			new Popup("Medico aggiunto!", Popup.msg.OK);
