@@ -1,23 +1,12 @@
 package org.progettingsw.OCM.panels;
 
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.nio.file.attribute.PosixFilePermission;
-
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JList;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
 import org.progettingsw.OCM.ComandiMedico;
 import org.progettingsw.OCM.JsonHelper;
 import org.progettingsw.OCM.MedicoBuilder;

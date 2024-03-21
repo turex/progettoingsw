@@ -2,9 +2,6 @@ package org.progettingsw.OCM;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-
-import javax.swing.DefaultListModel;
 
 public class ComandiPaziente {
 	

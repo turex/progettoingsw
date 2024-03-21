@@ -6,9 +6,6 @@ import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-
-import javax.swing.AbstractListModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -16,15 +13,12 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
-import javax.swing.ListModel;
 import javax.swing.SpinnerDateModel;
-import javax.swing.SwingUtilities;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import org.progettingsw.OCM.ComandiMedico;
 import org.progettingsw.OCM.ComandiPrenotazione;
-import org.progettingsw.OCM.Interface;
 import org.progettingsw.OCM.JsonHelper;
 import org.progettingsw.OCM.Popup;
 import org.progettingsw.OCM.PrenotazioneBuilder;
@@ -90,7 +84,7 @@ public class PrenotazioniPanel {
         spinnerModel.setCalendarField(Calendar.MINUTE); // Impostazione del campo del calendario su minuti
         JSpinner spinner = new JSpinner(spinnerModel);
         JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(spinner, "dd/MM/yyyy HH:mm");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+        //SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm");
         spinner.setEditor(dateEditor);
         prenotazioniPanel.add(new JLabel("Data e ora prenotazione:"), BorderLayout.NORTH);
         prenotazioniPanel.add(spinner, BorderLayout.CENTER);
