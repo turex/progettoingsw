@@ -66,6 +66,7 @@ public class JsonHelper {
 	
 	ComandiMedico med_comm = ComandiMedico.getIstance();
 	ComandiPaziente paz_comm = ComandiPaziente.getIstance();
+	ComandiPrenotazione pren_comm = ComandiPrenotazione.getIstance();
 	PrenotazioniPanel list_helper = PrenotazioniPanel.getIstance();
 	
 	final String PATH = System.getProperty("user.dir"); //Path corrente dell'eseguibile
@@ -188,15 +189,32 @@ public class JsonHelper {
 		            //DEBUGSystem.out.println("cognome=" + cognome + "; nome=" + nome);
 		            paz_comm.addPaziente(paz.setNome(nome1).setCognome(cognome1).setNascita(nascita).setSesso(sesso));
 		            
-		            System.out.println(nome1 + cognome1 + nascita + sesso);
+		            //System.out.println(nome1 + cognome1 + nascita + sesso);
 		            
 		            String ID = paz_comm.getID(nome1, cognome1, nascita);
-		            System.out.println(ID);
+		            //System.out.println(ID);
 		            
 		            list_helper.setPazientiListModel(nome1 + " " + cognome1 + " " + ID);
 		            
 		            break;
 		            
+		            
+		            case ("Prenotazione"):
+		            	
+			            String id_paz = (String) db.get("id_paziente");
+			            String id_med = (String) db.get("id_medico");
+			            String profess = (String) db.get("professione");
+			            String data = (String) db.get("data");
+			            
+			            //DEBUGSystem.out.println("cognome=" + cognome + "; nome=" + nome);
+			            pren_comm.addPrenotazione(pren.setidPaziente(id_paz).setidMedico(id_med).setProfessione(profess).setData(data));
+			            
+			            //System.out.println(nome1 + cognome1 + nascita + sesso);
+			            
+			            //System.out.println(ID);
+			            
+			            
+			            break;
 		            
 		            
 		            

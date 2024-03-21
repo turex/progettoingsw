@@ -118,7 +118,7 @@ public class ComandiPaziente {
 	        String checkCognome = paziente.getCognome().toUpperCase();
 	        String checkNascita = paziente.getNascita();
 	        
-	        System.out.println(checkNome + checkCognome + checkNascita);
+	        //System.out.println(checkNome + checkCognome + checkNascita);
 
 	        if (checkNome.equals(nomeUpper) && checkCognome.equals(cognomeUpper) && checkNascita.equals(nascitaUpper)) {
 	            ID = paziente.getID();

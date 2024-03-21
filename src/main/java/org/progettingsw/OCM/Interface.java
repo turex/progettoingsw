@@ -24,7 +24,7 @@ import javax.swing.SwingUtilities;
 public class Interface {
 
 	final String PATH = System.getProperty("user.dir"); // Path corrente dell'eseguibile
-	File pf, mf; // file per check db()p paziente , m medico
+	File pf, mf, ppf; // file per check db()p paziente , m medico, pp prenotazione
 
 	static JsonHelper dbs = JsonHelper.getIstance(); // creo oggetto JSON
 	
@@ -79,12 +79,18 @@ public class Interface {
 		
 		pf = new File(PATH + "\\Paziente.json");
 		mf = new File(PATH + "\\Medico.json");
+		ppf = new File(PATH + "\\Prenotazione.json");
 		if (pf.exists()) {
 
 			dbs.readfromJson("Paziente");
 		}
 		if (mf.exists()) {
 			dbs.readfromJson("Medico");
+
+		} 
+		
+		if (ppf.exists()) {
+			dbs.readfromJson("Prenotazione");
 
 		} 
 	}

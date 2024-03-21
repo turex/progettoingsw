@@ -5,7 +5,16 @@ import java.util.List;
 
 public class ComandiPrenotazione {
 	
+	static ComandiPrenotazione istance;
 	List<Prenotazione> pren = new ArrayList<>();
+	
+	public static ComandiPrenotazione getIstance() {
+		if(istance == null) {
+			istance = new ComandiPrenotazione();
+		}
+		
+		return istance;
+	}
 	
 	
 	public void addPrenotazione(PrenotazioneBuilder p) {       
