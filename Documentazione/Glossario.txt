@@ -1,0 +1,54 @@
+Glossario Interfaccia grafica OCM :
+
+Tab Pazienti :
+
+Bottoni :
+
+Aggiungi paziente : Comando che aggiunge un paziente non esistente alla lista "Pazienti"
+Lista pazienti  : Comando che stampa a video la lista "Pazienti"
+Salva database : Comando che salva la lista dei pazienti in un file "Paziente.json"
+
+Campi :
+
+Nome : Nome paziente
+Cognome : Cognome paziente
+Data di nascita : Data di nascita del paziente
+Sesso : Sesso del paziente
+
+------------------------------------------------------------
+
+Tab Medici :
+
+Bottoni :
+
+Aggiungi medico : Comando che aggiunge un medico non esistente alla lista "Medici"
+Lista medici  : Comando che stampa a video la lista "Medici"
+Salva database : Comando che salva la lista dei pazienti in un file "Medico.json"
+
+Campi :
+
+Nome : Nome medico
+Cognome : Cognome medico
+Professione : Campo di professione del medico dichiarato
+
+--------------------------------------------------------------
+
+Tab Prenotazioni :
+
+Bottoni :
+
+Aggiungi prenotazione : Comando che aggiunge una prenotazione non esistente alla lista "Prenotazioni"
+Lista prenotazioni : Comando che stampa a video la lista "Prenotazioni"
+Salva database : Comando che salva la lista delle prenotazioni in un file "Prenotazione.json"
+
+Campi :
+
+A destra troviamo una lista selezionabile come segue :
+
+Nome Paziente + Cognome Paziente + ID Paziente
+
+a sinistra troviamo una lista selezionabile come segue :
+
+Nome Medico + Cognome Medico + Professione Medico
+
+Una volta selezionati ad un ad uno  
