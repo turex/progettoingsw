@@ -12,8 +12,8 @@ Campi :
 
 Nome : Nome paziente
 Cognome : Cognome paziente
-Data di nascita : Data di nascita del paziente
-Sesso : Sesso del paziente
+Data di nascita : Data di nascita del paziente; Valori accettati : dd/MM/yyyy
+Sesso : Sesso del paziente;  Valori accettati : M o F
 
 ------------------------------------------------------------
 

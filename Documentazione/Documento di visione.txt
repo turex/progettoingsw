@@ -1,0 +1,17 @@
+OCM : OPEN CLINIC MANAGER
+
+Il software é stato sviluppando simulando i seguenti requisiti del committente :
+
+	- Gestione di pazienti, dei medici e delle prenotazioni di una clinica 
+
+La gestione dei database per i dati persistenti avviene tramite file .json(databse separati) i quali conterranno le informazioni delle 3 categorie {Pazienti, medici e Prenotazioni}
+
+Il software é diviso in 3 "TAB", le quali permetteraanno di gestire le categorie sopra citate separatamente.
+
+FUNZIONAMENTO :
+
+Le tab contengono dei bottoni cliccabili e delle field le quali possono essere riempite generando cosi le infomrazioni utili alle varie categorie.
+La tab delle prenotazioni funziiona in questo modo :
+
+
+Vanno selezionate dalle liste (ad uno a uno) i pazienti e i medici (le liste saranno popolate in modo da avere a destra i pazienti e a sinitra i medici con la relativa profesione)

@@ -1,6 +1,6 @@
 package org.progettingsw.OCM;
 
-import org.progettingsw.OCM.panels.MacchinarioPanel;
+//import org.progettingsw.OCM.panels.MacchinarioPanel;
 import org.progettingsw.OCM.panels.MedicoPanel;
 import org.progettingsw.OCM.panels.PazientePanel;
 import org.progettingsw.OCM.panels.PrenotazioniPanel;
@@ -46,7 +46,7 @@ public class Interface {
 
 		tabbedPane.addTab("Pazienti", new PazientePanel().createPanel());
 		tabbedPane.addTab("Medici", new MedicoPanel().createPanel());
-		tabbedPane.addTab("Macchinari", new MacchinarioPanel().createPanel());
+		//tabbedPane.addTab("Macchinari", new MacchinarioPanel().createPanel());
 		tabbedPane.addTab("Prenotazioni", pren.createPanel());
 
 		frame.add(tabbedPane);
