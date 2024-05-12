@@ -4,16 +4,16 @@ import javax.swing.JOptionPane;
 
 public class Popup {
 	
-	public msg mg;
+	public msgtype mg;
 	
-	public enum msg {
+	public enum msgtype {
 		OK,
 		ERR
 	}
 	
 	String title,testo = "";
 	
-	public Popup(String testo, msg m){
+	public Popup(String testo, msgtype m){
 		
 		this.testo = testo; // Messaggio BOX
 		this.mg = m;

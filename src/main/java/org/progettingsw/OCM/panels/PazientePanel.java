@@ -74,12 +74,12 @@ public class PazientePanel {
             			String Id = command.getID(nomeValue, cognomeValue,formattedDate.toString());
             			dbs.addtoJson(nomeValue, cognomeValue, Id ,null , formattedDate, sessoValue, "Paziente");
             			pp.setPazientiListModel(p.getPaziente().getNome() + " " + p.getPaziente().getCognome() + " " + Id);
-            			new Popup("Paziente aggiunto!",Popup.msg.OK);
+            			new Popup("Paziente aggiunto!",Popup.msgtype.OK);
             		} else {
-            			new Popup("Errore!\nNome, cognome e data di nascita sono necessari o paziente gia registrato",Popup.msg.ERR);
+            			new Popup("Errore!\nNome, cognome e data di nascita sono necessari o paziente gia registrato",Popup.msgtype.ERR);
             		}
             	} else {
-            		new Popup("Errore!\nInserire tutti i campi obbligatori", Popup.msg.ERR);
+            		new Popup("Errore!\nInserire tutti i campi obbligatori", Popup.msgtype.ERR);
             	}
             }
         });
@@ -94,8 +94,6 @@ public class PazientePanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				dbs.writeJson("Paziente");
-                new Popup("Database salvato con successo!", Popup.msg.OK);
-
 			}
         });
         

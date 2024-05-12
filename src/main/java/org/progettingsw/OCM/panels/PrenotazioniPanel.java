@@ -105,7 +105,10 @@ public class PrenotazioniPanel {
         		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm"); // Nuovo formato desiderato (per confronto database)
                 String formattedDate = dateFormat.format(selectedDate);
         		
-        		if(!(selectProfessione == null) && !(selectPaziente == null)) { // aggiungo la prenotazione se ho selezionato sia paziente che medico ma
+        		if((selectProfessione == null) || selectProfessione.isEmpty() && (selectPaziente == null) || selectPaziente.isEmpty() ) { // aggiungo la prenotazione se ho selezionato sia paziente che medico ma
+        			new Popup("Seleziona medico e paziente!",Popup.msgtype.ERR);
+        			return;
+        					}
         			//non é presente gia una prenotazion
         			split_paziente = selectPaziente.split(" ");
         			split_medico = selectProfessione.split(" ");
@@ -118,8 +121,6 @@ public class PrenotazioniPanel {
         			
         			String ID = med.getID(split_medico[0], split_medico[1], split_medico[2]);
         			
-        			med.printMedico(0);
-        			
         			System.out.println(ID);
         			if(!prencommand.checkPrenotazione(split_paziente[2],ID,split_medico[2], formattedDate.toString()) &&
         					!prencommand.checkdispoMedico(split_medico[0],split_medico[1], split_medico[2], formattedDate.toString())) { //se il check é false allora mi aggiunge la prenotazione
@@ -130,41 +131,42 @@ public class PrenotazioniPanel {
         				dbs.addPrenotazioni(split_paziente[2], ID, split_medico[2], formattedDate.toString());
         				
         				
-        				new Popup("Prenotazione aggiunta!",Popup.msg.OK);
+        				new Popup("Prenotazione aggiunta!",Popup.msgtype.OK);
         			}
         			else
-        				new Popup("Prenotazione gia presente , medico non disponibile o campi vuoti", Popup.msg.ERR);
-        		}
-        		else
-        			new Popup("Seleziona medico e paziente!",Popup.msg.ERR);
+        				new Popup("Prenotazione gia presente , medico non disponibile o campi vuoti", Popup.msgtype.ERR);
+        		
+        			
         		
         		
         	}
         	
         });
         
-        listPrenotazioni.addActionListener(new ActionListener(){
-        	
-        	public void actionPerformed(ActionEvent e) {
-        		
-        		try
-        		{
-        			
-        		String[] split_paziente = selectPaziente.split(" ");
-        			
-        		if(!(selectPaziente == null) && !(split_paziente == null)) {
-        		prencommand.listPrenotazioni(split_paziente[2]);
-        		}
-        		else
-        			new Popup("Seleziona Paziente",Popup.msg.ERR);
-        		}
-        		catch (NullPointerException e1)
-        		{
-        			e1.printStackTrace();
-        		}
-        	}
-        	
+        listPrenotazioni.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                // Check if selectPaziente is null
+                if (selectPaziente == null || selectPaziente.isEmpty()) {
+                    // If selectPaziente is null or empty, show a popup indicating that a patient should be selected
+                    new Popup("Seleziona Paziente", Popup.msgtype.ERR);
+                    return;
+                }
+                try {
+                    // Split selectPaziente by spaces
+                    String[] split_paziente = selectPaziente.split(" ");
+
+                    // Check if split_paziente is not null
+                    if (split_paziente != null) {
+                        // Invoke prencommand.listPrenotazioni with the appropriate argument
+                        prencommand.listPrenotazioni(split_paziente[2]);
+                    }
+                } catch (NullPointerException e1) {
+                    // Catch NullPointerException and print stack trace
+                    e1.printStackTrace();
+                }
+            }
         });
+
         
         
         pazientiList.addListSelectionListener(new ListSelectionListener() { //Setto il Listener per selezione dati da JList PAZIENTEL
@@ -189,6 +191,8 @@ public class PrenotazioniPanel {
                         if (!(professionistiList.getSelectedValue() == null)) {
                             selectProfessione = professionistiList.getSelectedValue().toString();
                         }
+                        else
+                        	return;
                     } catch (NullPointerException e) {
                         e.printStackTrace();
                     }
@@ -205,8 +209,6 @@ public class PrenotazioniPanel {
 				// TODO Auto-generated method stub
 				
 				dbs.writeJson("Prenotazione");
-                new Popup("Database salvato con successo!", Popup.msg.OK);
-
 			} //Setto il Listener per salvare dati prenotazione
             
         });

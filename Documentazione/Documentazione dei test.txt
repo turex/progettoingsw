@@ -1,13 +1,1 @@
-I test sono stati individuati in base alla funzioni implementate nel programma :
-
-Test 1 : Si aggiunge ad database un oggetto appartenente alle categorie [Medico e Paziente] , il test prosegue con la scrittura su file.
-Una volta scritti i file leggo i database caricati in memoria per testarne l'integritá e la corretta funzione di lettura.
-Una volta letti i database ne stampo il contenuto di "Paziente".
-A seguito controllo integritá leggo da file il database "Medico" e ne stampo il contenuto del primo.
-
-Test 2 : Qui eseguiamo il building di un "Medico" e ne testiamo l'effettiva creazione stampandone il contenuto e verifico se corrisponde al nome settato.
-
-
-Test 3 : Rieffettuo un controllo leggendo il database caricato in memoria nel primo test, ne stampo il contenuto e verifico se corrisponde al nome precedentemente settato.
-
-A fine test elimino i database salvati di test. 
+I test sono stati individuati in base alla funzioni implementate nel programma, come primo test si aggiunge ad database [Medico e Paziente] un

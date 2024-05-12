@@ -61,7 +61,7 @@ public class ComandiPaziente {
 		}
 		}
 		else
-			System.out.println("Lista pazienti vuota");
+			new Popup("Lista pazienti vuota",Popup.msgtype.OK);
 	}
 	
 	public String listaPazientitoModel() {

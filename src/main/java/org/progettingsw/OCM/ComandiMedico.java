@@ -127,7 +127,7 @@ public String getID(String nome, String cognome, String professione) {
 				System.out.println(medi.get(list));
 		}
 			else
-				System.out.println("Lista medici vuota!");
+				new Popup("Lista medici vuota!", Popup.msgtype.OK);
 
 		
 	}

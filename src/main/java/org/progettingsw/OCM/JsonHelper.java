@@ -282,36 +282,39 @@ public class JsonHelper {
 		 
 	}
 	
-	public void writeJson(String typeofdb) {
-		
-		//Write JSON file
-        try (FileWriter file = new FileWriter(typeofdb + ".json")) {
-        	
-        	switch(typeofdb) {
-    		
-    		case "Medico":    	
-    			file.write(medico.toJSONString()); 
-                file.flush();
-                break;
-    			
-    			
-    		case "Paziente":
-    			file.write(paziente.toJSONString()); 
-                file.flush();
-                break;
-                
-    		case "Prenotazione":
-    			file.write(prenotazione.toJSONString()); 
-                file.flush();
-                break;
-    		}
-            
- 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        
-	}
+	 public void writeJson(String typeofdb) {
+		    JSONArray data;
+		    String filename;
+		    switch (typeofdb) {
+		        case "Medico":
+		            data = medico;
+		            filename = "Medico.json";
+		            break;
+		        case "Paziente":
+		            data = paziente;
+		            filename = "Paziente.json";
+		            break;
+		        case "Prenotazione":
+		            data = prenotazione;
+		            filename = "Prenotazione.json";
+		            break;
+		        default:
+		            throw new IllegalArgumentException("Invalid database type: " + typeofdb);
+		    }
+
+		    if (data.isEmpty()) {
+		        new Popup("Database vuoto", Popup.msgtype.ERR);
+		        return;
+		    }
+
+		    try (FileWriter file = new FileWriter(filename)) {
+		        file.write(data.toJSONString());
+		        file.flush();
+		        new Popup("Database salvato con successo!", Popup.msgtype.OK);
+		    } catch (IOException e) {
+		        e.printStackTrace();
+		    }
+		}
 	
 	void printnomePaz()
 	{

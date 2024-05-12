@@ -64,12 +64,12 @@ public class MedicoPanel {
                         String Id = medcommand.getID(nomeValue,cognomeValue,professioneValue);
             			dbs.addtoJson(nomeValue, cognomeValue, Id ,professioneValue , null, null, "Medico");
             			pp.setMediciListModel(m.getMedico().getNome() + " " + m.getMedico().getCognome() + " " + professioneValue);
-            			new Popup("Medico aggiunto!", Popup.msg.OK);
+            			new Popup("Medico aggiunto!", Popup.msgtype.OK);
                     } else {
-            			new Popup("Errore!\nNome, cognome e data di nascita sono necessari o medico gia registrato",Popup.msg.ERR);
+            			new Popup("Errore!\nNome, cognome e data di nascita sono necessari o medico gia registrato",Popup.msgtype.ERR);
                     }
                 } else {
-                	new Popup("Errore!\nInserire tutti i campi obbligatori", Popup.msg.ERR);
+                	new Popup("Errore!\nInserire tutti i campi obbligatori", Popup.msgtype.ERR);
                 }
             }
         });
@@ -84,7 +84,7 @@ public class MedicoPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 dbs.writeJson("Medico");
-                new Popup("Database salvato con successo!", Popup.msg.OK);
+                
             }
         });
 

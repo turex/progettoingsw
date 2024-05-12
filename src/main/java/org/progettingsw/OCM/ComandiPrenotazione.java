@@ -86,7 +86,7 @@ public class ComandiPrenotazione {
 				}
 			}// End primoi IF
 		else
-			new Popup("Lista Vuota!", Popup.msg.ERR);
+			new Popup("Lista Vuota!", Popup.msgtype.ERR);
 	
 		
 		}	
