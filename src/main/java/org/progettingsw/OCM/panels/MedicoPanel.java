@@ -7,6 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
+
 import org.progettingsw.OCM.ComandiMedico;
 import org.progettingsw.OCM.JsonHelper;
 import org.progettingsw.OCM.MedicoBuilder;
@@ -18,16 +20,18 @@ public class MedicoPanel {
     
     JButton addMedico = new JButton("Aggiungi medico");
     JButton listMedici = new JButton("Lista medici");
+    JButton modMedici = new JButton("Modifica medico");
     JButton saveDBM = new JButton("Salva database");
     
 
-    
 	CommonPanelUtils common = new CommonPanelUtils();
     
     static ComandiMedico medcommand = ComandiMedico.getIstance(); //obbligato per design di PrenotazionePanel
     static MedicoBuilder m = new MedicoBuilder();
     static JsonHelper dbs = JsonHelper.getIstance(); // creo oggetto JSON
     PrenotazioniPanel pp = PrenotazioniPanel.getIstance();
+    
+    ListFrame lista;
 
     static String selectionProfessione; // mi da l'item della professione
 
@@ -48,6 +52,7 @@ public class MedicoPanel {
 
         panel.add(addMedico);
         panel.add(listMedici);
+        panel.add(modMedici);
         panel.add(saveDBM);
 
         addMedico.addActionListener(new ActionListener() {
@@ -77,6 +82,13 @@ public class MedicoPanel {
         listMedici.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 medcommand.listMedici();
+                SwingUtilities.invokeLater(() -> {
+                	ListFrame medicoFrame = new ListFrame("Medico");
+                    medicoFrame.createAndShowFrame();
+                    
+                });
+                
+                
             }
         });
 
