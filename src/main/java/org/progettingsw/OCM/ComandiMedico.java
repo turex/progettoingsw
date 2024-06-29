@@ -128,10 +128,10 @@ public String getID(String nome, String cognome, String professione) {
 				//System.out.println(medi.get(list));
 			isEmpty = false;
 		}
-			else
+			else {
 				new Popup("Lista medici vuota!", Popup.msgtype.OK);
 		isEmpty = true;
-		
+			}
 		return isEmpty;
 	}
 ;
