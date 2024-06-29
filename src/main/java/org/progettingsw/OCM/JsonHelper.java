@@ -67,7 +67,7 @@ public class JsonHelper {
 	ComandiMedico med_comm = ComandiMedico.getIstance();
 	ComandiPaziente paz_comm = ComandiPaziente.getIstance();
 	ComandiPrenotazione pren_comm = ComandiPrenotazione.getIstance();
-	PrenotazioniPanel list_helper = PrenotazioniPanel.getIstance();
+	PrenotazioniPanel list_helper = PrenotazioniPanel.getInstance();
 	
 	final String PATH = System.getProperty("user.dir"); //Path corrente dell'eseguibile
 	
@@ -175,7 +175,9 @@ public class JsonHelper {
 		            
 		            //DEBUGSystem.out.println("cognome=" + cognome + "; nome=" + nome);
 		            med_comm.addMedico(med.setNome(nome).setCognome(cognome).setProfessione(professione));
-		            list_helper.setMediciListModel(nome + " " + cognome + " " + professione);
+		            
+		            String[] data1 = new String[] {nome, cognome , professione};
+		            list_helper.setMediciTableModel(data1);
 		            
 		            break;
 		            
@@ -186,7 +188,6 @@ public class JsonHelper {
 		            String nascita = (String) db.get("nascita");
 		            String sesso = (String) db.get("sesso");
 		            
-		            //DEBUGSystem.out.println("cognome=" + cognome + "; nome=" + nome);
 		            paz_comm.addPaziente(paz.setNome(nome1).setCognome(cognome1).setNascita(nascita).setSesso(sesso));
 		            
 		            //System.out.println(nome1 + cognome1 + nascita + sesso);
@@ -194,7 +195,9 @@ public class JsonHelper {
 		            String ID = paz_comm.getID(nome1, cognome1, nascita);
 		            //System.out.println(ID);
 		            
-		            list_helper.setPazientiListModel(nome1 + " " + cognome1 + " " + ID);
+		            String[] data = new String[] {nome1, cognome1, ID};
+		            
+		           list_helper.setPazientiTableModel(data);
 		            
 		            break;
 		            
@@ -204,16 +207,10 @@ public class JsonHelper {
 			            String id_paz = (String) db.get("id_paziente");
 			            String id_med = (String) db.get("id_medico");
 			            String profess = (String) db.get("professione");
-			            String data = (String) db.get("data");
+			            String data2 = (String) db.get("data");
 			            
-			            //DEBUGSystem.out.println("cognome=" + cognome + "; nome=" + nome);
-			            pren_comm.addPrenotazione(pren.setidPaziente(id_paz).setidMedico(id_med).setProfessione(profess).setData(data));
-			            
-			            //System.out.println(nome1 + cognome1 + nascita + sesso);
-			            
-			            //System.out.println(ID);
-			            
-			            
+			            pren_comm.addPrenotazione(pren.setidPaziente(id_paz).setidMedico(id_med).setProfessione(profess).setData(data2));
+	
 			            break;
 		            
 		            

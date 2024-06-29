@@ -42,7 +42,7 @@ public class ComandiPaziente {
 		final int len_cognome = (len_c > 5) ? len_c/2 : len_c;
 		
 		
-		ID = p.nome.substring(0,len_nome).toUpperCase() + p.cognome.substring(0, len_cognome).toUpperCase() + p.nascita.replace("/", "") + addEntropy;		
+		ID = p.nome.substring(0,len_nome).toUpperCase() + p.cognome.substring(0, len_cognome).toUpperCase() + p.nascita.replace("/", "").replace("-", "") + addEntropy.toUpperCase();		
 		
 		return ID;
 	}
@@ -53,15 +53,20 @@ public class ComandiPaziente {
 		System.out.println(pazi.get(z));
 	}
 	
-	public void listPazienti() {  
+	public boolean listPazienti() {  
 		
-		if(pazi.size() > 0) {
-		for (int list = 0; list < pazi.size(); list++) {
-		System.out.println(pazi.get(list));
-		}
-		}
-		else
+		boolean isEmpty;
+		
+		if(pazi.size() > 0) 
+		isEmpty = false;
+		
+		else {
 			new Popup("Lista pazienti vuota",Popup.msgtype.OK);
+		isEmpty = true;
+		}
+		
+		
+		return isEmpty;
 	}
 	
 	public String listaPazientitoModel() {

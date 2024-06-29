@@ -42,7 +42,7 @@ public class Interface {
 
 		JTabbedPane tabbedPane = new JTabbedPane();
 		
-		PrenotazioniPanel pren = PrenotazioniPanel.getIstance();
+		PrenotazioniPanel pren = PrenotazioniPanel.getInstance();
 
 		tabbedPane.addTab("Pazienti", new PazientePanel().createPanel());
 		tabbedPane.addTab("Medici", new MedicoPanel().createPanel());

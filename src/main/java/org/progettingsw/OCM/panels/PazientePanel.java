@@ -29,7 +29,9 @@ public class PazientePanel {
 	static JsonHelper dbs = JsonHelper.getIstance(); // creo oggetto JSON
 	CommonPanelUtils common = new CommonPanelUtils();
 	
-	PrenotazioniPanel pp =  PrenotazioniPanel.getIstance();
+	ListFrame lista = new ListFrame();
+	
+	PrenotazioniPanel pp =  PrenotazioniPanel.getInstance();
 	
 	JTextField nome,cognome;
 	JSpinner dateSpinner, genderSpinner;
@@ -73,7 +75,9 @@ public class PazientePanel {
             			command.addPaziente(p.setNome(nomeValue).setCognome(cognomeValue).setNascita(formattedDate).setSesso(sessoValue));
             			String Id = command.getID(nomeValue, cognomeValue,formattedDate.toString());
             			dbs.addtoJson(nomeValue, cognomeValue, Id ,null , formattedDate, sessoValue, "Paziente");
-            			pp.setPazientiListModel(p.getPaziente().getNome() + " " + p.getPaziente().getCognome() + " " + Id);
+            			
+            			String[] data = new String[] {p.getPaziente().getNome(), p.getPaziente().getCognome(), p.getPaziente().getNascita(),p.getPaziente().getSesso(),  Id};
+            			pp.setPazientiTableModel(data);
             			new Popup("Paziente aggiunto!",Popup.msgtype.OK);
             		} else {
             			new Popup("Errore!\nNome, cognome e data di nascita sono necessari o paziente gia registrato",Popup.msgtype.ERR);
@@ -86,7 +90,10 @@ public class PazientePanel {
 
         listPaziente.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		command.listPazienti();
+        		if(!command.listPazienti())
+        		
+        		lista.createAndShowFrame("Paziente",false);
+        		
         	}
         });
         

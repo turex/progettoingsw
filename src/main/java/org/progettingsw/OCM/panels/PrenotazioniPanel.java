@@ -22,22 +22,26 @@ public class PrenotazioniPanel {
     String selectProfessione;
     String selectPaziente;
 
-    static ComandiPrenotazione prencommand = new ComandiPrenotazione();
-    static PrenotazioneBuilder pb = new PrenotazioneBuilder();
-    static JsonHelper dbs = JsonHelper.getIstance(); // creo oggetto JSON
-    static ComandiMedico med = ComandiMedico.getIstance();
+    static CommonPanelUtils common;
 
-    DefaultTableModel model_paz = new DefaultTableModel(new Object[]{"ID", "Nome", "Cognome"}, 0);
-    DefaultTableModel model_med = new DefaultTableModel(new Object[]{"ID", "Nome", "Cognome", "Professione"}, 0);
-
-    JTable pazientiTable = new JTable(model_paz);
-    JTable professionistiTable = new JTable(model_med);
+    JTable pazientiTable;
+    JTable professionistiTable;
 
     static PrenotazioniPanel instance;
 
+    static {
+        common = CommonPanelUtils.getInstance();
+    }
+
+    private PrenotazioniPanel() {
+        pazientiTable = new JTable(common.model_paz);
+        professionistiTable = new JTable(common.model_med);
+    }
+
     public static PrenotazioniPanel getInstance() {
-        if (instance == null)
+        if (instance == null) {
             instance = new PrenotazioniPanel();
+        }
         return instance;
     }
 
@@ -91,61 +95,52 @@ public class PrenotazioniPanel {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm"); // Nuovo formato desiderato (per confronto database)
                 String formattedDate = dateFormat.format(selectedDate);
 
-                if ((selectProfessione == null) || selectProfessione.isEmpty() || (selectPaziente == null) || selectPaziente.isEmpty()) { // aggiungo la prenotazione se ho selezionato sia paziente che medico ma
+                if ((selectProfessione == null) || selectProfessione.isEmpty() || (selectPaziente == null) || selectPaziente.isEmpty()) {
                     new Popup("Seleziona medico e paziente!", Popup.msgtype.ERR);
                     return;
                 }
-                //non é presente gia una prenotazion
+
                 split_paziente = selectPaziente.split(" ");
                 split_medico = selectProfessione.split(" ");
 
-                /*
-                 * Dato che non voglio nella JTable dei medici l'ID che non ha funzini utili, allora lo estraggo
-                 * 
-                 * dal medcommand.getID
-                 */
+                String ID = ComandiMedico.getIstance().getID(split_medico[0], split_medico[1], split_medico[2]);
 
-                String ID = med.getID(split_medico[0], split_medico[1], split_medico[2]);
-
-                System.out.println(ID);
-                if (!prencommand.checkPrenotazione(split_paziente[0], ID, split_medico[2], formattedDate.toString()) &&
-                        !prencommand.checkdispoMedico(split_medico[0], split_medico[1], split_medico[2], formattedDate.toString())) { //se il check é false allora mi aggiunge la prenotazione
-                    //DEBUGSystem.out.println(prencommand.checkPrenotazione(split_paziente[0],split_paziente[1], split_medico[0],split_medico[1])); //DEBUG
-
-                    prencommand.addPrenotazione(pb.setidPaziente(split_paziente[0]).setidMedico(ID).setProfessione(split_medico[2]).setData(formattedDate.toString()));
-                    dbs.addPrenotazioni(split_paziente[0], ID, split_medico[2], formattedDate.toString());
+                if (!ComandiPrenotazione.getIstance().checkPrenotazione(split_paziente[0], ID, split_medico[2], formattedDate.toString()) &&
+                        !ComandiPrenotazione.getIstance().checkdispoMedico(split_medico[0], split_medico[1], split_medico[2], formattedDate.toString())) {
+                    PrenotazioneBuilder pb = new PrenotazioneBuilder();
+                    pb.setidPaziente(split_paziente[0])
+                      .setidMedico(ID)
+                      .setProfessione(split_medico[2])
+                      .setData(formattedDate.toString());
+                    
+                    ComandiPrenotazione.getIstance().addPrenotazione(pb);
+                    JsonHelper.getIstance().addPrenotazioni(split_paziente[0], ID, split_medico[2], formattedDate.toString());
 
                     new Popup("Prenotazione aggiunta!", Popup.msgtype.OK);
-                } else
-                    new Popup("Prenotazione gia presente , medico non disponibile o campi vuoti", Popup.msgtype.ERR);
+                } else {
+                    new Popup("Prenotazione già presente, medico non disponibile o campi vuoti", Popup.msgtype.ERR);
+                }
             }
         });
 
         listPrenotazioni.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Check if selectPaziente is null
                 if (selectPaziente == null || selectPaziente.isEmpty()) {
-                    // If selectPaziente is null or empty, show a popup indicating that a patient should be selected
                     new Popup("Seleziona Paziente", Popup.msgtype.ERR);
                     return;
                 }
                 try {
-                    // Split selectPaziente by spaces
                     String[] split_paziente = selectPaziente.split(" ");
-
-                    // Check if split_paziente is not null
                     if (split_paziente != null) {
-                        // Invoke prencommand.listPrenotazioni with the appropriate argument
-                        prencommand.listPrenotazioni(split_paziente[0]);
+                        ComandiPrenotazione.getIstance().listPrenotazioni(split_paziente[2]);
                     }
                 } catch (NullPointerException e1) {
-                    // Catch NullPointerException and print stack trace
                     e1.printStackTrace();
                 }
             }
         });
 
-        pazientiTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() { //Setto il Listener per selezione dati da JTable PAZIENTE
+        pazientiTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent arg0) {
                 if (!arg0.getValueIsAdjusting()) {
                     try {
@@ -153,17 +148,16 @@ public class PrenotazioniPanel {
                         if (selectedRow >= 0) {
                             selectPaziente = pazientiTable.getValueAt(selectedRow, 0) + " " +
                                              pazientiTable.getValueAt(selectedRow, 1) + " " +
-                                             pazientiTable.getValueAt(selectedRow, 2);
+                                             pazientiTable.getValueAt(selectedRow, 4); // Assicurati di ottenere l'ID
                         }
                     } catch (NullPointerException e) {
                         e.printStackTrace();
                     }
-                    System.out.println(selectPaziente);
                 }
             }
         });
 
-        professionistiTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() { //Setto il Listener per selezione dati da JTable MEDICO
+        professionistiTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent arg0) {
                 if (!arg0.getValueIsAdjusting()) {
                     try {
@@ -172,19 +166,18 @@ public class PrenotazioniPanel {
                             selectProfessione = professionistiTable.getValueAt(selectedRow, 0) + " " +
                                                 professionistiTable.getValueAt(selectedRow, 1) + " " +
                                                 professionistiTable.getValueAt(selectedRow, 2) + " " +
-                                                professionistiTable.getValueAt(selectedRow, 3);
+                                                professionistiTable.getValueAt(selectedRow, 3); // Assicurati di ottenere l'ID
                         }
                     } catch (NullPointerException e) {
                         e.printStackTrace();
                     }
-                    System.out.println(selectProfessione);
                 }
             }
         });
 
         salvaDB.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                dbs.writeJson("Prenotazione");
+                JsonHelper.getIstance().writeJson("Prenotazione");
             }
         });
 
@@ -192,14 +185,16 @@ public class PrenotazioniPanel {
     }
 
     public void setPazientiTableModel(String[] data) {
-        model_paz.addRow(data);
+        common.model_paz.addRow(data);
+        pazientiTable.setModel(common.model_paz); // Aggiorna il modello della tabella
     }
 
     public void setMediciTableModel(String[] data) {
-        model_med.addRow(data);
-    }
+        common.model_med.addRow(data);
+        professionistiTable.setModel(common.model_med); // Aggiorna il modello della tabella
+            }
+    
 
-    // Method to create and show a JFrame containing this panel
     public void showInFrame() {
         JFrame frame = new JFrame("Prenotazioni Panel");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

@@ -40,7 +40,7 @@ public String assignID(MedicoBuilder m) {
 		String addEntropy = common.generateRandomString(3);
 		
 		
-		ID = m.nome.substring(0,len_nome).toUpperCase() + m.cognome.substring(0, len_cognome).toUpperCase() + m.professione.substring(0,2).toUpperCase() + addEntropy;        
+		ID = m.nome.substring(0,len_nome).toUpperCase() + m.cognome.substring(0, len_cognome).toUpperCase() + m.professione.substring(0,2).toUpperCase() + addEntropy.toUpperCase();        
 		
 		return ID;
 	}
@@ -120,16 +120,19 @@ public String getID(String nome, String cognome, String professione) {
 		System.out.println(medi.get(z));
 	}
 	
-	public void listMedici() {  
+	public boolean listMedici() {  
 		
+		boolean isEmpty;
 		if(medi.size() > 0) {
-			for (int list = 0; list < medi.size(); list++) 
-				System.out.println(medi.get(list));
+			//for (int list = 0; list < medi.size(); list++) 
+				//System.out.println(medi.get(list));
+			isEmpty = false;
 		}
 			else
 				new Popup("Lista medici vuota!", Popup.msgtype.OK);
-
+		isEmpty = true;
 		
+		return isEmpty;
 	}
-
+;
 }

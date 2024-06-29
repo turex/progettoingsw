@@ -7,8 +7,6 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-
 import org.progettingsw.OCM.ComandiMedico;
 import org.progettingsw.OCM.JsonHelper;
 import org.progettingsw.OCM.MedicoBuilder;
@@ -20,18 +18,19 @@ public class MedicoPanel {
     
     JButton addMedico = new JButton("Aggiungi medico");
     JButton listMedici = new JButton("Lista medici");
-    JButton modMedici = new JButton("Modifica medico");
+    //JButton modMedici = new JButton("Modifica medico"); TODO
     JButton saveDBM = new JButton("Salva database");
     
-
-	CommonPanelUtils common = new CommonPanelUtils();
-    
+    	
     static ComandiMedico medcommand = ComandiMedico.getIstance(); //obbligato per design di PrenotazionePanel
     static MedicoBuilder m = new MedicoBuilder();
     static JsonHelper dbs = JsonHelper.getIstance(); // creo oggetto JSON
-    PrenotazioniPanel pp = PrenotazioniPanel.getIstance();
+    PrenotazioniPanel pp = PrenotazioniPanel.getInstance();
     
-    ListFrame lista;
+    CommonPanelUtils common = CommonPanelUtils.getInstance();
+    
+    //ListFrame lista = ListFrame.getInstance();
+    ListFrame lista = new ListFrame();
 
     static String selectionProfessione; // mi da l'item della professione
 
@@ -52,7 +51,7 @@ public class MedicoPanel {
 
         panel.add(addMedico);
         panel.add(listMedici);
-        panel.add(modMedici);
+        //panel.add(modMedici);
         panel.add(saveDBM);
 
         addMedico.addActionListener(new ActionListener() {
@@ -68,7 +67,13 @@ public class MedicoPanel {
                         medcommand.addMedico(m.setNome(nomeValue).setCognome(cognomeValue).setProfessione(professioneValue));
                         String Id = medcommand.getID(nomeValue,cognomeValue,professioneValue);
             			dbs.addtoJson(nomeValue, cognomeValue, Id ,professioneValue , null, null, "Medico");
-            			pp.setMediciListModel(m.getMedico().getNome() + " " + m.getMedico().getCognome() + " " + professioneValue);
+            			
+            			String[] data = new String[] {m.getMedico().getNome(),m.getMedico().getCognome(),professioneValue, Id};
+            			
+            			//lista.addMedicoData(common.model_med, m.getMedico().getID(), m.getMedico().getNome(), m.getMedico().getCognome(), professioneValue);
+            			//lista.updateTable();
+            			
+            			pp.setMediciTableModel(data);
             			new Popup("Medico aggiunto!", Popup.msgtype.OK);
                     } else {
             			new Popup("Errore!\nNome, cognome e data di nascita sono necessari o medico gia registrato",Popup.msgtype.ERR);
@@ -81,12 +86,11 @@ public class MedicoPanel {
 
         listMedici.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                medcommand.listMedici();
-                SwingUtilities.invokeLater(() -> {
-                	ListFrame medicoFrame = new ListFrame("Medico");
-                    medicoFrame.createAndShowFrame();
+                if(!medcommand.listMedici())
+               // SwingUtilities.invokeLater(() -> {
+                    lista.createAndShowFrame("Medico",false); // not showed if is empty
                     
-                });
+              //  });
                 
                 
             }
@@ -99,6 +103,21 @@ public class MedicoPanel {
                 
             }
         });
+        
+       
+        /*
+        modMedici.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+			lista.createAndShowFrame("Medico",true);
+				
+			}
+        	
+        	
+        });
+        
+        */
 
         return panel;
    

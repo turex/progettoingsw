@@ -4,8 +4,15 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerListModel;
+import javax.swing.table.DefaultTableModel;
 
 public class CommonPanelUtils {
+	
+	public DefaultTableModel model_paz = new DefaultTableModel(new Object[]{"Nome", "Cognome", "Data di Nascita", "Sesso","ID"}, 0);
+	public DefaultTableModel model_med = new DefaultTableModel(new Object[]{"Nome", "Cognome", "Professione", "ID"}, 0);
+	
+	private static CommonPanelUtils instance;
+        
 	
 	 JTextField createTextField(String labelText) {
 	        JTextField textField = new JTextField();
@@ -24,5 +31,12 @@ public class CommonPanelUtils {
 	    	}
 	    	return spinner;
 	    }
+
+		public static CommonPanelUtils getInstance() {
+			if(instance == null)
+				instance = new CommonPanelUtils();
+			
+			return instance;
+		}
 
 }
