@@ -1,6 +1,7 @@
 package org.progettingsw.OCM.panels;
 
 import javax.swing.JSpinner;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerListModel;
@@ -38,5 +39,17 @@ public class CommonPanelUtils {
 			
 			return instance;
 		}
+		
+		public void setPazientiTableModel(String[] data) {
+	        model_paz.addRow(data);
+	    }
 
+	    public void setMediciTableModel(String[] data) {
+	        model_med.addRow(data);
+	    }
+	    
+	    public void setModel(JTable table, DefaultTableModel model) {
+	    	table.setModel(model);
+	    }
+	    
 }

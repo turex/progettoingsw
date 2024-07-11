@@ -35,9 +35,7 @@ public class ListFrame {
 	 * 
 	 * return instance; }
 	 */
-    
-    private int i,j = 0;  // Index delle righe per i vari pazientri e medici ( i per i Pazienit, j per i Medici)
-    
+        
     List<String[]> dataM = new ArrayList<>(); //Lista dati medico
     List<String[]> dataP = new ArrayList<>(); // Liosta dati paziente
     
@@ -45,8 +43,8 @@ public class ListFrame {
     JTable professionistiTable;
     DefaultTableModel model;
     
-    String[] columnNamesMedici = {"Nome", "Professione", "ID"};
-    String[] columnNamesPazienti = {"Nome", "Cognome", "Data di Naacita", "Sesso", "ID"};
+    String[] columnNamesMedici = {"Nome", "Cognome","Professione", "ID"};
+    String[] columnNamesPazienti = {"Nome", "Cognome", "Data di nascita", "Sesso", "ID"};
     
     //JButton save = new JButton("Salva modifiche");
     
@@ -66,18 +64,7 @@ public class ListFrame {
      * @isEditable (true,false) TODO
      */
     public ListFrame() {
-        // Inizializzazione delle tabelle con solo colonne definite
-    	
-    	//this.isEditable = isEditable;
-    	       
-        if(common.model_med != null)
-        common.model_med = new DefaultTableModel(columnNamesMedici, 0);
-        
-        common.model_paz = new DefaultTableModel(columnNamesPazienti, 0);
-        
-        // Inizializza il modello di tabella
-        model = new DefaultTableModel();
-
+  
     }
     
   
@@ -105,6 +92,7 @@ public class ListFrame {
             }
         };
 
+        common.setModel(tabella, model);
         scrollPane = new JScrollPane(tabella);
         f.add(scrollPane, BorderLayout.CENTER);
         //f.add(save,BorderLayout.SOUTH);
@@ -121,15 +109,18 @@ public class ListFrame {
         }
     }
     
-    public void addPazienteData(DefaultTableModel model, String id, String nome, String cognome, String datadinascita, String sesso) {
-    	model.addRow(new Object[]{id, nome, cognome, datadinascita,sesso});
+    /*
+    public void addPazienteData(DefaultTableModel model, String nome, String cognome, String datadinascita, String sesso, String id) {
+    	model.addRow(new Object[]{nome, cognome, datadinascita,sesso,id});
     }
     
-    public void addMedicoData(DefaultTableModel model, String id, String nome, String cognome, String specializzazione) {
-        model.addRow(new Object[]{id, nome, cognome, specializzazione});
+    public void addMedicoData(DefaultTableModel model,String nome, String cognome, String specializzazione, String id) {
+        model.addRow(new Object[]{nome, cognome, specializzazione,id});
         
         
     }
+    
+    */
     
     
 }

@@ -68,12 +68,12 @@ public class MedicoPanel {
                         String Id = medcommand.getID(nomeValue,cognomeValue,professioneValue);
             			dbs.addtoJson(nomeValue, cognomeValue, Id ,professioneValue , null, null, "Medico");
             			
-            			String[] data = new String[] {m.getMedico().getNome(),m.getMedico().getCognome(),professioneValue, Id};
+            			String[] data = new String[] {m.getMedico().getNome(),m.getMedico().getCognome(), professioneValue, Id};
             			
             			//lista.addMedicoData(common.model_med, m.getMedico().getID(), m.getMedico().getNome(), m.getMedico().getCognome(), professioneValue);
             			//lista.updateTable();
             			
-            			pp.setMediciTableModel(data);  // Where i add data to the MODEL
+            			common.setMediciTableModel(data);  // Where i add data to the MODEL
             			new Popup("Medico aggiunto!", Popup.msgtype.OK);
                     } else {
             			new Popup("Errore!\nNome, cognome e data di nascita sono necessari o medico gia registrato",Popup.msgtype.ERR);

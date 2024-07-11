@@ -47,7 +47,7 @@ public class ComandiPrenotazione {
 	
 	public boolean checkPrenotazione(String id_paziente, String id_medico, String professione, String data_prenotazione) {
 	    // True se esiste o ci sono errori
-	    if (id_paziente.isEmpty() || id_medico.isEmpty() || professione.isEmpty() || data_prenotazione.isEmpty()) {
+	    if (id_paziente==null || id_medico==null|| professione==null || data_prenotazione==null) {
 	        return true; // Uno dei parametri è vuoto, ci sono errori
 	    }
 

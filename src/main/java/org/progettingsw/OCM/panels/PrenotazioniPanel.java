@@ -22,20 +22,24 @@ public class PrenotazioniPanel {
     String selectProfessione;
     String selectPaziente;
 
-    static CommonPanelUtils common;
+    static CommonPanelUtils common = CommonPanelUtils.getInstance();
 
     JTable pazientiTable;
     JTable professionistiTable;
+    
+    String[] split_paziente = {};
+    String[] split_medico = {};
 
     static PrenotazioniPanel instance;
-
-    static {
-        common = CommonPanelUtils.getInstance();
-    }
+    
+    static ComandiMedico commed = ComandiMedico.getIstance();
+    static ComandiPrenotazione commpren = ComandiPrenotazione.getIstance();
+    static JsonHelper jhelper = JsonHelper.getIstance();
 
     private PrenotazioniPanel() {
         pazientiTable = new JTable(common.model_paz);
         professionistiTable = new JTable(common.model_med);
+        
     }
 
     public static PrenotazioniPanel getInstance() {
@@ -89,8 +93,7 @@ public class PrenotazioniPanel {
 
         addPrenotazione.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String[] split_paziente = {};
-                String[] split_medico = {};
+               
                 Date selectedDate = (Date) spinner.getValue();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm"); // Nuovo formato desiderato (per confronto database)
                 String formattedDate = dateFormat.format(selectedDate);
@@ -100,21 +103,20 @@ public class PrenotazioniPanel {
                     return;
                 }
 
-                split_paziente = selectPaziente.split(" ");
-                split_medico = selectProfessione.split(" ");
 
-                String ID = ComandiMedico.getIstance().getID(split_medico[0], split_medico[1], split_medico[2]);
-
-                if (!ComandiPrenotazione.getIstance().checkPrenotazione(split_paziente[0], ID, split_medico[2], formattedDate.toString()) &&
-                        !ComandiPrenotazione.getIstance().checkdispoMedico(split_medico[0], split_medico[1], split_medico[2], formattedDate.toString())) {
+                if (!commpren.checkPrenotazione(split_paziente[0], split_medico[3], split_medico[2], formattedDate.toString()) &&
+                        !commpren.checkdispoMedico(split_medico[0], split_medico[1], split_medico[2], formattedDate.toString())) {
                     PrenotazioneBuilder pb = new PrenotazioneBuilder();
-                    pb.setidPaziente(split_paziente[0])
-                      .setidMedico(ID)
+                    
+                    
+                    
+                    pb.setidPaziente(split_paziente[4])
+                      .setidMedico(split_medico[3])
                       .setProfessione(split_medico[2])
                       .setData(formattedDate.toString());
                     
-                    ComandiPrenotazione.getIstance().addPrenotazione(pb);
-                    JsonHelper.getIstance().addPrenotazioni(split_paziente[0], ID, split_medico[2], formattedDate.toString());
+                    commpren.addPrenotazione(pb);
+                    jhelper.addPrenotazioni(split_paziente[4], split_medico[3], split_medico[2], formattedDate.toString());
 
                     new Popup("Prenotazione aggiunta!", Popup.msgtype.OK);
                 } else {
@@ -130,9 +132,9 @@ public class PrenotazioniPanel {
                     return;
                 }
                 try {
-                    String[] split_paziente = selectPaziente.split(" ");
+                    
                     if (split_paziente != null) {
-                        ComandiPrenotazione.getIstance().listPrenotazioni(split_paziente[2]);
+                    	commpren.listPrenotazioni(split_paziente[4]);
                     }
                 } catch (NullPointerException e1) {
                     e1.printStackTrace();
@@ -146,9 +148,16 @@ public class PrenotazioniPanel {
                     try {
                         int selectedRow = pazientiTable.getSelectedRow();
                         if (selectedRow >= 0) {
+                        	
+                        	
+                        	
                             selectPaziente = pazientiTable.getValueAt(selectedRow, 0) + " " +
                                              pazientiTable.getValueAt(selectedRow, 1) + " " +
+                                             pazientiTable.getValueAt(selectedRow, 2) + " " +
+                                             pazientiTable.getValueAt(selectedRow, 3) + " " +
                                              pazientiTable.getValueAt(selectedRow, 4); // Assicurati di ottenere l'ID
+                            
+                            split_paziente = selectPaziente.split(" ");
                         }
                     } catch (NullPointerException e) {
                         e.printStackTrace();
@@ -166,7 +175,9 @@ public class PrenotazioniPanel {
                             selectProfessione = professionistiTable.getValueAt(selectedRow, 0) + " " +
                                                 professionistiTable.getValueAt(selectedRow, 1) + " " +
                                                 professionistiTable.getValueAt(selectedRow, 2) + " " +
-                                                professionistiTable.getValueAt(selectedRow, 3); // Assicurati di ottenere l'ID
+                                                professionistiTable.getValueAt(selectedRow, 3);
+                            
+                            split_medico = selectProfessione.split(" ");
                         }
                     } catch (NullPointerException e) {
                         e.printStackTrace();
@@ -177,22 +188,14 @@ public class PrenotazioniPanel {
 
         salvaDB.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JsonHelper.getIstance().writeJson("Prenotazione");
+            	jhelper.writeJson("Prenotazione");
             }
         });
 
         return panel;
     }
 
-    public void setPazientiTableModel(String[] data) {
-        common.model_paz.addRow(data);
-        pazientiTable.setModel(common.model_paz); // Aggiorna il modello della tabella
-    }
-
-    public void setMediciTableModel(String[] data) {
-        common.model_med.addRow(data);
-        professionistiTable.setModel(common.model_med); // Aggiorna il modello della tabella
-            }
+    //TODO
     
 
     public void showInFrame() {

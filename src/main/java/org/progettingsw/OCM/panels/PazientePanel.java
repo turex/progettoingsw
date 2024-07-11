@@ -77,7 +77,8 @@ public class PazientePanel {
             			dbs.addtoJson(nomeValue, cognomeValue, Id ,null , formattedDate, sessoValue, "Paziente");
             			
             			String[] data = new String[] {p.getPaziente().getNome(), p.getPaziente().getCognome(), p.getPaziente().getNascita(),p.getPaziente().getSesso(),  Id};
-            			pp.setPazientiTableModel(data);
+            			common.setPazientiTableModel(data);
+            			
             			new Popup("Paziente aggiunto!",Popup.msgtype.OK);
             		} else {
             			new Popup("Errore!\nNome, cognome e data di nascita sono necessari o paziente gia registrato",Popup.msgtype.ERR);
