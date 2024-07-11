@@ -35,6 +35,8 @@ public class PrenotazioniPanel {
     static ComandiMedico commed = ComandiMedico.getIstance();
     static ComandiPrenotazione commpren = ComandiPrenotazione.getIstance();
     static JsonHelper jhelper = JsonHelper.getIstance();
+    
+    String formattedDate;
 
     private PrenotazioniPanel() {
         pazientiTable = new JTable(common.model_paz);
@@ -96,7 +98,7 @@ public class PrenotazioniPanel {
                
                 Date selectedDate = (Date) spinner.getValue();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm"); // Nuovo formato desiderato (per confronto database)
-                String formattedDate = dateFormat.format(selectedDate);
+                formattedDate = dateFormat.format(selectedDate);
 
                 if ((selectProfessione == null) || selectProfessione.isEmpty() || (selectPaziente == null) || selectPaziente.isEmpty()) {
                     new Popup("Seleziona medico e paziente!", Popup.msgtype.ERR);
@@ -116,7 +118,9 @@ public class PrenotazioniPanel {
                       .setData(formattedDate.toString());
                     
                     commpren.addPrenotazione(pb);
-                    jhelper.addPrenotazioni(split_paziente[4], split_medico[3], split_medico[2], formattedDate.toString());
+                    jhelper.addPrenotazioni(split_paziente[4], split_medico[3], split_medico[2], formattedDate.toString()); // ID paziente, ID Medico , Professione e data prenotazione
+                    common.setPrenotazioniTableModel(new String[] {split_paziente[4], split_medico[3], split_medico[2], formattedDate.toString()});
+                    
 
                     new Popup("Prenotazione aggiunta!", Popup.msgtype.OK);
                 } else {
@@ -133,8 +137,8 @@ public class PrenotazioniPanel {
                 }
                 try {
                     
-                    if (split_paziente != null) {
-                    	commpren.listPrenotazioni(split_paziente[4]);
+                    if (split_paziente != null || split_medico != null) {
+                    	commpren.listPrenotazioni(split_paziente[4],split_medico[3], split_medico[2], formattedDate.toString());
                     }
                 } catch (NullPointerException e1) {
                     e1.printStackTrace();
@@ -193,17 +197,6 @@ public class PrenotazioniPanel {
         });
 
         return panel;
-    }
+    } 
 
-    //TODO
-    
-
-    public void showInFrame() {
-        JFrame frame = new JFrame("Prenotazioni Panel");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(createPanel());
-        frame.pack();
-        frame.setLocationRelativeTo(null); // Center the frame
-        frame.setVisible(true);
-    }
 }

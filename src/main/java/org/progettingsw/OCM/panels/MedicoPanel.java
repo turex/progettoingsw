@@ -70,8 +70,6 @@ public class MedicoPanel {
             			
             			String[] data = new String[] {m.getMedico().getNome(),m.getMedico().getCognome(), professioneValue, Id};
             			
-            			//lista.addMedicoData(common.model_med, m.getMedico().getID(), m.getMedico().getNome(), m.getMedico().getCognome(), professioneValue);
-            			//lista.updateTable();
             			
             			common.setMediciTableModel(data);  // Where i add data to the MODEL
             			new Popup("Medico aggiunto!", Popup.msgtype.OK);

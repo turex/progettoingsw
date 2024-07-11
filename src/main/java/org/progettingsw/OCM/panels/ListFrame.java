@@ -36,19 +36,7 @@ public class ListFrame {
 	 * return instance; }
 	 */
         
-    List<String[]> dataM = new ArrayList<>(); //Lista dati medico
-    List<String[]> dataP = new ArrayList<>(); // Liosta dati paziente
-    
-    JTable pazientiTable;
-    JTable professionistiTable;
     DefaultTableModel model;
-    
-    String[] columnNamesMedici = {"Nome", "Cognome","Professione", "ID"};
-    String[] columnNamesPazienti = {"Nome", "Cognome", "Data di nascita", "Sesso", "ID"};
-    
-    //JButton save = new JButton("Salva modifiche");
-    
-    //boolean isEditable = false;
     
     /**
      * Constructor
@@ -82,6 +70,8 @@ public class ListFrame {
             model = (DefaultTableModel) common.model_med; // Imposta il modello di tabella per i medici
         } else if ("Paziente".equals(tipo)) {
             model = (DefaultTableModel) common.model_paz; // Imposta il modello di tabella per i pazienti
+        } else if ("Prenotazione".equals(tipo)) {
+            model = (DefaultTableModel) common.model_pren; // Imposta il modello di tabella per le prenotazioni
         } 
 
       

@@ -3,9 +3,14 @@ package org.progettingsw.OCM;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.progettingsw.OCM.panels.CommonPanelUtils;
+import org.progettingsw.OCM.panels.ListFrame;
+
 public class ComandiPrenotazione {
 	
 	static ComandiPrenotazione istance;
+	static CommonPanelUtils common = CommonPanelUtils.getInstance();
+	static ListFrame lista = new ListFrame();
 	List<Prenotazione> pren = new ArrayList<>();
 	
 	public static ComandiPrenotazione getIstance() {
@@ -65,7 +70,7 @@ public class ComandiPrenotazione {
 	}
 
 	
-	public void listPrenotazioni(String id_paziente) {  
+	public void listPrenotazioni(String id_paziente, String id_medico, String professione,String data_prenotazione) {  
 		
 		boolean stato_lista = false; // default la setto false per dire che é vuota
 		
@@ -75,16 +80,17 @@ public class ComandiPrenotazione {
 				String check_id="";
 				check_id = pren.get(list).id_paziente.toUpperCase();
 					if(check_id.equals(id_paziente.toUpperCase())) {
-						System.out.println(pren.get(list));
+						lista.createAndShowFrame("Prenotazione", false);
+						common.setPrenotazioniTableModel(new String[] {id_paziente,id_medico,professione,data_prenotazione}); //TODO
 						stato_lista = true;
 			
 					}
 			
 					if(!stato_lista)
-						System.out.println("Non é stato identificato l'ID");
+						new Popup("Non é stato identificato l'ID", Popup.msgtype.ERR);
 		
 				}
-			}// End primoi IF
+			}// End primo IF
 		else
 			new Popup("Lista Vuota!", Popup.msgtype.ERR);
 	

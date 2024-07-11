@@ -11,6 +11,7 @@ public class CommonPanelUtils {
 	
 	public DefaultTableModel model_paz = new DefaultTableModel(new Object[]{"Nome", "Cognome", "Data di Nascita", "Sesso","ID"}, 0);
 	public DefaultTableModel model_med = new DefaultTableModel(new Object[]{"Nome", "Cognome", "Professione", "ID"}, 0);
+	public DefaultTableModel model_pren = new DefaultTableModel(new Object[]{"ID Paziente", "ID Medico", "Professione", "Data Prenotazione"},0);
 	
 	private static CommonPanelUtils instance;
         
@@ -46,6 +47,10 @@ public class CommonPanelUtils {
 
 	    public void setMediciTableModel(String[] data) {
 	        model_med.addRow(data);
+	    }
+	    
+	    public void setPrenotazioniTableModel(String[] data) {
+	    	model_pren.addRow(data);
 	    }
 	    
 	    public void setModel(JTable table, DefaultTableModel model) {

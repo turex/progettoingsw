@@ -31,7 +31,7 @@ public class Interface {
 
 	private final String TITOLO = "OCM Opensource clinic manager";
 
-	private final int X = 500;
+	private final int X = 1000;
 	private final int Y = 500;
 	
 	public Interface() {
