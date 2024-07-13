@@ -13,6 +13,7 @@ public class ComandiPrenotazione {
 	static ListFrame lista = new ListFrame();
 	List<Prenotazione> pren = new ArrayList<>();
 	
+	
 	public static ComandiPrenotazione getIstance() {
 		if(istance == null) {
 			istance = new ComandiPrenotazione();
@@ -70,7 +71,7 @@ public class ComandiPrenotazione {
 	}
 
 	
-	public void listPrenotazioni(String id_paziente, String id_medico, String professione,String data_prenotazione) {  
+	public void listPrenotazioni(String id_paziente, PrenotazioneBuilder p) {  
 		
 		boolean stato_lista = false; // default la setto false per dire che é vuota
 		
@@ -79,9 +80,11 @@ public class ComandiPrenotazione {
 			for (int list = 0; list < pren.size(); list++) {
 				String check_id="";
 				check_id = pren.get(list).id_paziente.toUpperCase();
-					if(check_id.equals(id_paziente.toUpperCase())) {
-						lista.createAndShowFrame("Prenotazione", false);
-						common.setPrenotazioniTableModel(new String[] {id_paziente,id_medico,professione,data_prenotazione}); //TODO
+					if(check_id.equals(id_paziente.toUpperCase()) && check_id.equals(p.getPrenotazione().id_paziente) ) { //Stampo solo quelli con ID Paziente corrispondente
+						
+					
+						
+						common.setPrenotazioniTableModel(new String[] {p.getPrenotazione().toString()}); //TODO
 						stato_lista = true;
 			
 					}
@@ -90,6 +93,9 @@ public class ComandiPrenotazione {
 						new Popup("Non é stato identificato l'ID", Popup.msgtype.ERR);
 		
 				}
+			
+			lista.createAndShowFrame("Prenotazione"); //Creo La finestra solo dopo aver aggiunto le prenotazioni al modello della tabella
+			
 			}// End primo IF
 		else
 			new Popup("Lista Vuota!", Popup.msgtype.ERR);

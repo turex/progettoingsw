@@ -64,14 +64,13 @@ public class MedicoPanel {
                 // Esegui le azioni necessarie con i valori ottenuti
                 if (!nomeValue.isEmpty() && !cognomeValue.isEmpty() && !professioneValue.isEmpty()) {
                     if (!medcommand.checkMedico(nomeValue, cognomeValue, professioneValue)) {
+                    	
                         medcommand.addMedico(m.setNome(nomeValue).setCognome(cognomeValue).setProfessione(professioneValue));
+                        
                         String Id = medcommand.getID(nomeValue,cognomeValue,professioneValue);
             			dbs.addtoJson(nomeValue, cognomeValue, Id ,professioneValue , null, null, "Medico");
             			
-            			String[] data = new String[] {m.getMedico().getNome(),m.getMedico().getCognome(), professioneValue, Id};
-            			
-            			
-            			common.setMediciTableModel(data);  // Where i add data to the MODEL
+            			common.setMediciTableModel(new String[] {m.getMedico().getNome(),m.getMedico().getCognome(), professioneValue, Id});  // Where i add data to the MODEL
             			new Popup("Medico aggiunto!", Popup.msgtype.OK);
                     } else {
             			new Popup("Errore!\nNome, cognome e data di nascita sono necessari o medico gia registrato",Popup.msgtype.ERR);
@@ -86,7 +85,7 @@ public class MedicoPanel {
             public void actionPerformed(ActionEvent e) {
                 if(!medcommand.listMedici())
                // SwingUtilities.invokeLater(() -> {
-                    lista.createAndShowFrame("Medico",false); // not showed if is empty
+                    lista.createAndShowFrame("Medico"); // not showed if is empty
                     
               //  });
                 

@@ -9,8 +9,6 @@ import java.util.Date;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
-
 import org.progettingsw.OCM.ComandiMedico;
 import org.progettingsw.OCM.ComandiPrenotazione;
 import org.progettingsw.OCM.JsonHelper;
@@ -37,11 +35,39 @@ public class PrenotazioniPanel {
     static JsonHelper jhelper = JsonHelper.getIstance();
     
     String formattedDate;
-
+    JSpinner spinner;
+    
+    Date selectedDate;
+    
+    SimpleDateFormat dateFormat;
+    
+    PrenotazioneBuilder pb = new PrenotazioneBuilder();
+    
     private PrenotazioniPanel() {
-        pazientiTable = new JTable(common.model_paz);
-        professionistiTable = new JTable(common.model_med);
+    	
+        pazientiTable = new JTable(common.model_paz){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Disabilita l'editabilità basata su isEditable
+            }
+        };
         
+        
+        professionistiTable = new JTable(common.model_med){
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false; // Disabilita l'editabilità basata su isEditable
+            }
+        };
+        
+        
+        SpinnerDateModel spinnerModel = new SpinnerDateModel();
+        spinnerModel.setCalendarField(Calendar.MINUTE); // Impostazione del campo del calendario su minuti
+        spinner = new JSpinner(spinnerModel);
+        selectedDate = (Date) spinner.getValue();
+        
+        dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm"); // Nuovo formato desiderato (per confronto database)
+        formattedDate = dateFormat.format(selectedDate);
     }
 
     public static PrenotazioniPanel getInstance() {
@@ -79,9 +105,7 @@ public class PrenotazioniPanel {
 
         // Pannello per la selezione della data e dell'ora
         JPanel prenotazioniPanel = new JPanel(new BorderLayout());
-        SpinnerDateModel spinnerModel = new SpinnerDateModel();
-        spinnerModel.setCalendarField(Calendar.MINUTE); // Impostazione del campo del calendario su minuti
-        JSpinner spinner = new JSpinner(spinnerModel);
+        
         JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(spinner, "dd/MM/yyyy HH:mm");
         spinner.setEditor(dateEditor);
         prenotazioniPanel.add(new JLabel("Data e ora prenotazione:"), BorderLayout.NORTH);
@@ -96,9 +120,8 @@ public class PrenotazioniPanel {
         addPrenotazione.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                
-                Date selectedDate = (Date) spinner.getValue();
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm"); // Nuovo formato desiderato (per confronto database)
-                formattedDate = dateFormat.format(selectedDate);
+                
+                
 
                 if ((selectProfessione == null) || selectProfessione.isEmpty() || (selectPaziente == null) || selectPaziente.isEmpty()) {
                     new Popup("Seleziona medico e paziente!", Popup.msgtype.ERR);
@@ -108,7 +131,7 @@ public class PrenotazioniPanel {
 
                 if (!commpren.checkPrenotazione(split_paziente[0], split_medico[3], split_medico[2], formattedDate.toString()) &&
                         !commpren.checkdispoMedico(split_medico[0], split_medico[1], split_medico[2], formattedDate.toString())) {
-                    PrenotazioneBuilder pb = new PrenotazioneBuilder();
+                    
                     
                     
                     
@@ -119,9 +142,9 @@ public class PrenotazioniPanel {
                     
                     commpren.addPrenotazione(pb);
                     jhelper.addPrenotazioni(split_paziente[4], split_medico[3], split_medico[2], formattedDate.toString()); // ID paziente, ID Medico , Professione e data prenotazione
-                    common.setPrenotazioniTableModel(new String[] {split_paziente[4], split_medico[3], split_medico[2], formattedDate.toString()});
                     
-
+                    common.setPrenotazioniTableModel(new String[] {split_paziente[4], split_medico[3], split_medico[2], formattedDate.toString()});
+                  
                     new Popup("Prenotazione aggiunta!", Popup.msgtype.OK);
                 } else {
                     new Popup("Prenotazione già presente, medico non disponibile o campi vuoti", Popup.msgtype.ERR);
@@ -138,7 +161,7 @@ public class PrenotazioniPanel {
                 try {
                     
                     if (split_paziente != null || split_medico != null) {
-                    	commpren.listPrenotazioni(split_paziente[4],split_medico[3], split_medico[2], formattedDate.toString());
+                    	commpren.listPrenotazioni(split_paziente[4], pb);
                     }
                 } catch (NullPointerException e1) {
                     e1.printStackTrace();

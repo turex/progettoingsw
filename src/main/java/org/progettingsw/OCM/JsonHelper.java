@@ -9,7 +9,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.progettingsw.OCM.panels.CommonPanelUtils;
 import org.progettingsw.OCM.panels.ListFrame;
-import org.progettingsw.OCM.panels.PrenotazioniPanel;
 
 //Uso il Singleton JSon (Medico, paziente)
 
@@ -39,8 +38,9 @@ import org.progettingsw.OCM.panels.PrenotazioniPanel;
  * 
  */
 
+
+
 public class JsonHelper {
-	
 	
 	private static JsonHelper istance; //Singleton istance
 	public static JSONArray medico = new JSONArray(); //inserisco qui l'array del JSON per i medici
@@ -86,6 +86,8 @@ public class JsonHelper {
 	JSONObject med,paz; //TODO
 	
 	static int size = 0; // variabile globale per la dimesione delle liste array dei vari DB
+	
+	FileReader reader;
 
 	private JsonHelper() {
 	         
@@ -168,7 +170,7 @@ public class JsonHelper {
 		 
 		 
 		 try {
-		       Object obj = parser.parse(new FileReader(PATH + "\\" + typeofdb + ".json"));
+		       Object obj = parser.parse(reader = new FileReader(PATH + "\\" + typeofdb + ".json"));
 		        JSONArray jsonArray = (JSONArray) obj;
 		        
 		        int i;
@@ -236,13 +238,20 @@ public class JsonHelper {
 			        		   .setData(ppren.get(i)));
 			           
 			           addPrenotazioni(id_p.get(i), id_m.get(i), profess.get(i), ppren.get(i)); //Aggiungo la prenotazione al JSON per il salvataggio
+			           
+			           //common.setPrenotazioniTableModel(new String[] {
+			        		   //id_p.get(i), id_m.get(i),profess.get(i),ppren.get(i)});
 	
 			          break;
 		            
 		            
 		            
 		            }
+		            
 		        }
+		        
+		   reader.close();
+		        
 		    } catch (Exception e) {
 		        System.out.println("Errore: " + e.getMessage());
 		        e.printStackTrace(); // Stampa lo stack trace per avere maggiori dettagli sull'errore
@@ -274,25 +283,18 @@ public class JsonHelper {
              */
     		
     		case "Medico":
-    			// medico.forEach(med -> {
-    				// parseObject((JSONObject)med,typeofdb);
+    			 medico.forEach(med -> {
+    				 parseObject((JSONObject)med,typeofdb);
     				
     				
-    				//});	
+    				});	
     				
-    				for(int i = 0; i < medico.size();i++) 
-    					parseObject((JSONObject)med,typeofdb);
-    				
-    				
-    				
-    			
+
     			break;
     			
     		case "Paziente":
-    			//paziente.forEach(paz -> parseObject((JSONObject)paz,typeofdb));
+    			paziente.forEach(paz -> parseObject((JSONObject)paz,typeofdb));
     			
-    			for(int i = 0; i < paziente.size();i++) 
-					parseObject((JSONObject)paz,typeofdb);
     			
     			break;
     			
@@ -367,7 +369,6 @@ public class JsonHelper {
     private static void parseObject(JSONObject database, String typeofdb) 
     {
         	//Get object within list
-    	System.out.println(typeofdb);
     	
     	try {
         	JSONObject Object = (JSONObject) database.get(typeofdb);

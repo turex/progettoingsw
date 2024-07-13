@@ -72,12 +72,20 @@ public class PazientePanel {
             	// Esegui le azioni necessarie con i valori ottenuti
             	if (!nomeValue.isEmpty() && !cognomeValue.isEmpty() && !formattedDate.isEmpty()) {
             		if (!command.checkPaziente(nomeValue, cognomeValue, formattedDate)) {
+            			
             			command.addPaziente(p.setNome(nomeValue).setCognome(cognomeValue).setNascita(formattedDate).setSesso(sessoValue));
+            			
             			String Id = command.getID(nomeValue, cognomeValue,formattedDate.toString());
+            			
             			dbs.addtoJson(nomeValue, cognomeValue, Id ,null , formattedDate, sessoValue, "Paziente");
             			
-            			String[] data = new String[] {p.getPaziente().getNome(), p.getPaziente().getCognome(), p.getPaziente().getNascita(),p.getPaziente().getSesso(),  Id};
-            			common.setPazientiTableModel(data);
+            		
+            			common.setPazientiTableModel(new String[] {p.getPaziente().getNome(), 
+            					p.getPaziente().getCognome(), 
+            					p.getPaziente().getNascita(),
+            					p.getPaziente().getSesso(),  
+            					Id});
+            			
             			
             			new Popup("Paziente aggiunto!",Popup.msgtype.OK);
             		} else {
@@ -93,7 +101,7 @@ public class PazientePanel {
         	public void actionPerformed(ActionEvent e) {
         		if(!command.listPazienti())
         		
-        		lista.createAndShowFrame("Paziente",false);
+        		lista.createAndShowFrame("Paziente");
         		
         	}
         });

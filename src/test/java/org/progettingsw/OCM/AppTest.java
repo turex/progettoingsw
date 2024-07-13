@@ -72,8 +72,13 @@ public class AppTest
     @AfterClass
     static public void cleantestJson() {
     	System.out.println("Pulizia dei database di prova");
-    	if(m.exists())
+    	try {
+    	//if(m.exists())
     	m.delete();
+    	}
+    	catch (Exception e) {
+    		e.printStackTrace();
+    	}
     	if(p.exists())
         	p.delete();
     }

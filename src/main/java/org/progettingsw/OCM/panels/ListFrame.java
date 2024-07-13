@@ -1,13 +1,6 @@
 package org.progettingsw.OCM.panels;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
-
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -57,7 +50,7 @@ public class ListFrame {
     
   
 
-    public void createAndShowFrame(String tipo, boolean isEditable) {
+    public void createAndShowFrame(String tipo) {
 		JFrame f = new JFrame();
 		f.setTitle("Lista " + tipo);
 		f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -70,19 +63,27 @@ public class ListFrame {
             model = (DefaultTableModel) common.model_med; // Imposta il modello di tabella per i medici
         } else if ("Paziente".equals(tipo)) {
             model = (DefaultTableModel) common.model_paz; // Imposta il modello di tabella per i pazienti
-        } else if ("Prenotazione".equals(tipo)) {
-            model = (DefaultTableModel) common.model_pren; // Imposta il modello di tabella per le prenotazioni
+        //} else if ("Prenotazione".equals(tipo)) {
+            //model = (DefaultTableModel) common.model_pren; // Imposta il modello di tabella per le prenotazioni
         } 
 
       
-        tabella = new JTable(model) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return isEditable; // Permetti l'editabilità basata su isEditable
+        tabella = new JTable(model){
+          /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+		@Override
+		public boolean isCellEditable(int row, int column) {
+                return false; // Disabilita l'editabilità basata su isEditable
             }
         };
-
+           
         common.setModel(tabella, model);
+        
+        System.out.println(model.getRowCount());
+        
         scrollPane = new JScrollPane(tabella);
         f.add(scrollPane, BorderLayout.CENTER);
         //f.add(save,BorderLayout.SOUTH);
@@ -99,18 +100,6 @@ public class ListFrame {
         }
     }
     
-    /*
-    public void addPazienteData(DefaultTableModel model, String nome, String cognome, String datadinascita, String sesso, String id) {
-    	model.addRow(new Object[]{nome, cognome, datadinascita,sesso,id});
-    }
-    
-    public void addMedicoData(DefaultTableModel model,String nome, String cognome, String specializzazione, String id) {
-        model.addRow(new Object[]{nome, cognome, specializzazione,id});
-        
-        
-    }
-    
-    */
     
     
 }
