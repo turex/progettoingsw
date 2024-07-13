@@ -29,7 +29,6 @@ public class MedicoPanel {
     
     CommonPanelUtils common = CommonPanelUtils.getInstance();
     
-    //ListFrame lista = ListFrame.getInstance();
     ListFrame lista = new ListFrame();
 
     static String selectionProfessione; // mi da l'item della professione
@@ -65,9 +64,12 @@ public class MedicoPanel {
                 if (!nomeValue.isEmpty() && !cognomeValue.isEmpty() && !professioneValue.isEmpty()) {
                     if (!medcommand.checkMedico(nomeValue, cognomeValue, professioneValue)) {
                     	
-                        medcommand.addMedico(m.setNome(nomeValue).setCognome(cognomeValue).setProfessione(professioneValue));
-                        
-                        String Id = medcommand.getID(nomeValue,cognomeValue,professioneValue);
+                    	
+                    	medcommand.addMedico(m.setNome(nomeValue).setCognome(cognomeValue).setProfessione(professioneValue));
+                    	
+                    	
+                    	 String Id = medcommand.getID(nomeValue,cognomeValue,professioneValue);
+
             			dbs.addtoJson(nomeValue, cognomeValue, Id ,professioneValue , null, null, "Medico");
             			
             			common.setMediciTableModel(new String[] {m.getMedico().getNome(),m.getMedico().getCognome(), professioneValue, Id});  // Where i add data to the MODEL

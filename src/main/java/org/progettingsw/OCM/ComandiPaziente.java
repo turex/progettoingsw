@@ -110,7 +110,7 @@ public class ComandiPaziente {
 	}
 
 	public String getID(String nome, String cognome, String nascita) {
-	    String ID = null;
+	    String ID = "";
 	    String nomeUpper = nome.toUpperCase();
 	    String cognomeUpper = cognome.toUpperCase();
 	    String nascitaUpper = nascita.toUpperCase();

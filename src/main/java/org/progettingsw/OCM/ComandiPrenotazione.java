@@ -71,7 +71,7 @@ public class ComandiPrenotazione {
 	}
 
 	
-	public void listPrenotazioni(String id_paziente, PrenotazioneBuilder p) {  
+	public void listPrenotazioni(String id_paziente, PrenotazioneBuilder p) {  //fare check su effettivo inserimento in lista
 		
 		boolean stato_lista = false; // default la setto false per dire che é vuota
 		
@@ -84,7 +84,8 @@ public class ComandiPrenotazione {
 						
 					
 						
-						common.setPrenotazioniTableModel(new String[] {p.getPrenotazione().toString()}); //TODO
+						common.setPrenotazioniTableModel(new String[] {p.getPrenotazione().id_paziente,p.getPrenotazione().id_medico,p.getPrenotazione().professione,
+								p.getPrenotazione().data}); //// ID paziente, ID Medico , Professione e data prenotazione
 						stato_lista = true;
 			
 					}

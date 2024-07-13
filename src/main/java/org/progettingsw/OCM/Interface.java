@@ -29,7 +29,8 @@ public class Interface {
 	
 	JFrame frame;
 
-	private final String TITOLO = "OCM Opensource clinic manager";
+	private final String VERSION = "v 1.6";
+	private final String TITOLO = "OCM Opensource clinic manager " + VERSION;
 
 	private final int X = 1000;
 	private final int Y = 500;

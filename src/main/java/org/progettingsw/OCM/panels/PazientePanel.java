@@ -27,7 +27,7 @@ public class PazientePanel {
 	static ComandiPaziente command = ComandiPaziente.getIstance();
 	static PazienteBuilder p = new PazienteBuilder();
 	static JsonHelper dbs = JsonHelper.getIstance(); // creo oggetto JSON
-	CommonPanelUtils common = new CommonPanelUtils();
+	CommonPanelUtils common = CommonPanelUtils.getInstance();
 	
 	ListFrame lista = new ListFrame();
 	
@@ -73,20 +73,21 @@ public class PazientePanel {
             	if (!nomeValue.isEmpty() && !cognomeValue.isEmpty() && !formattedDate.isEmpty()) {
             		if (!command.checkPaziente(nomeValue, cognomeValue, formattedDate)) {
             			
-            			command.addPaziente(p.setNome(nomeValue).setCognome(cognomeValue).setNascita(formattedDate).setSesso(sessoValue));
+            			command.addPaziente(p.setNome(nomeValue).setCognome(cognomeValue).setNascita(formattedDate).setSesso(sessoValue)); // *REMINDER*  L'ID viene assegnato da addPaziente
             			
             			String Id = command.getID(nomeValue, cognomeValue,formattedDate.toString());
             			
             			dbs.addtoJson(nomeValue, cognomeValue, Id ,null , formattedDate, sessoValue, "Paziente");
             			
-            		
-            			common.setPazientiTableModel(new String[] {p.getPaziente().getNome(), 
-            					p.getPaziente().getCognome(), 
-            					p.getPaziente().getNascita(),
-            					p.getPaziente().getSesso(),  
-            					Id});
+            		String[] data = new String[] {p.getPaziente().getNome(), 
+        					p.getPaziente().getCognome(), 
+        					p.getPaziente().getNascita(),
+        					p.getPaziente().getSesso(),  
+        					Id};
+
+            			common.setPazientiTableModel(data);
             			
-            			
+            			            				
             			new Popup("Paziente aggiunto!",Popup.msgtype.OK);
             		} else {
             			new Popup("Errore!\nNome, cognome e data di nascita sono necessari o paziente gia registrato",Popup.msgtype.ERR);
@@ -99,8 +100,9 @@ public class PazientePanel {
 
         listPaziente.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
+
         		if(!command.listPazienti())
-        		
+
         		lista.createAndShowFrame("Paziente");
         		
         	}

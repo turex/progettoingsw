@@ -1,5 +1,9 @@
 package org.progettingsw.OCM.panels;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -42,20 +46,39 @@ public class CommonPanelUtils {
 		}
 		
 		public void setPazientiTableModel(String[] data) {
-	        model_paz.addRow(data);
+			String[] newData;
+	    	newData = convertToUpperCase(data);
+	        model_paz.addRow(newData);
 	    }
 
 	    public void setMediciTableModel(String[] data) {
-	        model_med.addRow(data);
+	    	
+	    	String[] newData;
+	    	newData = convertToUpperCase(data);
+	        model_med.addRow(newData);
+	        
 	    }
 	    
 	    public void setPrenotazioniTableModel(String[] data) {
-	    		    	
-	    	model_pren.addRow(data);
+	    	String[] newData;
+	    	newData = convertToUpperCase(data);
+	    	model_pren.addRow(newData);
 	    }
 	    
 	    public void setModel(JTable table, DefaultTableModel model) {
 	    	table.setModel(model);
+	    }
+	    
+	    
+	    private String[] convertToUpperCase(String[] data) {
+	        ArrayList<String> list = new ArrayList<>();
+
+	        for (String valore : data) {
+	        	//DEBUG //System.out.println("Dati : " + valore);
+	            list.add(valore.toUpperCase());
+	        }
+
+	        return list.toArray(new String[0]);
 	    }
 	    
 }

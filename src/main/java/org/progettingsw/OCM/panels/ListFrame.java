@@ -63,8 +63,8 @@ public class ListFrame {
             model = (DefaultTableModel) common.model_med; // Imposta il modello di tabella per i medici
         } else if ("Paziente".equals(tipo)) {
             model = (DefaultTableModel) common.model_paz; // Imposta il modello di tabella per i pazienti
-        //} else if ("Prenotazione".equals(tipo)) {
-            //model = (DefaultTableModel) common.model_pren; // Imposta il modello di tabella per le prenotazioni
+        } else if ("Prenotazione".equals(tipo)) {
+            model = (DefaultTableModel) common.model_pren; // Imposta il modello di tabella per le prenotazioni
         } 
 
       
@@ -80,11 +80,14 @@ public class ListFrame {
             }
         };
            
-        common.setModel(tabella, model);
+    
+       
         
-        System.out.println(model.getRowCount());
         
         scrollPane = new JScrollPane(tabella);
+        
+        common.setModel(tabella, model);
+        
         f.add(scrollPane, BorderLayout.CENTER);
         //f.add(save,BorderLayout.SOUTH);
         f.setVisible(true);

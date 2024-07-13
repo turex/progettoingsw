@@ -191,7 +191,7 @@ public class JsonHelper {
 		           med_comm.addMedico(medb.setNome(nm.get(i))
 		        		   		     .setCognome(cm.get(i))
 		        		             .setProfessione(prop.get(i))
-		        		             .setID(im.get(i))); //Lo aggiungo alla lista dei Medici
+		        		             ); //Lo aggiungo alla lista dei Medici
 		           
 		           addtoJson(nm.get(i), cm.get(i), im.get(i), prop.get(i), null, null, typeofdb); // Aggiungo i dati alla lista dei JSON (per salvataggio)
 		           
@@ -214,7 +214,7 @@ public class JsonHelper {
 		            		.setCognome(cp.get(i))
 		            		.setNascita(nap.get(i))
 		            		.setSesso(sp.get(i))
-		            		.setID(ip.get(i)));
+		            		);
 		                    
 		            addtoJson(np.get(i), cp.get(i), ip.get(i), null, nap.get(i), sp.get(i), typeofdb); // Aggiungo i dati alla lista dei JSON (per salvataggio)
 			           
@@ -239,8 +239,8 @@ public class JsonHelper {
 			           
 			           addPrenotazioni(id_p.get(i), id_m.get(i), profess.get(i), ppren.get(i)); //Aggiungo la prenotazione al JSON per il salvataggio
 			           
-			           //common.setPrenotazioniTableModel(new String[] {
-			        		   //id_p.get(i), id_m.get(i),profess.get(i),ppren.get(i)});
+			           common.setPrenotazioniTableModel(new String[] {
+			        		   id_p.get(i), id_m.get(i),profess.get(i),ppren.get(i)});
 	
 			          break;
 		            

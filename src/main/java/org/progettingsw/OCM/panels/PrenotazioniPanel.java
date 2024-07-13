@@ -132,15 +132,11 @@ public class PrenotazioniPanel {
                 if (!commpren.checkPrenotazione(split_paziente[0], split_medico[3], split_medico[2], formattedDate.toString()) &&
                         !commpren.checkdispoMedico(split_medico[0], split_medico[1], split_medico[2], formattedDate.toString())) {
                     
-                    
-                    
-                    
-                    pb.setidPaziente(split_paziente[4])
-                      .setidMedico(split_medico[3])
-                      .setProfessione(split_medico[2])
-                      .setData(formattedDate.toString());
-                    
-                    commpren.addPrenotazione(pb);
+                	commpren.addPrenotazione( pb.setidPaziente(split_paziente[4])
+                            .setidMedico(split_medico[3])
+                            .setProfessione(split_medico[2])
+                            .setData(formattedDate.toString()));
+                	
                     jhelper.addPrenotazioni(split_paziente[4], split_medico[3], split_medico[2], formattedDate.toString()); // ID paziente, ID Medico , Professione e data prenotazione
                     
                     common.setPrenotazioniTableModel(new String[] {split_paziente[4], split_medico[3], split_medico[2], formattedDate.toString()});
