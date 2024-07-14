@@ -29,20 +29,19 @@ public class ComandiPrenotazione {
 
 	}
 	
-	public boolean checkdispoMedico(String nome_medico, String cognome_medico, String professione, String data_prenotazione) {
+	public boolean checkdispoMedico(String nome_medico, String professione, String data_prenotazione) {
 	    // True se esiste o ci sono errori
 	    if (nome_medico.isEmpty() || professione.isEmpty() || data_prenotazione.isEmpty()) {
 	        return true; // Uno dei parametri è vuoto, ci sono errori
 	    }
 
-	    for (Prenotazione prenotazione : pren) {
-	        if (prenotazione.getidMedico().equalsIgnoreCase(nome_medico) && prenotazione.getProfessione().equalsIgnoreCase(professione) && prenotazione.getData().equals(data_prenotazione)) {
-	            return true; // Il medico non è disponibile per la prenotazione
-	        }
-	    }
-
-	    return false; // Il medico è disponibile per la prenotazione
+	    return pren.stream()
+	               .anyMatch(prenotazione -> prenotazione.getidMedico().equalsIgnoreCase(nome_medico) &&
+	                                          prenotazione.getProfessione().equalsIgnoreCase(professione) &&
+	                                          prenotazione.getData().equals(data_prenotazione));
 	}
+
+
 
 	
 	
@@ -53,22 +52,38 @@ public class ComandiPrenotazione {
 	
 	public boolean checkPrenotazione(String id_paziente, String id_medico, String professione, String data_prenotazione) {
 	    // True se esiste o ci sono errori
-	    if (id_paziente==null || id_medico==null|| professione==null || data_prenotazione==null) {
+	    if (id_paziente == null || id_medico == null || professione == null || data_prenotazione == null) {
+	        System.out.println("Errore: uno dei parametri è null");
 	        return true; // Uno dei parametri è vuoto, ci sono errori
 	    }
 
-	    for (Prenotazione prenotazione : pren) {
-	        if ((prenotazione.getidPaziente().equalsIgnoreCase(id_paziente) && prenotazione.getidMedico().equalsIgnoreCase(id_medico) && prenotazione.getProfessione().equalsIgnoreCase(professione) && prenotazione.getData().equals(data_prenotazione))
-	                || (prenotazione.getidMedico().equalsIgnoreCase(id_medico) && prenotazione.getData().equals(data_prenotazione))) {
-	            
-	        	return true; // La prenotazione esiste già o ci sono errori
-	        }
-	    }
-	    
-	    
+	    System.out.println("Parametri ricevuti: " + id_paziente + ", " + id_medico + ", " + professione + ", " + data_prenotazione);
 
+	    boolean prenotazioneEsistente = pren.stream()
+	        .peek(prenotazione -> {
+	        	
+	        	System.out.println("Controllando prenotazione: " + prenotazione);
+	        		
+	        		  System.out.println(prenotazione);
+	        }
+	        		)
+	        .anyMatch(prenotazione -> 
+	            (prenotazione.getidPaziente().equalsIgnoreCase(id_paziente) 
+	                && prenotazione.getidMedico().equalsIgnoreCase(id_medico) 
+	                && prenotazione.getProfessione().equalsIgnoreCase(professione) 
+	                && prenotazione.getData().equals(data_prenotazione))
+	        );
+
+	    if (prenotazioneEsistente) {
+	        System.out.println("Prenotazione trovata o errore nei parametri");
+	        return true; // La prenotazione esiste già o ci sono errori
+	    }
+
+	    System.out.println("Nessuna prenotazione trovata, prenotazione valida");
 	    return false; // La prenotazione è valida
 	}
+
+
 
 	
 	public void listPrenotazioni(String id_paziente, PrenotazioneBuilder p) {

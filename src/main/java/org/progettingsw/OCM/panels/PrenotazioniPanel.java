@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import javax.swing.*;
@@ -130,7 +131,7 @@ public class PrenotazioniPanel {
 
 
                 if (!commpren.checkPrenotazione(split_paziente[0], split_medico[3], split_medico[2], formattedDate.toString()) &&
-                        !commpren.checkdispoMedico(split_medico[0], split_medico[1], split_medico[2], formattedDate.toString())) {
+                        !commpren.checkdispoMedico(split_medico[0], split_medico[2], formattedDate.toString())) {
                     
                 	commpren.addPrenotazione( pb.setidPaziente(split_paziente[4])
                             .setidMedico(split_medico[3])
@@ -157,6 +158,8 @@ public class PrenotazioniPanel {
                 try {
                     
                     if (split_paziente != null || split_medico != null) {
+                    	System.out.println(split_paziente[4]);
+                    	
                     	commpren.listPrenotazioni(split_paziente[4], pb);
                     }
                 } catch (NullPointerException e1) {
@@ -167,6 +170,8 @@ public class PrenotazioniPanel {
 
         pazientiTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent arg0) {
+            	selectPaziente = "";
+            	Arrays.fill(split_paziente, "");
                 if (!arg0.getValueIsAdjusting()) {
                     try {
                         int selectedRow = pazientiTable.getSelectedRow();
@@ -191,6 +196,10 @@ public class PrenotazioniPanel {
 
         professionistiTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent arg0) {
+            	
+            	selectProfessione = "";
+            	Arrays.fill(split_medico, "");
+            	
                 if (!arg0.getValueIsAdjusting()) {
                     try {
                         int selectedRow = professionistiTable.getSelectedRow();
