@@ -80,5 +80,29 @@ public class CommonPanelUtils {
 
 	        return list.toArray(new String[0]);
 	    }
+
+		public void clearTableModel(DefaultTableModel model) {
+			
+			model.setRowCount(0);
+			
+		}
+		
+		
+		public boolean containsPrenotazione(String[] prenotazioneData) {
+	        // Check if the table model already contains the appointment
+	        for (int i = 0; i < model_pren.getRowCount(); i++) {
+	            boolean match = true;
+	            for (int j = 0; j < prenotazioneData.length; j++) {
+	                if (!model_pren.getValueAt(i, j).equals(prenotazioneData[j])) {
+	                    match = false;
+	                    break;
+	                }
+	            }
+	            if (match) {
+	                return true;
+	            }
+	        }
+	        return false;
+	    }
 	    
 }

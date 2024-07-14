@@ -13,7 +13,7 @@ public class Popup {
 	
 	String title,testo = "";
 	
-	public Popup(String testo, msgtype m){
+public Popup(String testo, msgtype m){
 		
 		this.testo = testo; // Messaggio BOX
 		this.mg = m;

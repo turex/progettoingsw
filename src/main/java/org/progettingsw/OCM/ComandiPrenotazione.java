@@ -71,39 +71,40 @@ public class ComandiPrenotazione {
 	}
 
 	
-	public void listPrenotazioni(String id_paziente, PrenotazioneBuilder p) {  //fare check su effettivo inserimento in lista
-		
-		boolean stato_lista = false; // default la setto false per dire che é vuota
-		
-		if(pren.size() > 0) {
-		
-			for (int list = 0; list < pren.size(); list++) {
-				String check_id="";
-				check_id = pren.get(list).id_paziente.toUpperCase();
-					if(check_id.equals(id_paziente.toUpperCase()) && check_id.equals(p.getPrenotazione().id_paziente) ) { //Stampo solo quelli con ID Paziente corrispondente
-						
-					
-						
-						common.setPrenotazioniTableModel(new String[] {p.getPrenotazione().id_paziente,p.getPrenotazione().id_medico,p.getPrenotazione().professione,
-								p.getPrenotazione().data}); //// ID paziente, ID Medico , Professione e data prenotazione
-						stato_lista = true;
-			
-					}
-			
-					if(!stato_lista)
-						new Popup("Non é stato identificato l'ID", Popup.msgtype.ERR);
-		
-				}
-			
-			lista.createAndShowFrame("Prenotazione"); //Creo La finestra solo dopo aver aggiunto le prenotazioni al modello della tabella
-			
-			}// End primo IF
-		else
-			new Popup("Lista Vuota!", Popup.msgtype.ERR);
-	
-		
-		}	
-	
+	public void listPrenotazioni(String id_paziente, PrenotazioneBuilder p) {
+	    boolean stato_lista = false; // default set to false to indicate the list is empty
+
+	    if (pren != null && pren.size() > 0) {
+	        common.clearTableModel(common.model_pren); // Clear the table model before adding new entries
+
+	        for (int list = 0; list < pren.size(); list++) {
+	            String check_id = pren.get(list).id_paziente.toUpperCase();
+	            if (check_id.equals(id_paziente.toUpperCase())) { // Print only those with matching patient ID
+	                String[] prenotazioneData = new String[] {
+	                    pren.get(list).id_paziente,
+	                    pren.get(list).id_medico,
+	                    pren.get(list).professione,
+	                    pren.get(list).data
+	                };
+
+	                if (!common.containsPrenotazione(prenotazioneData)) { // Check if the appointment is already in the model
+	                    common.setPrenotazioniTableModel(prenotazioneData); // Add the appointment to the table model
+	                    stato_lista = true;
+	                }
+	            }
+	        }
+
+	        if (!stato_lista) {
+	            new Popup("Non è stata identificata alcuna prenotazione associata all'ID", Popup.msgtype.ERR);
+	        } else {
+	            lista.createAndShowFrame("Prenotazione"); // Create the window only after adding appointments to the table model
+	        }
+	    } else {
+	        new Popup("Database vuoto!", Popup.msgtype.ERR);
+	    }
+	}
+
+
 }
 
 
