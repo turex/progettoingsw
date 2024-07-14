@@ -8,7 +8,7 @@ public class ComandiPaziente {
 	List<Paziente> pazi = new ArrayList<>();
 	PazienteBuilder p;
 	
-	static ComandiPaziente istance;
+	static private ComandiPaziente istance;
 	
 	CommonCommand common = new CommonCommand();
 	
