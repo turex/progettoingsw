@@ -51,6 +51,12 @@ public class Prenotazione {
 				+ ", data=" + data + "]";
 	}
 	
+	
+	public String toString1() {
+		return "[" + id_paziente + ", " + id_medico +  ", " + professione
+				+ ", " + data + "]";
+	}
+	
 
 }
 

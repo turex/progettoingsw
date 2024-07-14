@@ -69,6 +69,10 @@ public class CommonPanelUtils {
 	    	table.setModel(model);
 	    }
 	    
+	    public void clearModel(DefaultTableModel model) {
+	    	for(int i = 0; i < model.getRowCount(); i++)
+	    	model.removeRow(i);
+	    }
 	    
 	    private String[] convertToUpperCase(String[] data) {
 	        ArrayList<String> list = new ArrayList<>();

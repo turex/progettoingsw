@@ -1,221 +1,112 @@
-package org.progettingsw.OCM.panels;
+package org.progettingsw.OCM;
 
-import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import org.progettingsw.OCM.ComandiMedico;
-import org.progettingsw.OCM.ComandiPrenotazione;
-import org.progettingsw.OCM.JsonHelper;
-import org.progettingsw.OCM.Popup;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+
+import org.progettingsw.OCM.Prenotazione;
 import org.progettingsw.OCM.PrenotazioneBuilder;
+import org.progettingsw.OCM.panels.CommonPanelUtils;
+import org.progettingsw.OCM.panels.ListFrame;
 
-public class PrenotazioniPanel {
-
-    String selectProfessione;
-    String selectPaziente;
-
+public class ComandiPrenotazione {
+    
+    static ComandiPrenotazione istance;
     static CommonPanelUtils common = CommonPanelUtils.getInstance();
-
-    JTable pazientiTable;
-    JTable professionistiTable;
+    static ListFrame lista = new ListFrame();
     
-    String[] split_paziente = {};
-    String[] split_medico = {};
-
-    static PrenotazioniPanel instance;
+    List<Prenotazione> pren = new ArrayList<>();
+    private List<String> salvaPrenotazioni = new ArrayList<>(); // qui salvo le prenotazioni per singolo user da visualizzare
     
-    static ComandiMedico commed = ComandiMedico.getIstance();
-    static ComandiPrenotazione commpren = ComandiPrenotazione.getIstance();
-    static JsonHelper jhelper = JsonHelper.getIstance();
-    
-    String formattedDate;
-    JSpinner spinner;
-    
-    Date selectedDate;
-    
-    SimpleDateFormat dateFormat;
-    
-    PrenotazioneBuilder pb = new PrenotazioneBuilder();
-    
-    private PrenotazioniPanel() {
-    	
-        pazientiTable = new JTable(common.model_paz){
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false; // Disabilita l'editabilità basata su isEditable
-            }
-        };
-        
-        
-        professionistiTable = new JTable(common.model_med){
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false; // Disabilita l'editabilità basata su isEditable
-            }
-        };
-        
-        
-        SpinnerDateModel spinnerModel = new SpinnerDateModel();
-        spinnerModel.setCalendarField(Calendar.MINUTE); // Impostazione del campo del calendario su minuti
-        spinner = new JSpinner(spinnerModel);
-        selectedDate = (Date) spinner.getValue();
-        
-        dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm"); // Nuovo formato desiderato (per confronto database)
-        formattedDate = dateFormat.format(selectedDate);
-    }
-
-    public static PrenotazioniPanel getInstance() {
-        if (instance == null) {
-            instance = new PrenotazioniPanel();
+    public static ComandiPrenotazione getIstance() {
+        if (istance == null) {
+            istance = new ComandiPrenotazione();
         }
-        return instance;
+        return istance;
+    }
+    
+    public void addPrenotazione(PrenotazioneBuilder p) {
+        pren.add(p.getPrenotazione());
+    }
+    
+    public boolean checkdispoMedico(String nome_medico, String cognome_medico, String professione, String data_prenotazione) {
+        // True se esiste o ci sono errori
+        if (nome_medico.isEmpty() || professione.isEmpty() || data_prenotazione.isEmpty()) {
+            return true; // Uno dei parametri è vuoto, ci sono errori
+        }
+
+        for (Prenotazione prenotazione : pren) {
+            if (prenotazione.getidMedico().equalsIgnoreCase(nome_medico) && prenotazione.getProfessione().equalsIgnoreCase(professione) && prenotazione.getData().equals(data_prenotazione)) {
+                return true; // Il medico non è disponibile per la prenotazione
+            }
+        }
+
+        return false; // Il medico è disponibile per la prenotazione
+    }
+    
+    public boolean checkPrenotazione(String id_paziente, String id_medico, String professione, String data_prenotazione) {
+        // True se esiste o ci sono errori
+        if (id_paziente == null || id_medico == null || professione == null || data_prenotazione == null) {
+            return true; // Uno dei parametri è vuoto, ci sono errori
+        }
+
+        for (Prenotazione prenotazione : pren) {
+            if ((prenotazione.getidPaziente().equalsIgnoreCase(id_paziente) && prenotazione.getidMedico().equalsIgnoreCase(id_medico) && prenotazione.getProfessione().equalsIgnoreCase(professione) && prenotazione.getData().equals(data_prenotazione))
+                    || (prenotazione.getidMedico().equalsIgnoreCase(id_medico) && prenotazione.getData().equals(data_prenotazione))) {
+                return true; // La prenotazione esiste già o ci sono errori
+            }
+        }
+
+        return false; // La prenotazione è valida
+    }
+    
+    public void listPrenotazioni(String id_paziente, PrenotazioneBuilder p) {
+        boolean stato_lista = false; // default la setto false per dire che é vuota
+
+        if (pren.size() > 0) {
+            common.clearModel(common.model_pren);
+            for (int list = 0; list < pren.size(); list++) {
+                String check_id = pren.get(list).id_paziente.toUpperCase();
+                if (check_id.equals(id_paziente.toUpperCase()) && !isAlreadyOnList(common.model_pren.getDataVector(), p)) {
+                    String temp = p.getPrenotazione().toString1();
+                    if (temp != null && !temp.isEmpty()) {
+                        String[] temp1 = temp.replace("[", "").replace("]", "").split(",");
+
+                        if (temp1.length == 4) {
+                            common.setPrenotazioniTableModel(new String[] {temp1[0], temp1[1], temp1[2], temp1[3]});
+                            System.out.println(salvaPrenotazioni);
+
+                            stato_lista = true;
+                        } else {
+                            System.out.println("Errore: La prenotazione non ha il formato corretto.");
+                        }
+                    } else {
+                        System.out.println("Errore: La prenotazione è vuota.");
+                    }
+                }
+            }
+            if (!stato_lista) {
+                new Popup("Non é stato identificato l'ID", Popup.msgtype.ERR);
+            }
+
+            lista.createAndShowFrame("Prenotazione"); // Creo La finestra solo dopo aver aggiunto le prenotazioni al modello della tabella
+        } else {
+            new Popup("Lista Vuota!", Popup.msgtype.ERR);
+        }
     }
 
-    public JPanel createPanel() {
-        JPanel panel = new JPanel(new BorderLayout());
+    private boolean isAlreadyOnList(Vector dati, PrenotazioneBuilder p) {
+        boolean isOnList = false;
+        List<String> check = new ArrayList<>(dati);
 
-        JButton addPrenotazione, listPrenotazioni, salvaDB;
+        String prenotazioneStr = p.getPrenotazione().toString1();
+        if (!check.contains(prenotazioneStr) && !salvaPrenotazioni.contains(prenotazioneStr)) {
+            salvaPrenotazioni.add(prenotazioneStr);
+            System.out.println("Check - " + check + "\n" + "To check: " + prenotazioneStr);
+        } else {
+            isOnList = true;
+        }
 
-        // Creazione del pannello per i pazienti a sinistra
-        JPanel pazientiPanel = new JPanel();
-        pazientiPanel.setLayout(new BorderLayout());
-        pazientiPanel.add(new JLabel("Lista Pazienti:"), BorderLayout.NORTH);
-
-        JScrollPane pazientiScrollPane = new JScrollPane(pazientiTable);
-        pazientiPanel.add(pazientiScrollPane, BorderLayout.CENTER);
-
-        // Creazione del pannello per i professionisti a destra
-        JPanel professionistiPanel = new JPanel();
-        professionistiPanel.setLayout(new BorderLayout());
-        professionistiPanel.add(new JLabel("Lista Professionisti:"), BorderLayout.NORTH);
-        JScrollPane professionistiScrollPane = new JScrollPane(professionistiTable);
-        professionistiPanel.add(professionistiScrollPane, BorderLayout.CENTER);
-
-        // Pannello per i bottoni
-        JPanel buttonPanel = new JPanel();
-        buttonPanel.add(addPrenotazione = new JButton("Aggiungi prenotazione"));
-        buttonPanel.add(listPrenotazioni = new JButton("Lista prenotazioni"));
-        buttonPanel.add(salvaDB = new JButton("Salva DB"));
-
-        // Pannello per la selezione della data e dell'ora
-        JPanel prenotazioniPanel = new JPanel(new BorderLayout());
-        
-        JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(spinner, "dd/MM/yyyy HH:mm");
-        spinner.setEditor(dateEditor);
-        prenotazioniPanel.add(new JLabel("Data e ora prenotazione:"), BorderLayout.NORTH);
-        prenotazioniPanel.add(spinner, BorderLayout.CENTER);
-
-        // Aggiunta dei pannelli al pannello principale
-        panel.add(pazientiPanel, BorderLayout.WEST);
-        panel.add(professionistiPanel, BorderLayout.EAST);
-        panel.add(buttonPanel, BorderLayout.NORTH);
-        panel.add(prenotazioniPanel, BorderLayout.SOUTH);
-
-        addPrenotazione.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-               
-                
-                
-
-                if ((selectProfessione == null) || selectProfessione.isEmpty() || (selectPaziente == null) || selectPaziente.isEmpty()) {
-                    new Popup("Seleziona medico e paziente!", Popup.msgtype.ERR);
-                    return;
-                }
-
-
-                if (!commpren.checkPrenotazione(split_paziente[0], split_medico[3], split_medico[2], formattedDate.toString()) &&
-                        !commpren.checkdispoMedico(split_medico[0], split_medico[1], split_medico[2], formattedDate.toString())) {
-                    
-                	commpren.addPrenotazione( pb.setidPaziente(split_paziente[4])
-                            .setidMedico(split_medico[3])
-                            .setProfessione(split_medico[2])
-                            .setData(formattedDate.toString()));
-                	
-                    jhelper.addPrenotazioni(split_paziente[4], split_medico[3], split_medico[2], formattedDate.toString()); // ID paziente, ID Medico , Professione e data prenotazione
-                    
-                    common.setPrenotazioniTableModel(new String[] {split_paziente[4], split_medico[3], split_medico[2], formattedDate.toString()});
-                  
-                    new Popup("Prenotazione aggiunta!", Popup.msgtype.OK);
-                } else {
-                    new Popup("Prenotazione già presente, medico non disponibile o campi vuoti", Popup.msgtype.ERR);
-                }
-            }
-        });
-
-        listPrenotazioni.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                if (selectPaziente == null || selectPaziente.isEmpty()) {
-                    new Popup("Seleziona Paziente", Popup.msgtype.ERR);
-                    return;
-                }
-                try {
-                    
-                    if (split_paziente != null || split_medico != null) {
-                    	commpren.listPrenotazioni(split_paziente[4], pb);
-                    }
-                } catch (NullPointerException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        });
-
-        pazientiTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent arg0) {
-                if (!arg0.getValueIsAdjusting()) {
-                    try {
-                        int selectedRow = pazientiTable.getSelectedRow();
-                        if (selectedRow >= 0) {
-                        	
-                        	
-                        	
-                            selectPaziente = pazientiTable.getValueAt(selectedRow, 0) + " " +
-                                             pazientiTable.getValueAt(selectedRow, 1) + " " +
-                                             pazientiTable.getValueAt(selectedRow, 2) + " " +
-                                             pazientiTable.getValueAt(selectedRow, 3) + " " +
-                                             pazientiTable.getValueAt(selectedRow, 4); // Assicurati di ottenere l'ID
-                            
-                            split_paziente = selectPaziente.split(" ");
-                        }
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-
-        professionistiTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent arg0) {
-                if (!arg0.getValueIsAdjusting()) {
-                    try {
-                        int selectedRow = professionistiTable.getSelectedRow();
-                        if (selectedRow >= 0) {
-                            selectProfessione = professionistiTable.getValueAt(selectedRow, 0) + " " +
-                                                professionistiTable.getValueAt(selectedRow, 1) + " " +
-                                                professionistiTable.getValueAt(selectedRow, 2) + " " +
-                                                professionistiTable.getValueAt(selectedRow, 3);
-                            
-                            split_medico = selectProfessione.split(" ");
-                        }
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
-
-        salvaDB.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	jhelper.writeJson("Prenotazione");
-            }
-        });
-
-        return panel;
-    } 
-
+        return isOnList;
+    }
 }
