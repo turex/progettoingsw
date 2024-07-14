@@ -8,7 +8,7 @@ import org.progettingsw.OCM.panels.ListFrame;
 
 public class ComandiPrenotazione {
 	
-	static ComandiPrenotazione istance;
+	private static ComandiPrenotazione istance;
 	static CommonPanelUtils common = CommonPanelUtils.getInstance();
 	static ListFrame lista = new ListFrame();
 	List<Prenotazione> pren = new ArrayList<>();
@@ -60,26 +60,24 @@ public class ComandiPrenotazione {
 	    System.out.println("Parametri ricevuti: " + id_paziente + ", " + id_medico + ", " + professione + ", " + data_prenotazione);
 
 	    boolean prenotazioneEsistente = pren.stream()
-	        .peek(prenotazione -> {
-	        	
-	        	System.out.println("Controllando prenotazione: " + prenotazione);
-	        		
-	        		  System.out.println(prenotazione);
-	        }
-	        		)
-	        .anyMatch(prenotazione -> 
-	            (prenotazione.getidPaziente().equalsIgnoreCase(id_paziente) 
-	                && prenotazione.getidMedico().equalsIgnoreCase(id_medico) 
-	                && prenotazione.getProfessione().equalsIgnoreCase(professione) 
-	                && prenotazione.getData().equals(data_prenotazione))
-	        );
+		        .peek(prenotazione -> {
+
+		        	System.out.println("Controllando prenotazione: " + prenotazione);
+
+		        		  System.out.println(prenotazione);
+		        }
+		        		)
+		        .anyMatch(prenotazione -> 
+		            (prenotazione.getidPaziente().equalsIgnoreCase(id_paziente) 
+		                && prenotazione.getidMedico().equalsIgnoreCase(id_medico) 
+		                && prenotazione.getProfessione().equalsIgnoreCase(professione) 
+		                && prenotazione.getData().equals(data_prenotazione))
+		        );
 
 	    if (prenotazioneEsistente) {
-	        System.out.println("Prenotazione trovata o errore nei parametri");
 	        return true; // La prenotazione esiste già o ci sono errori
 	    }
 
-	    System.out.println("Nessuna prenotazione trovata, prenotazione valida");
 	    return false; // La prenotazione è valida
 	}
 

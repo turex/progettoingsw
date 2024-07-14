@@ -29,7 +29,7 @@ public class PrenotazioniPanel {
     String[] split_paziente = {};
     String[] split_medico = {};
 
-    static PrenotazioniPanel instance;
+    private static PrenotazioniPanel instance;
     
     static ComandiMedico commed = ComandiMedico.getIstance();
     static ComandiPrenotazione commpren = ComandiPrenotazione.getIstance();
@@ -158,8 +158,6 @@ public class PrenotazioniPanel {
                 try {
                     
                     if (split_paziente != null || split_medico != null) {
-                    	System.out.println(split_paziente[4]);
-                    	
                     	commpren.listPrenotazioni(split_paziente[4], pb);
                     }
                 } catch (NullPointerException e1) {
