@@ -42,9 +42,9 @@ public class PazientePanel {
         
         nome = common.createTextField("Nome:"); // Lunghezza preferita per il campo Nome
         cognome = common.createTextField("Cognome:"); // Lunghezza preferita per il campo Cognome
-        dateSpinner = common.createSpinner("Data di nascita:", "dd/MM/yyyy");
+        dateSpinner = common.createSpinner("dd/MM/yyyy");
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        genderSpinner = common.createSpinner("Sesso:", new String[]{"M", "F"});
+        genderSpinner = common.createSpinner(new String[]{"M", "F"});
         
         panel.add(new JLabel("Nome:"));
         panel.add(nome);

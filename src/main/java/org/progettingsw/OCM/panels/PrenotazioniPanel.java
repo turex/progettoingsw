@@ -64,7 +64,7 @@ public class PrenotazioniPanel {
             }
         };
         
-        prioritySpinner = common.createSpinner("Prioritá : ", new String[]{"1", "2","3"});
+        prioritySpinner = common.createSpinner(new String[]{"1", "2","3"});
         
         
         SpinnerDateModel spinnerModel = new SpinnerDateModel();
