@@ -6,13 +6,15 @@ public class Prenotazione {
 	String id_medico ="";
 	String professione ="";
 	String data="";	
+	String priority;
 		
 
-	public Prenotazione(String id_paziente, String id_medico,String professione, String data) {
+	public Prenotazione(String id_paziente, String id_medico,String professione, String data, String priority) {
 		this.id_paziente = id_paziente;
 		this.id_medico = id_medico;
 		this.professione = professione;
 		this.data = data;
+		this.priority = priority;
 	}
 	
 	
@@ -42,6 +44,13 @@ public class Prenotazione {
 		return data;
 		
 	}
+	
+	public String getPriority() {
+		// TODO Auto-generated method stub
+		return priority;
+		
+	}
+
 
 
 

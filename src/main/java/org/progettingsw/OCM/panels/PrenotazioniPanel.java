@@ -35,6 +35,9 @@ public class PrenotazioniPanel {
     static ComandiPrenotazione commpren = ComandiPrenotazione.getIstance();
     static JsonHelper jhelper = JsonHelper.getIstance();
     
+    JSpinner prioritySpinner; // spinner per impostare prioritá della visita
+
+    
     String formattedDate;
     JSpinner spinner;
     
@@ -60,6 +63,8 @@ public class PrenotazioniPanel {
                 return false; // Disabilita l'editabilità basata su isEditable
             }
         };
+        
+        prioritySpinner = common.createSpinner("Prioritá : ", new String[]{"1", "2","3"});
         
         
         SpinnerDateModel spinnerModel = new SpinnerDateModel();
@@ -87,6 +92,8 @@ public class PrenotazioniPanel {
         JPanel pazientiPanel = new JPanel();
         pazientiPanel.setLayout(new BorderLayout());
         pazientiPanel.add(new JLabel("Lista Pazienti:"), BorderLayout.NORTH);
+        
+        
 
         JScrollPane pazientiScrollPane = new JScrollPane(pazientiTable);
         pazientiPanel.add(pazientiScrollPane, BorderLayout.CENTER);
@@ -103,6 +110,8 @@ public class PrenotazioniPanel {
         buttonPanel.add(addPrenotazione = new JButton("Aggiungi prenotazione"));
         buttonPanel.add(listPrenotazioni = new JButton("Lista prenotazioni"));
         buttonPanel.add(salvaDB = new JButton("Salva DB"));
+        buttonPanel.add(new JLabel("Prioritá visita: "));
+        buttonPanel.add(prioritySpinner);
 
         // Pannello per la selezione della data e dell'ora
         JPanel prenotazioniPanel = new JPanel(new BorderLayout());
@@ -121,7 +130,7 @@ public class PrenotazioniPanel {
         addPrenotazione.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                
-                
+                String priorityValue = prioritySpinner.getValue().toString();
                 
 
                 if ((selectProfessione == null) || selectProfessione.isEmpty() || (selectPaziente == null) || selectPaziente.isEmpty()) {
@@ -136,11 +145,12 @@ public class PrenotazioniPanel {
                 	commpren.addPrenotazione( pb.setidPaziente(split_paziente[4])
                             .setidMedico(split_medico[3])
                             .setProfessione(split_medico[2])
-                            .setData(formattedDate.toString()));
+                            .setData(formattedDate.toString())
+                            .setPriority(priorityValue));
                 	
-                    jhelper.addPrenotazioni(split_paziente[4], split_medico[3], split_medico[2], formattedDate.toString()); // ID paziente, ID Medico , Professione e data prenotazione
+                    jhelper.addPrenotazioni(split_paziente[4], split_medico[3], split_medico[2], formattedDate.toString(),priorityValue); // ID paziente, ID Medico , Professione e data prenotazione
                     
-                    common.setPrenotazioniTableModel(new String[] {split_paziente[4], split_medico[3], split_medico[2], formattedDate.toString()});
+                    common.setPrenotazioniTableModel(new String[] {split_paziente[4], split_medico[3], split_medico[2], formattedDate.toString(), priorityValue});
                   
                     new Popup("Prenotazione aggiunta!", Popup.msgtype.OK);
                 } else {

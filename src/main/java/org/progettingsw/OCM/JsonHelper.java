@@ -65,6 +65,7 @@ public class JsonHelper {
 	public static ArrayList<String> id_m = new ArrayList<String>(); //array del id_medico per prenotazione
 	public static ArrayList<String> ppren = new ArrayList<String>(); //array data prenotazioni
 	public static ArrayList<String> profess = new ArrayList<String>(); //array contenente le professioni dei medici nelle prenotazioni
+	public static ArrayList<String> priority = new ArrayList<String>(); //array contenente le prioritá dei medici nelle prenotazioni
 	
 	ComandiMedico med_comm = ComandiMedico.getIstance();
 	ComandiPaziente paz_comm = ComandiPaziente.getIstance();
@@ -141,7 +142,7 @@ public class JsonHelper {
 	 
 	 @SuppressWarnings("unchecked")
 	public
-	void addPrenotazioni(String id_paziente, String id_medico, String professione,  String data) {
+	void addPrenotazioni(String id_paziente, String id_medico, String professione,  String data,String priorita) {
 		 
 		    obj_pren = new JSONObject(); // Inizializzazione dell'oggetto obj_pren
 		    typeofdb_pren = new JSONObject();
@@ -150,6 +151,7 @@ public class JsonHelper {
 			obj_pren.put("id_medico", id_medico);
 			obj_pren.put("professione", professione);
 			obj_pren.put("data", data);
+			obj_pren.put("priorita", priorita);
 			typeofdb_pren.put("Prenotazione", obj_pren);
 			prenotazione.add(typeofdb_pren);
 			
@@ -231,16 +233,18 @@ public class JsonHelper {
 			           id_m.add((String) db.get("id_medico"));
 			           profess.add((String) db.get("professione"));
 			           ppren.add((String) db.get("data"));
+			           priority.add((String) db.get("priorita"));
 			            
 			           pren_comm.addPrenotazione(pren.setidPaziente(id_p.get(i))
 			        		   .setidMedico(id_m.get(i))
 			        		   .setProfessione(profess.get(i))
-			        		   .setData(ppren.get(i)));
+			        		   .setData(ppren.get(i))
+			        		   .setPriority(typeofdb));
 			           
-			           addPrenotazioni(id_p.get(i), id_m.get(i), profess.get(i), ppren.get(i)); //Aggiungo la prenotazione al JSON per il salvataggio
+			           addPrenotazioni(id_p.get(i), id_m.get(i), profess.get(i), ppren.get(i),priority.get(i)); //Aggiungo la prenotazione al JSON per il salvataggio
 			           
 			           common.setPrenotazioniTableModel(new String[] {
-			        		   id_p.get(i), id_m.get(i),profess.get(i),ppren.get(i)});
+			        		   id_p.get(i), id_m.get(i),profess.get(i),ppren.get(i), priority.get(i)});
 	
 			          break;
 		            

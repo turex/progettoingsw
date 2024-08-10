@@ -15,7 +15,7 @@ public class CommonPanelUtils {
 	
 	public DefaultTableModel model_paz = new DefaultTableModel(new Object[]{"Nome", "Cognome", "Data di Nascita", "Sesso","ID"}, 0);
 	public DefaultTableModel model_med = new DefaultTableModel(new Object[]{"Nome", "Cognome", "Professione", "ID"}, 0);
-	public DefaultTableModel model_pren = new DefaultTableModel(new Object[]{"ID Paziente", "ID Medico", "Professione", "Data Prenotazione"},0);
+	public DefaultTableModel model_pren = new DefaultTableModel(new Object[]{"ID Paziente", "ID Medico", "Professione", "Data Prenotazione", "Prioritá"},0);
 		
 	private static CommonPanelUtils instance;
         
@@ -25,7 +25,7 @@ public class CommonPanelUtils {
 	        return textField;
 	    }
 	    
-	     JSpinner createSpinner(String labelText, Object values) {
+	     JSpinner createSpinner(Object values) {
 	    	JSpinner spinner = new JSpinner();
 	    	if (values instanceof String[]) {
 	    		spinner.setModel(new SpinnerListModel((String[]) values));
