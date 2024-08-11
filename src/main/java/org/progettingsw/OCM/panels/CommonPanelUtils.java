@@ -62,6 +62,10 @@ public class CommonPanelUtils {
 	    public void setPrenotazioniTableModel(String[] data) {
 	    	String[] newData;
 	    	newData = convertToUpperCase(data);
+	    	
+	    	for(String data2 : newData) {
+	    		System.out.println(data2);
+	    	}
 	    	model_pren.addRow(newData);
 	    }
 	    

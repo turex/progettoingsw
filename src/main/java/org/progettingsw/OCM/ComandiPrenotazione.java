@@ -50,9 +50,9 @@ public class ComandiPrenotazione {
 		//System.out.println(medi.get(z));
 	}
 	
-	public boolean checkPrenotazione(String id_paziente, String id_medico, String professione, String data_prenotazione) {
+	public boolean checkPrenotazione(String id_paziente, String id_medico, String professione, String data_prenotazione, String priorita) {
 	    // True se esiste o ci sono errori
-	    if (id_paziente == null || id_medico == null || professione == null || data_prenotazione == null) {
+	    if (id_paziente == null || id_medico == null || professione == null || data_prenotazione == null || priorita == null) {
 	        System.out.println("Errore: uno dei parametri è null");
 	        return true; // Uno dei parametri è vuoto, ci sono errori
 	    }
@@ -63,16 +63,20 @@ public class ComandiPrenotazione {
 		        .peek(prenotazione -> {
 
 		        	System.out.println("Controllando prenotazione: " + prenotazione);
-
-		        		  System.out.println(prenotazione);
+System.out.println("ÖOOOO: " + prenotazione.getidPaziente());
 		        }
 		        		)
 		        .anyMatch(prenotazione -> 
 		            (prenotazione.getidPaziente().equalsIgnoreCase(id_paziente) 
 		                && prenotazione.getidMedico().equalsIgnoreCase(id_medico) 
 		                && prenotazione.getProfessione().equalsIgnoreCase(professione) 
-		                && prenotazione.getData().equals(data_prenotazione))
+		                && prenotazione.getData().equals(data_prenotazione)
+		                && prenotazione.getPriority().equals(priorita))
+		            
+		            
+		            
 		        );
+	    
 
 	    if (prenotazioneEsistente) {
 	        return true; // La prenotazione esiste già o ci sono errori
@@ -83,7 +87,10 @@ public class ComandiPrenotazione {
 
 
 
-	
+	/*
+	 * 
+	 * Metodo per creare la frame contenente la lista delle prenotazioni del paziente selezionato
+	 */
 	public void listPrenotazioni(String id_paziente, PrenotazioneBuilder p) {
 	    boolean stato_lista = false; // default set to false to indicate the list is empty
 
@@ -97,7 +104,8 @@ public class ComandiPrenotazione {
 	                    pren.get(list).id_paziente,
 	                    pren.get(list).id_medico,
 	                    pren.get(list).professione,
-	                    pren.get(list).data
+	                    pren.get(list).data,
+	                    pren.get(list).priority
 	                };
 
 	                if (!common.containsPrenotazione(prenotazioneData)) { // Check if the appointment is already in the model

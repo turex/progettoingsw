@@ -7,6 +7,8 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Vector;
+
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -46,6 +48,7 @@ public class PrenotazioniPanel {
     SimpleDateFormat dateFormat;
     
     PrenotazioneBuilder pb = new PrenotazioneBuilder();
+    String priorityValue = "";
     
     private PrenotazioniPanel() {
     	
@@ -130,16 +133,15 @@ public class PrenotazioniPanel {
         addPrenotazione.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                
-                String priorityValue = prioritySpinner.getValue().toString();
-                
-
+                priorityValue = prioritySpinner.getValue().toString();
+                                
                 if ((selectProfessione == null) || selectProfessione.isEmpty() || (selectPaziente == null) || selectPaziente.isEmpty()) {
                     new Popup("Seleziona medico e paziente!", Popup.msgtype.ERR);
                     return;
                 }
 
 
-                if (!commpren.checkPrenotazione(split_paziente[0], split_medico[3], split_medico[2], formattedDate.toString()) &&
+                if (!commpren.checkPrenotazione(split_paziente[4], split_medico[3], split_medico[2], formattedDate.toString(), priorityValue) &&
                         !commpren.checkdispoMedico(split_medico[0], split_medico[2], formattedDate.toString())) {
                     
                 	commpren.addPrenotazione( pb.setidPaziente(split_paziente[4])
@@ -147,6 +149,7 @@ public class PrenotazioniPanel {
                             .setProfessione(split_medico[2])
                             .setData(formattedDate.toString())
                             .setPriority(priorityValue));
+                	
                 	
                     jhelper.addPrenotazioni(split_paziente[4], split_medico[3], split_medico[2], formattedDate.toString(),priorityValue); // ID paziente, ID Medico , Professione e data prenotazione
                     

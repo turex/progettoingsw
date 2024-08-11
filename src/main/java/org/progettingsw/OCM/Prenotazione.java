@@ -57,12 +57,12 @@ public class Prenotazione {
 	@Override
 	public String toString() {
 		return "Prenotazione [id_paziente=" + id_paziente + ", id_medico=" + id_medico + ", professione=" + professione
-				+ ", data=" + data + "]";
+				+ ", data=" + data + ", prioritá=" + priority + "]";
 	}
 	
 	public String toString1() {
 		return id_paziente + ", " + id_medico +  ", " + professione
-				+ ", " + data;
+				+ ", " + data + ", " + priority;
 	}
 	
 
