@@ -9,14 +9,16 @@ public class Medico{
 	String ID = "";
 	String professione = "";
 	ArrayList<String> dataslot = new ArrayList<>();
+	String level;
 	
-	public Medico(String nome,String cognome,String ID,String professione, ArrayList<String> dataslot) {
+	public Medico(String nome,String cognome,String ID,String professione, ArrayList<String> dataslot, String level) {
 		
 		this.nome = nome;
 		this.cognome = cognome;
 		this.ID = ID;
 		this.professione = professione;
 		this.dataslot.addAll(dataslot);
+		this.level = level;
 		
 	}
 
@@ -46,10 +48,14 @@ public class Medico{
 		// TODO Auto-generated method stub
 		return dataslot;
 	}
+	
+	public String getLevel() {
+		return level;
+	}
 
 	@Override
 	public String toString() {
-		return "Medico [nome=" + nome + ", cognome=" + cognome + ", ID=" + ID + ", professione=" + professione + "]";
+		return "Medico [nome=" + nome + ", cognome=" + cognome + ", ID=" + ID + ", professione=" + professione + ", livello=" + level + "]";
 	}
 	
 	

@@ -9,6 +9,7 @@ public class MedicoBuilder {
 	String ID = "";
 	String professione = "";
 	ArrayList<String> dataslot = new ArrayList<>();
+	String level;
 
 	public MedicoBuilder setNome(String nome) {
 		this.nome = nome;
@@ -40,6 +41,11 @@ public class MedicoBuilder {
 		this.dataslot.add(dataslot);
 		return this;
 	}
+	
+	public MedicoBuilder setLevel(String level) {
+		this.level = level;
+		return this;
+	}
 /*	
 	public MedicoBuilder setPrenotazione(String prenotazione) {
 		this.prenotazione = prenotazione;
@@ -48,7 +54,7 @@ public class MedicoBuilder {
 	*/
 	
 	public Medico getMedico() {
-		return new Medico(nome,cognome,ID,professione,dataslot);
+		return new Medico(nome,cognome,ID,professione,dataslot,level);
 	}
 	
 	
