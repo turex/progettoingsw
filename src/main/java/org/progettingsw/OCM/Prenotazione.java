@@ -6,7 +6,7 @@ public class Prenotazione {
 	String id_medico ="";
 	String professione ="";
 	String data="";	
-	String priority;
+	String priority="";
 		
 
 	public Prenotazione(String id_paziente, String id_medico,String professione, String data, String priority) {

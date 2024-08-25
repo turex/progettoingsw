@@ -141,19 +141,21 @@ public class PrenotazioniPanel {
                 }
 
 
-                if (!commpren.checkPrenotazione(split_paziente[4], split_medico[3], split_medico[2], formattedDate.toString(), priorityValue) &&
+                if (!commpren.checkPrenotazione(split_paziente[4], split_medico[4], split_medico[2], formattedDate.toString(), priorityValue) &&
                         !commpren.checkdispoMedico(split_medico[0], split_medico[2], formattedDate.toString())) {
                     
                 	commpren.addPrenotazione( pb.setidPaziente(split_paziente[4])
-                            .setidMedico(split_medico[3])
+                            .setidMedico(split_medico[4])
                             .setProfessione(split_medico[2])
                             .setData(formattedDate.toString())
                             .setPriority(priorityValue));
                 	
                 	
-                    jhelper.addPrenotazioni(split_paziente[4], split_medico[3], split_medico[2], formattedDate.toString(),priorityValue); // ID paziente, ID Medico , Professione e data prenotazione
+                    jhelper.addPrenotazioni(split_paziente[4], split_medico[4], split_medico[2], formattedDate.toString(),priorityValue); // ID paziente, ID Medico , Professione e data prenotazione
                     
-                    common.setPrenotazioniTableModel(new String[] {split_paziente[4], split_medico[3], split_medico[2], formattedDate.toString(), priorityValue});
+                    System.out.println(priorityValue);
+                    
+                    common.setPrenotazioniTableModel(new String[] {split_paziente[4], split_medico[4], split_medico[3], formattedDate.toString(), priorityValue});
                   
                     new Popup("Prenotazione aggiunta!", Popup.msgtype.OK);
                 } else {
@@ -218,7 +220,9 @@ public class PrenotazioniPanel {
                             selectProfessione = professionistiTable.getValueAt(selectedRow, 0) + " " +
                                                 professionistiTable.getValueAt(selectedRow, 1) + " " +
                                                 professionistiTable.getValueAt(selectedRow, 2) + " " +
-                                                professionistiTable.getValueAt(selectedRow, 3);
+                                                professionistiTable.getValueAt(selectedRow, 3) + " " +
+                                                professionistiTable.getValueAt(selectedRow, 4)
+                                                ;
                             
                             split_medico = selectProfessione.split(" ");
                         }

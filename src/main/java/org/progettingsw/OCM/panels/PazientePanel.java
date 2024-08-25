@@ -67,6 +67,7 @@ public class PazientePanel {
             	Date selectedDate = (Date) dateSpinner.getValue();
                 String formattedDate = dateFormat.format(selectedDate);            	 
                 String sessoValue = genderSpinner.getValue().toString();
+                //String priorityValue = pri
                 
             	
             	// Esegui le azioni necessarie con i valori ottenuti
@@ -77,7 +78,7 @@ public class PazientePanel {
             			
             			String Id = command.getID(nomeValue, cognomeValue,formattedDate.toString());
             			
-            			dbs.addtoJson(nomeValue, cognomeValue, Id ,null , formattedDate, sessoValue, "Paziente");
+            			dbs.addtoJson(nomeValue, cognomeValue, Id ,null , formattedDate, sessoValue,null, "Paziente");
             			
             		String[] data = new String[] {p.getPaziente().getNome(), 
         					p.getPaziente().getCognome(), 

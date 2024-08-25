@@ -46,12 +46,6 @@ public class MedicoBuilder {
 		this.level = level;
 		return this;
 	}
-/*	
-	public MedicoBuilder setPrenotazione(String prenotazione) {
-		this.prenotazione = prenotazione;
-		return this;
-	}
-	*/
 	
 	public Medico getMedico() {
 		return new Medico(nome,cognome,ID,professione,dataslot,level);

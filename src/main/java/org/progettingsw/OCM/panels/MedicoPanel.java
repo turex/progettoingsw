@@ -36,7 +36,9 @@ public class MedicoPanel {
     SpinnerListModel model = new SpinnerListModel(professioneValues);
     JSpinner professione = new JSpinner(model);
    
-   
+    String[] levelValues = {"1", "2", "3"};
+    SpinnerListModel levelModel = new SpinnerListModel(levelValues);
+    JSpinner level = new JSpinner(levelModel);
     
     ListFrame lista = new ListFrame();
 
@@ -61,10 +63,11 @@ public class MedicoPanel {
         panel.add(cognome);
         panel.add(new JLabel("Professione:"));
         panel.add(professione);
+        panel.add(new JLabel("Esperienza:"));
+        panel.add(level);
 
         panel.add(addMedico);
         panel.add(listMedici);
-        //panel.add(modMedici);
         panel.add(saveDBM);
 
         addMedico.addActionListener(new ActionListener() {
@@ -73,20 +76,25 @@ public class MedicoPanel {
                 String nomeValue = nome.getText();
                 String cognomeValue = cognome.getText();
                 String professioneValue = professione.getValue().toString();
+                String levelValue = level.getValue().toString();
 
                 // Esegui le azioni necessarie con i valori ottenuti
                 if (!nomeValue.isEmpty() && !cognomeValue.isEmpty()) {
                     if (!medcommand.checkMedico(nomeValue, cognomeValue, professioneValue)) {
                     	
                     	
-                    	medcommand.addMedico(m.setNome(nomeValue).setCognome(cognomeValue).setProfessione(professioneValue));
+                    	medcommand.addMedico(m.setNome(nomeValue)
+                    			.setCognome(cognomeValue)
+                    			.setProfessione(professioneValue)
+                    			.setLevel(professioneValue)
+                    			);
                     	
                     	
                     	 String Id = medcommand.getID(nomeValue,cognomeValue,professioneValue);
 
-            			dbs.addtoJson(nomeValue, cognomeValue, Id ,professioneValue , null, null, "Medico");
+            			dbs.addtoJson(nomeValue, cognomeValue, Id ,professioneValue , null, null,levelValue, "Medico"); 
             			
-            			common.setMediciTableModel(new String[] {m.getMedico().getNome(),m.getMedico().getCognome(), professioneValue, Id});  // Where i add data to the MODEL
+            			common.setMediciTableModel(new String[] {m.getMedico().getNome(),m.getMedico().getCognome(), professioneValue,levelValue, Id});  // Where i add data to the MODEL
             			new Popup("Medico aggiunto!", Popup.msgtype.OK);
                     } else {
             			new Popup("Errore!\nNome, cognome e data di nascita sono necessari o medico gia registrato",Popup.msgtype.ERR);

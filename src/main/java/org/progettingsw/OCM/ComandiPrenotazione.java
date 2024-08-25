@@ -63,7 +63,6 @@ public class ComandiPrenotazione {
 		        .peek(prenotazione -> {
 
 		        	System.out.println("Controllando prenotazione: " + prenotazione);
-System.out.println("ÖOOOO: " + prenotazione.getidPaziente());
 		        }
 		        		)
 		        .anyMatch(prenotazione -> 
@@ -106,8 +105,9 @@ System.out.println("ÖOOOO: " + prenotazione.getidPaziente());
 	                    pren.get(list).professione,
 	                    pren.get(list).data,
 	                    pren.get(list).priority
+	                    
+	                    
 	                };
-
 	                if (!common.containsPrenotazione(prenotazioneData)) { // Check if the appointment is already in the model
 	                    common.setPrenotazioniTableModel(prenotazioneData); // Add the appointment to the table model
 	                    stato_lista = true;

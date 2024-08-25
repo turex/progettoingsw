@@ -28,9 +28,9 @@ public class AppTest
     @SuppressWarnings("static-access")
 	@Test
     public void testJson() {
-       	n.addtoJson("Ciao", "Ciao", null,null,"01/10/2022",null,"Paziente");
-		n.addtoJson("Pippo", "Verdi", null,"test",null,null, "Medico");
-		n.addtoJson("Mario", "Rossi", null,"test",null,null,"Medico");
+       	n.addtoJson("Ciao", "Ciao", null,null,"01/10/2022",null,"1","Paziente");
+		n.addtoJson("Pippo", "Verdi", null,"test",null,null,"1", "Medico");
+		n.addtoJson("Mario", "Rossi", null,"test",null,null,"1","Medico");
 		n.writeJson("Medico");
 		n.writeJson("Paziente");
 		System.out.println("Struttura json per 'Paziente' :");
@@ -38,7 +38,12 @@ public class AppTest
 		n.readDb("Paziente");
 		n.printnomePaz();
 		System.out.println("Leggo dal file");
+		try {
 		n.readfromJson("Medico");
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
 		n.nm.get(0);
 		System.out.println("JSon 'Medico' creato correttamente" + " nel path : " + PATH);
 		assertTrue(m.exists());
@@ -73,7 +78,7 @@ public class AppTest
     static public void cleantestJson() {
     	System.out.println("Pulizia dei database di prova");
     	try {
-    	//if(m.exists())
+    	if(m.exists())
     	m.delete();
     	}
     	catch (Exception e) {

@@ -53,19 +53,19 @@ public class JsonHelper {
 	public static ArrayList<String> cp = new ArrayList<String>(); //array cognome paziente
 	public static ArrayList<String> ip = new ArrayList<String>(); //array ID paziente
 	public static ArrayList<String> nap = new ArrayList<String>(); //array nascita paziente
-	public static ArrayList<String> sp = new ArrayList<String>(); //array sesso paziente
-	
+	public static ArrayList<String> sp = new ArrayList<String>(); //array sesso paziente	
 	
 	public static ArrayList<String> nm = new ArrayList<String>(); //array del nome medico
 	public static ArrayList<String> cm = new ArrayList<String>(); //array cognome medico
 	public static ArrayList<String> im = new ArrayList<String>(); //array ID medico
 	public static ArrayList<String> prop = new ArrayList<String>(); //array professione medico
+	public static ArrayList<String> expmed = new ArrayList<String>(); //array prioritá paziente
 	
 	public static ArrayList<String> id_p = new ArrayList<String>(); //array del id_paziente per prenotazione
 	public static ArrayList<String> id_m = new ArrayList<String>(); //array del id_medico per prenotazione
-	public static ArrayList<String> ppren = new ArrayList<String>(); //array data prenotazioni
+	public static ArrayList<String> datpren = new ArrayList<String>(); //array data prenotazioni
 	public static ArrayList<String> profess = new ArrayList<String>(); //array contenente le professioni dei medici nelle prenotazioni
-	public static ArrayList<String> priority = new ArrayList<String>(); //array contenente le prioritá dei medici nelle prenotazioni
+	public static ArrayList<String> priority = new ArrayList<String>(); //array contenente le prioritá del paziente nelle prenotazioni
 	
 	ComandiMedico med_comm = ComandiMedico.getIstance();
 	ComandiPaziente paz_comm = ComandiPaziente.getIstance();
@@ -85,9 +85,7 @@ public class JsonHelper {
 	JSONObject typeofdb_pren;
 	
 	JSONObject med,paz; //TODO
-	
-	static int size = 0; // variabile globale per la dimesione delle liste array dei vari DB
-	
+		
 	FileReader reader;
 
 	private JsonHelper() {
@@ -102,11 +100,12 @@ public class JsonHelper {
 	 * @typeofdb : inserisco nell'array se é medico o paziente
 	 * @employeeList : contiene il database 
 	 * @typeofdb : parametrizzo il database, qui viene inserito se é medico o paziente
+	 * @livello : viene utilizzato sia per il livello di poriorita del paziente che come livello di esperienza del medico
 	 */
 	
 	 @SuppressWarnings("unchecked")
 	public void addtoJson(String nome, String cognome, String id, String professione,String nascita, String sesso,
-					 String typeofdb) {
+					  String livello, String typeofdb) {
 		 		
 				
 		switch(typeofdb) {
@@ -118,6 +117,7 @@ public class JsonHelper {
 			obj_med.put("cognome", cognome);
 			obj_med.put("id", id);
 			obj_med.put("professione", professione);
+			obj_med.put("esperienza", livello);
 			typeofdb_med.put("Medico", obj_med);
 			medico.add(typeofdb_med);
 			break;
@@ -139,7 +139,13 @@ public class JsonHelper {
 		
 	}
 	 
-	 
+	 /*
+	  * 
+	  * @priorita si riferisce alla priorita acquisita dal paziente
+	  * 
+	  * TODO aggiungere i costi
+	  * 
+	  */
 	 @SuppressWarnings("unchecked")
 	public
 	void addPrenotazioni(String id_paziente, String id_medico, String professione,  String data,String priorita) {
@@ -189,17 +195,20 @@ public class JsonHelper {
 		             nm.add((String) db.get("nome"));
 		             prop.add((String) db.get("professione"));
 		             im.add((String) db.get("id"));
+		             expmed.add((String)db.get("esperienza"));
+		             
 		            
 		           med_comm.addMedico(medb.setNome(nm.get(i))
 		        		   		     .setCognome(cm.get(i))
 		        		             .setProfessione(prop.get(i))
+		        		             .setLevel(expmed.get(i))
 		        		             ); //Lo aggiungo alla lista dei Medici
 		           
-		           addtoJson(nm.get(i), cm.get(i), im.get(i), prop.get(i), null, null, typeofdb); // Aggiungo i dati alla lista dei JSON (per salvataggio)
+		           addtoJson(nm.get(i), cm.get(i), im.get(i), prop.get(i), null, null, expmed.get(i), typeofdb); // Aggiungo i dati alla lista dei JSON (per salvataggio)
 		           
 		           
 		           common.setMediciTableModel(new String[] {
-		        		   nm.get(i), cm.get(i), prop.get(i),im.get(i)}
+		        		   nm.get(i), cm.get(i), prop.get(i),expmed.get(i),im.get(i)}
 		           );  // Where i add data to the MODEL
 		           
 		            
@@ -218,7 +227,7 @@ public class JsonHelper {
 		            		.setSesso(sp.get(i))
 		            		);
 		                    
-		            addtoJson(np.get(i), cp.get(i), ip.get(i), null, nap.get(i), sp.get(i), typeofdb); // Aggiungo i dati alla lista dei JSON (per salvataggio)
+		            addtoJson(np.get(i), cp.get(i), ip.get(i), null, nap.get(i), sp.get(i),null, typeofdb); // Aggiungo i dati alla lista dei JSON (per salvataggio)
 			           
 			           common.setPazientiTableModel(new String[] {
 			        		   np.get(i), cp.get(i),nap.get(i),sp.get(i),ip.get(i)}
@@ -232,19 +241,20 @@ public class JsonHelper {
 			           id_p.add((String) db.get("id_paziente"));
 			           id_m.add((String) db.get("id_medico"));
 			           profess.add((String) db.get("professione"));
-			           ppren.add((String) db.get("data"));
+			           datpren.add((String) db.get("data"));
 			           priority.add((String) db.get("priorita"));
 			            
 			           pren_comm.addPrenotazione(pren.setidPaziente(id_p.get(i))
 			        		   .setidMedico(id_m.get(i))
 			        		   .setProfessione(profess.get(i))
-			        		   .setData(ppren.get(i))
-			        		   .setPriority(typeofdb));
+			        		   .setData(datpren.get(i))
+			        		   .setPriority(priority.get(i))
+			        		   );
 			           
-			           addPrenotazioni(id_p.get(i), id_m.get(i), profess.get(i), ppren.get(i),priority.get(i)); //Aggiungo la prenotazione al JSON per il salvataggio
+			           addPrenotazioni(id_p.get(i), id_m.get(i), profess.get(i), datpren.get(i),priority.get(i)); //Aggiungo la prenotazione al JSON per il salvataggio
 			           
 			           common.setPrenotazioniTableModel(new String[] {
-			        		   id_p.get(i), id_m.get(i),profess.get(i),ppren.get(i), priority.get(i)});
+			        		   id_p.get(i), id_m.get(i),profess.get(i),datpren.get(i), priority.get(i)});
 	
 			          break;
 		            
@@ -258,7 +268,7 @@ public class JsonHelper {
 		        
 		    } catch (Exception e) {
 		        System.out.println("Errore: " + e.getMessage());
-		        e.printStackTrace(); // Stampa lo stack trace per avere maggiori dettagli sull'errore
+		        //e.printStackTrace(); // Stampa lo stack trace per avere maggiori dettagli sull'errore
 		    }
 }
 	    
@@ -311,21 +321,6 @@ public class JsonHelper {
         
                 
 	}
-	 
-	 int getlistSize(String type) {
-		 
-		 size = 0;
-		 
-		 switch(type) {
- 		
- 		case "Medico":
- 			size = nm.size();
- 			break;
-		 }
-		 
-		 return size;
-		 
-	}
 	
 	 public void writeJson(String typeofdb) {
 		    JSONArray data;
@@ -364,7 +359,7 @@ public class JsonHelper {
 	
 	/*
 	 * Parser dati Json
-	 * 
+	 * ß
 	 * Parametri :
 	 * 
 	 * @database : oggetto Json
@@ -384,6 +379,7 @@ public class JsonHelper {
     				cm.add((String) Object.get("cognome"));
     				im.add((String) Object.get("id"));
     				prop.add((String) Object.get("professione"));
+    				expmed.add((String) Object.get("esperienza"));
     				break;
     			
     			
@@ -399,9 +395,10 @@ public class JsonHelper {
     			case "Prenotazione":  
     				id_p.add((String) Object.get("id_paziente"));
     				id_m.add((String) Object.get("id_medico"));
-    				ppren.add((String) Object.get("prenotazione"));
+    				datpren.add((String) Object.get("prenotazione"));
     				nap.add((String) Object.get("nascita"));
     				sp.add((String) Object.get("sesso"));
+    				priority.add((String) Object.get("priorita"));
     				break;
     		}
          

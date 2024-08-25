@@ -46,6 +46,7 @@ public Paziente(String nome,String cognome,String ID,String nascita,String sesso
 		// TODO Auto-generated method stub
 		return sesso;
 	}
+	
 
 	@Override
 	public String toString() {
