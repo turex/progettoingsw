@@ -36,9 +36,7 @@ public class MedicoPanel {
     SpinnerListModel model = new SpinnerListModel(professioneValues);
     JSpinner professione = new JSpinner(model);
    
-    String[] levelValues = {"1", "2", "3"};
-    SpinnerListModel levelModel = new SpinnerListModel(levelValues);
-    JSpinner level = new JSpinner(levelModel);
+    JSpinner level = common.createSpinner(common.livello);
     
     ListFrame lista = new ListFrame();
 
@@ -63,7 +61,7 @@ public class MedicoPanel {
         panel.add(cognome);
         panel.add(new JLabel("Professione:"));
         panel.add(professione);
-        panel.add(new JLabel("Esperienza:"));
+        panel.add(new JLabel("Livello esperienza:"));
         panel.add(level);
 
         panel.add(addMedico);

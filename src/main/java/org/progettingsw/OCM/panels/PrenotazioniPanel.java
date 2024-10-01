@@ -7,7 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Vector;
 
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
@@ -67,7 +66,7 @@ public class PrenotazioniPanel {
             }
         };
         
-        prioritySpinner = common.createSpinner(new String[]{"1", "2","3"});
+        prioritySpinner = common.createSpinner(common.livello);
         
         
         SpinnerDateModel spinnerModel = new SpinnerDateModel();
@@ -129,6 +128,10 @@ public class PrenotazioniPanel {
         panel.add(professionistiPanel, BorderLayout.EAST);
         panel.add(buttonPanel, BorderLayout.NORTH);
         panel.add(prenotazioniPanel, BorderLayout.SOUTH);
+        
+        
+        
+        //TODO: ***** Add payment logic *****
 
         addPrenotazione.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -143,6 +146,9 @@ public class PrenotazioniPanel {
 
                 if (!commpren.checkPrenotazione(split_paziente[4], split_medico[4], split_medico[2], formattedDate.toString(), priorityValue) &&
                         !commpren.checkdispoMedico(split_medico[0], split_medico[2], formattedDate.toString())) {
+                	
+                	
+                	//*** GO TO PAYMENT BEFORE PRENOTAZIONE ***
                     
                 	commpren.addPrenotazione( pb.setidPaziente(split_paziente[4])
                             .setidMedico(split_medico[4])

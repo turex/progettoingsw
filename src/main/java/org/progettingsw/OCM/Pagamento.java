@@ -1,5 +1,13 @@
 package org.progettingsw.OCM;
 
-public class Pagamento {
+/*
+ * 
+ * Payment logic
+ * 
+ */
+
+public class Pagamento implements Pagamenti{
+	
+	
 
 }

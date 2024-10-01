@@ -16,6 +16,7 @@ public class CommonPanelUtils {
 	public DefaultTableModel model_paz = new DefaultTableModel(new Object[]{"Nome", "Cognome", "Data di Nascita", "Sesso","ID"}, 0);
 	public DefaultTableModel model_med = new DefaultTableModel(new Object[]{"Nome", "Cognome", "Professione", "Esperienza", "ID"}, 0);
 	public DefaultTableModel model_pren = new DefaultTableModel(new Object[]{"ID Paziente", "ID Medico", "Professione", "Data Prenotazione", "Prioritá"},0);
+	public String[] livello = new String[] {"Alta", "Media", "Bassa"};
 		
 	private static CommonPanelUtils instance;
         
@@ -63,9 +64,6 @@ public class CommonPanelUtils {
 	    	String[] newData;
 	    	newData = convertToUpperCase(data);
 	    	
-	    	for(String data2 : newData) {
-	    		System.out.println(data2);
-	    	}
 	    	model_pren.addRow(newData);
 	    }
 	    
