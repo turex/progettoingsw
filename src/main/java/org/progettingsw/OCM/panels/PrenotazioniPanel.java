@@ -11,6 +11,8 @@ import java.util.Date;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
+import org.progettingsw.OCM.Basket;
 import org.progettingsw.OCM.ComandiMedico;
 import org.progettingsw.OCM.ComandiPrenotazione;
 import org.progettingsw.OCM.JsonHelper;
@@ -21,6 +23,8 @@ public class PrenotazioniPanel {
 
     String selectProfessione;
     String selectPaziente;
+    
+    Basket basket = new Basket();
 
     static CommonPanelUtils common = CommonPanelUtils.getInstance();
 
@@ -29,6 +33,8 @@ public class PrenotazioniPanel {
     
     String[] split_paziente = {};
     String[] split_medico = {};
+    
+    int costo;
 
     private static PrenotazioniPanel instance;
     
@@ -88,7 +94,7 @@ public class PrenotazioniPanel {
     public JPanel createPanel() {
         JPanel panel = new JPanel(new BorderLayout());
 
-        JButton addPrenotazione, listPrenotazioni, salvaDB;
+        JButton addPrenotazione, listPrenotazioni, salvaDB, paga;
 
         // Creazione del pannello per i pazienti a sinistra
         JPanel pazientiPanel = new JPanel();
@@ -111,6 +117,7 @@ public class PrenotazioniPanel {
         JPanel buttonPanel = new JPanel();
         buttonPanel.add(addPrenotazione = new JButton("Aggiungi prenotazione"));
         buttonPanel.add(listPrenotazioni = new JButton("Lista prenotazioni"));
+        buttonPanel.add(paga = new JButton("Vai al pagamento"));
         buttonPanel.add(salvaDB = new JButton("Salva DB"));
         buttonPanel.add(new JLabel("Prioritá visita: "));
         buttonPanel.add(prioritySpinner);
@@ -149,19 +156,25 @@ public class PrenotazioniPanel {
                 	
                 	
                 	//*** GO TO PAYMENT BEFORE PRENOTAZIONE ***
-                    
+                	
+                costo = basket.addToBasket(split_medico[2], split_paziente[4]);
+                
                 	commpren.addPrenotazione( pb.setidPaziente(split_paziente[4])
                             .setidMedico(split_medico[4])
                             .setProfessione(split_medico[2])
                             .setData(formattedDate.toString())
-                            .setPriority(priorityValue));
+                            .setPriority(priorityValue)
+                            .setCosto(costo)
+                			.setTotale(basket.getTotale(split_paziente[4]))
+                			);
                 	
                 	
-                    jhelper.addPrenotazioni(split_paziente[4], split_medico[4], split_medico[2], formattedDate.toString(),priorityValue); // ID paziente, ID Medico , Professione e data prenotazione
+                    jhelper.addPrenotazioni(split_paziente[4], split_medico[4], split_medico[2], formattedDate.toString(),priorityValue); // ID paziente, ID Medico , Professione e data prenotazione , questo va al json
                     
-                    System.out.println(priorityValue);
                     
-                    common.setPrenotazioniTableModel(new String[] {split_paziente[4], split_medico[4], split_medico[3], formattedDate.toString(), priorityValue});
+                    common.setPrenotazioniTableModel(new String[] {split_paziente[4], split_medico[4], split_medico[3], formattedDate.toString(), priorityValue,
+                    		Integer.toString(costo)
+                    		});  //questo popola la tabella
                   
                     new Popup("Prenotazione aggiunta!", Popup.msgtype.OK);
                 } else {
@@ -179,7 +192,7 @@ public class PrenotazioniPanel {
                 try {
                     
                     if (split_paziente != null || split_medico != null) {
-                    	commpren.listPrenotazioni(split_paziente[4], pb);
+                    	commpren.listPrenotazioni(split_paziente[4], pb,costo);
                     }
                 } catch (NullPointerException e1) {
                     e1.printStackTrace();
@@ -247,5 +260,6 @@ public class PrenotazioniPanel {
 
         return panel;
     } 
+       
 
 }

@@ -13,7 +13,9 @@ public class PaymentPanel {
 
 	  private JTextField daPagare;
 	  
-	  PaymentPanel(){
+	  private int importo = 0;
+	  
+	  PaymentPanel(int importo){
 		  
 		  
 	  }
@@ -22,7 +24,7 @@ public class PaymentPanel {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 2, 10, 10)); // GridLayout con 2 colonne e 10 pixel di spazio tra le righe e le colonne
         
-        daPagare = common.createTextField("Nome:"); // Lunghezza preferita per il campo Nome
+        daPagare = common.createTextField("Costo totale:"); // Lunghezza preferita per il campo Nome
         //cognome = common.createTextField("Cognome:"); // Lunghezza preferita per il campo Cognome
         //dateSpinner = common.createSpinner("dd/MM/yyyy");
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");

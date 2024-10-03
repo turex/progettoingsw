@@ -21,8 +21,6 @@ public class PazienteBuilder {
 	}
 
 	public PazienteBuilder setID(String ID) {
-		
-		
 		this.ID = ID;
 		return this;
 
@@ -38,9 +36,6 @@ public class PazienteBuilder {
 		this.sesso = sesso;
 		return this;
 	}
-	
-	
-	
 	
 	
 	public Paziente getPaziente() {

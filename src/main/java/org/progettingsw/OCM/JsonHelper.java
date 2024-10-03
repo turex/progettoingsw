@@ -66,6 +66,7 @@ public class JsonHelper {
 	public static ArrayList<String> datpren = new ArrayList<String>(); //array data prenotazioni
 	public static ArrayList<String> profess = new ArrayList<String>(); //array contenente le professioni dei medici nelle prenotazioni
 	public static ArrayList<String> priority = new ArrayList<String>(); //array contenente le prioritá del paziente nelle prenotazioni
+	public static ArrayList<String> totale = new ArrayList<String>(); //array contenente le prioritá del paziente nelle prenotazioni
 	
 	ComandiMedico med_comm = ComandiMedico.getIstance();
 	ComandiPaziente paz_comm = ComandiPaziente.getIstance();

@@ -1,5 +1,6 @@
 package org.progettingsw.OCM;
 
+import java.util.HashMap;
 
 /*
  * 
@@ -10,32 +11,45 @@ package org.progettingsw.OCM;
 
 public class Basket {
 	
-	int spesaTotale = 0;
-	private String visita;
-	
-	Basket(){
-		
-		this.visita = visita.toUpperCase();
-				
-	}
+	HashMap<String, Integer> transazione = new HashMap<>(); // Dove mantengo in memoria id e spesa
 	
 	
-	private int getTotale(String visita) {
-		
-		visita = visita.toUpperCase();
+public int addToBasket(String visita, String idpaziente) {
+		int costo = 0;
+	   switch (visita.toUpperCase()) {
+       case "CHIRURGO":
+           costo = 30;
+           break;
+       case "OCULISTA":
+           costo = 20;
+           break;
+       case "FISIOTERAPISTA":
+           costo = 50;
+           break;
+       default:
+           System.out.println("Tipo di visita non riconosciuto.");
+           break;
+   }
+	   int spesaTotale = transazione.getOrDefault(idpaziente, 0);
+       spesaTotale += costo;
+       transazione.put(idpaziente, spesaTotale);
 
+		return costo;
 		
-		if(visita.equals("CHIRURGO"))
-			spesaTotale += 30;
-		else if(visita.equals("OCULISTA"))
-			spesaTotale += 20;
-		else if(visita.equals("FISIOTERAPISTA"))
-			spesaTotale += 50;
-		
-		return spesaTotale;
-		
-		
+					
 	}
+
+public int getTotale(String idpaziente) {
+    return transazione.getOrDefault(idpaziente, 0);
+}
+
+
+
+public void clearBasket(String idpaziente) {
+
+	transazione.remove(idpaziente);
+
+}
 	
 
 }

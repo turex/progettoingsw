@@ -90,8 +90,10 @@ public class ComandiPrenotazione {
 	 * 
 	 * Metodo per creare la frame contenente la lista delle prenotazioni del paziente selezionato
 	 */
-	public void listPrenotazioni(String id_paziente, PrenotazioneBuilder p) {
+	public void listPrenotazioni(String id_paziente, PrenotazioneBuilder p, int costo) {
 	    boolean stato_lista = false; // default set to false to indicate the list is empty
+	    
+	   
 
 	    if (pren != null && pren.size() > 0) {
 	        common.clearTableModel(common.model_pren); // Clear the table model before adding new entries
@@ -104,7 +106,8 @@ public class ComandiPrenotazione {
 	                    pren.get(list).id_medico,
 	                    pren.get(list).professione,
 	                    pren.get(list).data,
-	                    pren.get(list).priority
+	                    pren.get(list).priority,
+	                    Integer.toString(pren.get(list).costo) // aggiungo il costo della visita
 	                    
 	                    
 	                };

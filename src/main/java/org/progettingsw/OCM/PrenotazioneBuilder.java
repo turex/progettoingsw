@@ -7,6 +7,8 @@ public class PrenotazioneBuilder{
 	String professione ="";
 	String data="";
 	String priority="";
+	int costo=0;
+	int totale=0; // Spesa totale visite
 	
 	public PrenotazioneBuilder setidPaziente(String id_paziente) {
 		this.id_paziente = id_paziente;
@@ -34,8 +36,18 @@ public class PrenotazioneBuilder{
 		return this;	
 	}
 	
+	public PrenotazioneBuilder setCosto(int costo) {
+		this.costo = costo;
+		return this;	
+	}
+	
+	public PrenotazioneBuilder setTotale(int totale) {
+		this.totale = totale;
+		return this;	
+	}
+	
 	public Prenotazione getPrenotazione() {
-		return new Prenotazione(id_paziente, id_medico,professione,data,priority);
+		return new Prenotazione(id_paziente, id_medico,professione,data,priority,costo,totale);
 	}
 	
 	
