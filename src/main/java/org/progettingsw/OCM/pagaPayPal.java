@@ -2,16 +2,26 @@ package org.progettingsw.OCM;
 
 public class pagaPayPal implements Pagamenti {
 
+	boolean statoPagamento = false;
+	
+	
 	@Override
-	public boolean paga(int totale) {
+	public String metodoPagamento() {
 		// TODO Auto-generated method stub
-		return false;
+		return "PayPal";
 	}
 
 	@Override
-	public void collezionaDettagli() {
+	public int conto() {
 		// TODO Auto-generated method stub
-		
+		return 0;
 	}
+
+	@Override
+	public boolean stato() {
+		// TODO Auto-generated method stub
+		return statoPagamento;
+	}
+
 
 }

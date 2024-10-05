@@ -13,6 +13,7 @@ import javax.swing.JTextField;
 
 import org.progettingsw.OCM.Pagamenti;
 import org.progettingsw.OCM.Pagamento;
+import org.progettingsw.OCM.pagaCartadiCredito;
 import org.progettingsw.OCM.pagaPayPal;
 
 public class PaymentPanel {
@@ -41,8 +42,6 @@ public class PaymentPanel {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 2, 10, 10)); // GridLayout con 2 colonne e 10 pixel di spazio tra le righe e le colonne
         
-        String selezione = metodoPagamento.getValue().toString(); // Immagaziono in questa variabile la mia scelta di pagamento
-        
         daPagare = new JLabel("Costo totale:" + importo); // Lunghezza preferita per il campo Nome
         paga = new JButton("Paga");
         
@@ -55,24 +54,29 @@ public class PaymentPanel {
         
         paga.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	String selezione = metodoPagamento.getValue().toString(); // Immagazino in questa variabile la mia scelta di pagamento
             	
-            	if(selezione.equals("PayPal"))
-            		strategia = new pagaPayPal();
+            	switch(selezione) {
             		
+            		case "PayPal":
+            			strategia = new pagaPayPal();
+            			break;
+            		case "Carta di Credito":
+            			strategia = new pagaCartadiCredito();
+            		default:
+            			break;
+            		
+            	}
+            	
+            	pagamento.pagato(strategia);
             	
             }
             	
         });
         
         
-        
-        
-        
-        
-       
         return panel;
  }
 	
-	
-	
+
 }

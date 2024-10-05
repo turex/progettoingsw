@@ -258,7 +258,7 @@ public class PrenotazioniPanel {
         
         paga.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	JFrame paymentFrame = new JFrame("Payment Panel");
+            	JFrame paymentFrame = new JFrame("Pagamento");
             	PaymentPanel paymentPanel;
             	
             	if (split_paziente != null && split_paziente.length > 4 && !split_paziente[4].isBlank()) { // Ensure split_paziente is properly initialized and has enough elements
@@ -266,7 +266,6 @@ public class PrenotazioniPanel {
             	
             	paymentFrame.add(paymentPanel.createPanel());
             	paymentFrame.setSize(400, 300);
-            	//paymentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             	paymentFrame.setVisible(true);
              }
             	else
