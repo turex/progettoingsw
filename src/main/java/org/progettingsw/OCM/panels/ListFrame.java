@@ -52,6 +52,7 @@ public class ListFrame {
 
     public void createAndShowFrame(String tipo) {
 		JFrame f = new JFrame();
+		
 		f.setTitle("Lista " + tipo);
 		f.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		f.setSize(800, 600);
@@ -59,15 +60,25 @@ public class ListFrame {
 		f.setLayout(new BorderLayout());
 
 		JScrollPane scrollPane;
-        if ("Medico".equals(tipo)) {
-            model = (DefaultTableModel) common.model_med; // Imposta il modello di tabella per i medici
-        } else if ("Paziente".equals(tipo)) {
-            model = (DefaultTableModel) common.model_paz; // Imposta il modello di tabella per i pazienti
-        } else if ("Prenotazione".equals(tipo)) {
-            model = (DefaultTableModel) common.model_pren; // Imposta il modello di tabella per le prenotazioni
-        } 
-
-      
+		
+		
+		switch(tipo) {
+		
+		case "Medico":
+			 model = (DefaultTableModel) common.model_med; // Imposta il modello di tabella per i medici
+			 break;
+		case "Paziente":
+			model = (DefaultTableModel) common.model_paz; // Imposta il modello di tabella per i pazienti
+			break;
+		case "Prenotazione":
+			 model = (DefaultTableModel) common.model_pren; // Imposta il modello di tabella per le prenotazioni
+			 break;
+			 
+		default:
+			break;
+			 
+		}
+		
         tabella = new JTable(model){
           /**
 			 * 

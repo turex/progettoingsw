@@ -1,48 +1,78 @@
 package org.progettingsw.OCM.panels;
 
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
 
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+
+import org.progettingsw.OCM.Pagamenti;
+import org.progettingsw.OCM.Pagamento;
+import org.progettingsw.OCM.pagaPayPal;
 
 public class PaymentPanel {
 	
 	  static CommonPanelUtils common = CommonPanelUtils.getInstance();
 
-	  private JTextField daPagare;
+	  private JLabel daPagare;
+	  
+	  private JButton paga;
+	  
+	  private JSpinner metodoPagamento = common.createSpinner(new String[] {"PayPal", "Carta di Credito"});
 	  
 	  private int importo = 0;
 	  
+	  Pagamenti strategia; // Strategia di pagamento
+	  Pagamento pagamento = new Pagamento();  //Pagamento finale
+	  
 	  PaymentPanel(int importo){
 		  
+		  this.importo = importo;
 		  
 	  }
 	
+	  
 	public JPanel createPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 2, 10, 10)); // GridLayout con 2 colonne e 10 pixel di spazio tra le righe e le colonne
         
-        daPagare = common.createTextField("Costo totale:"); // Lunghezza preferita per il campo Nome
-        //cognome = common.createTextField("Cognome:"); // Lunghezza preferita per il campo Cognome
-        //dateSpinner = common.createSpinner("dd/MM/yyyy");
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        //genderSpinner = common.createSpinner(new String[]{"M", "F"});
+        String selezione = metodoPagamento.getValue().toString(); // Immagaziono in questa variabile la mia scelta di pagamento
         
-        panel.add(new JLabel("Nome:"));
-       // panel.add(nome);
-        panel.add(new JLabel("Cognome:"));
-       // panel.add(cognome);
-        panel.add(new JLabel("Data di nascita:"));
-       // panel.add(dateSpinner);
-        panel.add(new JLabel("Sesso:"));
-        //panel.add(genderSpinner);
-		
+        daPagare = new JLabel("Costo totale:" + importo); // Lunghezza preferita per il campo Nome
+        paga = new JButton("Paga");
         
-        //panel.add(addPaziente);
-        //panel.add(listPaziente);
-       // panel.add(saveDBP);
-return panel;
-}
+        panel.add(daPagare);
+      
+        panel.add(paga);
+        
+        panel.add(metodoPagamento);
+        
+        
+        paga.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	
+            	if(selezione.equals("PayPal"))
+            		strategia = new pagaPayPal();
+            		
+            	
+            }
+            	
+        });
+        
+        
+        
+        
+        
+        
+       
+        return panel;
+ }
+	
+	
+	
 }

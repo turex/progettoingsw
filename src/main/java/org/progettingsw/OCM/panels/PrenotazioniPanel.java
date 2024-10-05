@@ -17,6 +17,7 @@ import org.progettingsw.OCM.ComandiMedico;
 import org.progettingsw.OCM.ComandiPrenotazione;
 import org.progettingsw.OCM.JsonHelper;
 import org.progettingsw.OCM.Popup;
+import org.progettingsw.OCM.Popup.msgtype;
 import org.progettingsw.OCM.PrenotazioneBuilder;
 
 public class PrenotazioniPanel {
@@ -41,6 +42,8 @@ public class PrenotazioniPanel {
     static ComandiMedico commed = ComandiMedico.getIstance();
     static ComandiPrenotazione commpren = ComandiPrenotazione.getIstance();
     static JsonHelper jhelper = JsonHelper.getIstance();
+    
+    private ListFrame lista = new ListFrame(); // to show payment sheet
     
     JSpinner prioritySpinner; // spinner per impostare prioritá della visita
 
@@ -251,6 +254,27 @@ public class PrenotazioniPanel {
                 }
             }
         });
+        
+        
+        paga.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	JFrame paymentFrame = new JFrame("Payment Panel");
+            	PaymentPanel paymentPanel;
+            	
+            	if (split_paziente != null && split_paziente.length > 4 && !split_paziente[4].isBlank()) { // Ensure split_paziente is properly initialized and has enough elements
+            	paymentPanel = new PaymentPanel(basket.getTotale(split_paziente[4]));
+            	
+            	paymentFrame.add(paymentPanel.createPanel());
+            	paymentFrame.setSize(400, 300);
+            	//paymentFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            	paymentFrame.setVisible(true);
+             }
+            	else
+            		new Popup("Seleziona il paziente", msgtype.ERR);
+            	
+            }
+        });
+        
 
         salvaDB.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

@@ -6,8 +6,7 @@ package org.progettingsw.OCM;
  * 
  */
 
-public class Pagamento implements Pagamenti{
-	
-	
+public class Pagamento{
+
 
 }
