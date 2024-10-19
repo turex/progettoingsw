@@ -25,7 +25,7 @@ public class PrenotazioniPanel {
     String selectProfessione;
     String selectPaziente;
     
-    Basket basket = new Basket();
+    Basket basket = Basket.getIstance();
 
     static CommonPanelUtils common = CommonPanelUtils.getInstance();
 
@@ -42,12 +42,9 @@ public class PrenotazioniPanel {
     static ComandiMedico commed = ComandiMedico.getIstance();
     static ComandiPrenotazione commpren = ComandiPrenotazione.getIstance();
     static JsonHelper jhelper = JsonHelper.getIstance();
-    
-    private ListFrame lista = new ListFrame(); // to show payment sheet
-    
+        
     JSpinner prioritySpinner; // spinner per impostare prioritá della visita
 
-    
     String formattedDate;
     JSpinner spinner;
     
@@ -140,11 +137,11 @@ public class PrenotazioniPanel {
         panel.add(prenotazioniPanel, BorderLayout.SOUTH);
         
         
-        
-        //TODO: ***** Add payment logic *****
 
         addPrenotazione.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+            	
+            	
                
                 priorityValue = prioritySpinner.getValue().toString();
                                 
@@ -160,7 +157,8 @@ public class PrenotazioniPanel {
                 	
                 	//*** GO TO PAYMENT BEFORE PRENOTAZIONE ***
                 	
-                costo = basket.addToBasket(split_medico[2], split_paziente[4]);
+                costo = basket.addToBasket(split_medico[2], split_paziente[4], split_medico[3]);
+                
                 
                 	commpren.addPrenotazione( pb.setidPaziente(split_paziente[4])
                             .setidMedico(split_medico[4])
@@ -168,7 +166,6 @@ public class PrenotazioniPanel {
                             .setData(formattedDate.toString())
                             .setPriority(priorityValue)
                             .setCosto(costo)
-                			.setTotale(basket.getTotale(split_paziente[4]))
                 			);
                 	
                 	
@@ -262,7 +259,7 @@ public class PrenotazioniPanel {
             	PaymentPanel paymentPanel;
             	
             	if (split_paziente != null && split_paziente.length > 4 && !split_paziente[4].isBlank()) { // Ensure split_paziente is properly initialized and has enough elements
-            	paymentPanel = new PaymentPanel(basket.getTotale(split_paziente[4]));
+            	paymentPanel = new PaymentPanel(basket.getTotale(split_paziente[4]), split_paziente[4]);
             	
             	paymentFrame.add(paymentPanel.createPanel());
             	paymentFrame.setSize(400, 300);

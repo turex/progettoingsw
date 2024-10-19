@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 
+import org.progettingsw.OCM.Basket;
 import org.progettingsw.OCM.Pagamenti;
 import org.progettingsw.OCM.Pagamento;
 import org.progettingsw.OCM.pagaCartadiCredito;
@@ -27,13 +28,15 @@ public class PaymentPanel {
 	  private JSpinner metodoPagamento = common.createSpinner(new String[] {"PayPal", "Carta di Credito"});
 	  
 	  private int importo = 0;
+	  String idpaziente = "";
 	  
 	  Pagamenti strategia; // Strategia di pagamento
 	  Pagamento pagamento = new Pagamento();  //Pagamento finale
 	  
-	  PaymentPanel(int importo){
+	  PaymentPanel(int importo, String idpaziente){
 		  
 		  this.importo = importo;
+		  this.idpaziente = idpaziente;
 		  
 	  }
 	
@@ -68,8 +71,7 @@ public class PaymentPanel {
             		
             	}
             	
-            	pagamento.pagato(strategia);
-            	
+            	pagamento.pagato(strategia,idpaziente);
             }
             	
         });

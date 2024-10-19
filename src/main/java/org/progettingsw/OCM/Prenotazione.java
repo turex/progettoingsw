@@ -8,16 +8,15 @@ public class Prenotazione {
 	String data="";	
 	String priority="";
 	int costo=0;
-	int totale=0;	
 
-	public Prenotazione(String id_paziente, String id_medico,String professione, String data, String priority,int costo, int totale) {
+
+	public Prenotazione(String id_paziente, String id_medico,String professione, String data, String priority,int costo) {
 		this.id_paziente = id_paziente;
 		this.id_medico = id_medico;
 		this.professione = professione;
 		this.data = data;
 		this.priority = priority;
 		this.costo = costo;
-		this.totale = totale;
 	}
 	
 	
@@ -60,23 +59,16 @@ public class Prenotazione {
 		
 	}
 
-	public int getTotale() {
-		// TODO Auto-generated method stub
-		return totale;
-		
-	}
-
-
 
 	@Override
 	public String toString() {
 		return "Prenotazione [id_paziente=" + id_paziente + ", id_medico=" + id_medico + ", professione=" + professione
-				+ ", data=" + data + ", prioritá=" + priority + ", costo=" + costo + ", totale=" + totale + "]";
+				+ ", data=" + data + ", prioritá=" + priority + ", costo=" + costo + "]";
 	}
 	
 	public String toString1() {
 		return id_paziente + ", " + id_medico +  ", " + professione
-				+ ", " + data + ", " + priority  +  ", " + costo  +  ", " + totale;
+				+ ", " + data + ", " + priority  +  ", " + costo ;
 	}
 	
 
