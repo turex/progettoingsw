@@ -1,7 +1,9 @@
 package org.progettingsw.OCM;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
+import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
 public class CommonCommand {
@@ -38,15 +40,14 @@ public class CommonCommand {
 		
 	}
 	
-	 public static int calcolaEta(LocalDate dataDiNascita) {
-	        
-	        // Ottieni la data corrente
-	        LocalDate dataCorrente = LocalDate.now();
-	        
-	        // Calcola l'età
-	        Period periodo = Period.between(dataDiNascita, dataCorrente);
-	        
-	        return periodo.getYears();
-	    }
+	public int calcolaEta(String dataDiNascita) {
+		
+	    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+	    LocalDate dateTime1 = LocalDate.parse(dataDiNascita, formatter);
+	    LocalDate dataCorrente = LocalDate.now();
+	    Period periodo = Period.between(dateTime1, dataCorrente);
+	    return periodo.getYears();
 
+
+	}
 }

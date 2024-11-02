@@ -2,6 +2,8 @@ package org.progettingsw.OCM;
 
 import java.util.HashMap;
 
+import org.progettingsw.OCM.Popup.msgtype;
+
 /*
  * 
  * Inserisco qui le funzioni del carrello
@@ -10,6 +12,8 @@ import java.util.HashMap;
 
 
 public class Basket {
+	
+	CommonCommand comandi = new CommonCommand();
 	
 	HashMap<String, Integer> transazione = new HashMap<>(); // Dove mantengo in memoria id e spesa
 	
@@ -25,11 +29,16 @@ public class Basket {
 	}
 	
 	
-public int addToBasket(String visita, String idpaziente, String livelloMedico) {
+public int addToBasket(String visita, String idpaziente, String livelloMedico, String eta_paziente) {
 		int costo = 0;
-		
 		int costoMaggiorato = 0, maggiorazione = 0;
-    	
+		int spesaTotale;
+		boolean esenzione = false;
+		
+		if(comandi.calcolaEta(eta_paziente)>= 65)
+			esenzione = true;
+		
+		if(!esenzione) {
     	switch(livelloMedico) {
     	
     	case "ALTA":
@@ -61,9 +70,14 @@ public int addToBasket(String visita, String idpaziente, String livelloMedico) {
    }
 	   
 	   costoMaggiorato = costo + ((costo*maggiorazione)/100);
-	   int spesaTotale = transazione.getOrDefault(idpaziente, 0);
+	   spesaTotale = transazione.getOrDefault(idpaziente, 0);
        spesaTotale += costoMaggiorato;
-       
+		}
+		else {
+			spesaTotale = 0;
+			new Popup("Paziente esente da pagamento", msgtype.OK);
+		}
+			       
        transazione.put(idpaziente, spesaTotale);
 
 		return costo;

@@ -157,7 +157,7 @@ public class PrenotazioniPanel {
                 	
                 	//*** GO TO PAYMENT BEFORE PRENOTAZIONE ***
                 	
-                costo = basket.addToBasket(split_medico[2], split_paziente[4], split_medico[3]);
+                costo = basket.addToBasket(split_medico[2], split_paziente[4], split_medico[3], split_paziente[2]);
                 
                 
                 	commpren.addPrenotazione( pb.setidPaziente(split_paziente[4])
