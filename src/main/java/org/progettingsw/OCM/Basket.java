@@ -39,44 +39,44 @@ public int addToBasket(String visita, String idpaziente, String livelloMedico, S
 			esenzione = true;
 		
 		if(!esenzione) {
-    	switch(livelloMedico) {
+			switch(livelloMedico) {
     	
-    	case "ALTA":
-    		maggiorazione = 50;
-    		break;
-    	case "MEDIA":
-    		maggiorazione = 30;
-    		break;
-    	case "BASSA":
-    		maggiorazione = 10;
-    		break;
+			case "ALTA":
+				maggiorazione = 50;
+				break;
+			case "MEDIA":
+				maggiorazione = 30;
+				break;
+			case "BASSA":
+				maggiorazione = 10;
+				break;
     	
     	
-    	}
+			}
     	
-	   switch (visita.toUpperCase()) {
-       case "CHIRURGO":
-    	   costo = 30;
-           break;
-       case "OCULISTA":
-    	   costo = 20;
-           break;
-       case "FISIOTERAPISTA":
-    	   costo = 50;	   
-           break;
-       default:
-           System.out.println("Tipo di visita non riconosciuto.");
-           break;
-   }
+			switch (visita.toUpperCase()) {
+			case "CHIRURGO":
+				costo = 30;
+				break;
+			case "OCULISTA":
+				costo = 20;
+				break;
+			case "FISIOTERAPISTA":
+				costo = 50;	   
+				break;
+			default:
+				System.out.println("Tipo di visita non riconosciuto.");
+				break;
+			}
 	   
-	   costoMaggiorato = costo + ((costo*maggiorazione)/100);
-	   spesaTotale = transazione.getOrDefault(idpaziente, 0);
-       spesaTotale += costoMaggiorato;
-		}
-		else {
-			spesaTotale = 0;
-			new Popup("Paziente esente da pagamento", msgtype.OK);
-		}
+			costoMaggiorato = costo + ((costo*maggiorazione)/100);
+			spesaTotale = transazione.getOrDefault(idpaziente, 0); //ottengo la spesa del paziente o 0 se vuoto
+			spesaTotale += costoMaggiorato;
+			}
+			else {
+				spesaTotale = 0;
+				new Popup("Paziente esente da pagamento", msgtype.OK);
+			}
 			       
        transazione.put(idpaziente, spesaTotale);
 

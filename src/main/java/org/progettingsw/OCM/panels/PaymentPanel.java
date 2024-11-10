@@ -14,6 +14,8 @@ import javax.swing.JTextField;
 import org.progettingsw.OCM.Basket;
 import org.progettingsw.OCM.Pagamenti;
 import org.progettingsw.OCM.Pagamento;
+import org.progettingsw.OCM.Popup;
+import org.progettingsw.OCM.Popup.msgtype;
 import org.progettingsw.OCM.pagaCartadiCredito;
 import org.progettingsw.OCM.pagaPayPal;
 
@@ -59,6 +61,7 @@ public class PaymentPanel {
             public void actionPerformed(ActionEvent e) {
             	String selezione = metodoPagamento.getValue().toString(); // Immagazino in questa variabile la mia scelta di pagamento
             	
+            	if(importo > 0) {
             	switch(selezione) {
             		
             		case "PayPal":
@@ -72,6 +75,12 @@ public class PaymentPanel {
             	}
             	
             	pagamento.pagato(strategia,idpaziente);
+            	
+            	}
+            	
+            	else {
+            		new Popup("Non ci sono visite da pagare", msgtype.ERR);
+            	}
             }
             	
         });
