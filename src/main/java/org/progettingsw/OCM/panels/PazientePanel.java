@@ -20,7 +20,6 @@ public class PazientePanel {
     
     JButton addPaziente = new JButton("Aggiungi paziente");
     JButton listPaziente = new JButton("Lista pazienti");
-    JButton saveDBP = new JButton("Salva database");
     
 	static String selectPaziente; // mi da l'item del paziente
 	
@@ -57,7 +56,6 @@ public class PazientePanel {
         
         panel.add(addPaziente);
         panel.add(listPaziente);
-        panel.add(saveDBP);
         
         addPaziente.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -108,15 +106,7 @@ public class PazientePanel {
         	}
         });
         
-        saveDBP.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				dbs.writeJson("Paziente");
-			}
-        });
-        
-        
-        
+          
         return panel;
     }
     

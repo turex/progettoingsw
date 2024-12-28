@@ -1,12 +1,16 @@
 package org.progettingsw.OCM;
 
+import org.progettingsw.OCM.Popup.msgtype;
 //import org.progettingsw.OCM.panels.MacchinarioPanel;
 import org.progettingsw.OCM.panels.MedicoPanel;
 import org.progettingsw.OCM.panels.PazientePanel;
 import org.progettingsw.OCM.panels.PrenotazioniPanel;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 /*
@@ -47,7 +51,6 @@ public class Interface {
 
 		tabbedPane.addTab("Pazienti", new PazientePanel().createPanel());
 		tabbedPane.addTab("Medici", new MedicoPanel().createPanel());
-		//tabbedPane.addTab("Macchinari", new MacchinarioPanel().createPanel());
 		tabbedPane.addTab("Prenotazioni", pren.createPanel());
 
 		frame.add(tabbedPane);
@@ -64,6 +67,26 @@ public class Interface {
 
 		
 		loadDB();
+		
+		/*
+		 * Aggiungo listener per salvare automaticamnte tutti i DB 
+		 * 
+		 */
+		frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                
+                int choice = Popup.showPopup("Vuoi salvare i dati prima di uscire?", msgtype.YES_NO_OPTION);
+                if(choice == JOptionPane.YES_OPTION) {
+                dbs.writeJson("Paziente");
+                dbs.writeJson("Medico");
+                dbs.writeJson("Prenotazione");
+                }
+                else
+                	System.out.println("NO.");
+
+            }
+        });
 
 		
 

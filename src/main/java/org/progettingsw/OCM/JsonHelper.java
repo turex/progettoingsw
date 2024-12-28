@@ -343,10 +343,10 @@ public class JsonHelper {
 		            throw new IllegalArgumentException("Invalid database type: " + typeofdb);
 		    }
 
-		    if (data.isEmpty()) {
-		        new Popup("Database vuoto", Popup.msgtype.ERR);
-		        return;
-		    }
+		   // if (data.isEmpty()) {
+		        //new Popup("Database " + typeofdb +  " vuoto", Popup.msgtype.ERR);
+		       // return;
+		  //  }
 
 		    try (FileWriter file = new FileWriter(filename)) {
 		        file.write(data.toJSONString());

@@ -22,7 +22,6 @@ public class MedicoPanel {
     
     JButton addMedico = new JButton("Aggiungi medico");
     JButton listMedici = new JButton("Lista medici");
-    JButton saveDBM = new JButton("Salva database");
     
     	
     static ComandiMedico medcommand = ComandiMedico.getIstance(); //obbligato per design di PrenotazionePanel
@@ -66,7 +65,6 @@ public class MedicoPanel {
 
         panel.add(addMedico);
         panel.add(listMedici);
-        panel.add(saveDBM);
 
         addMedico.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -115,14 +113,7 @@ public class MedicoPanel {
             }
         });
 
-        saveDBM.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                dbs.writeJson("Medico");
-                
-            }
-        });
-        
+       
        
         /*
         modMedici.addActionListener(new ActionListener() {

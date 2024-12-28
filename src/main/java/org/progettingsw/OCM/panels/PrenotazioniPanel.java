@@ -118,7 +118,6 @@ public class PrenotazioniPanel {
         buttonPanel.add(addPrenotazione = new JButton("Aggiungi prenotazione"));
         buttonPanel.add(listPrenotazioni = new JButton("Lista prenotazioni"));
         buttonPanel.add(paga = new JButton("Vai al pagamento"));
-        buttonPanel.add(salvaDB = new JButton("Salva DB"));
         buttonPanel.add(new JLabel("Prioritá visita: "));
         buttonPanel.add(prioritySpinner);
 
@@ -151,8 +150,7 @@ public class PrenotazioniPanel {
                 }
 
 
-                if (!commpren.checkPrenotazione(split_paziente[4], split_medico[4], split_medico[2], formattedDate.toString(), priorityValue) &&
-                        !commpren.checkdispoMedico(split_medico[0], split_medico[2], formattedDate.toString())) {
+                if (commpren.checkPrenotazione(split_paziente[4], split_medico[4], split_medico[2], formattedDate.toString(), priorityValue)) {
                 	
                 	
                 	//*** GO TO PAYMENT BEFORE PRENOTAZIONE ***
@@ -271,12 +269,6 @@ public class PrenotazioniPanel {
             }
         });
         
-
-        salvaDB.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	jhelper.writeJson("Prenotazione");
-            }
-        });
 
         return panel;
     } 
