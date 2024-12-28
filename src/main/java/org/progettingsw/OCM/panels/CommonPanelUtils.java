@@ -1,9 +1,6 @@
 package org.progettingsw.OCM.panels;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
@@ -15,7 +12,7 @@ public class CommonPanelUtils {
 	
 	public DefaultTableModel model_paz = new DefaultTableModel(new Object[]{"Nome", "Cognome", "Data di Nascita", "Sesso","ID"}, 0);
 	public DefaultTableModel model_med = new DefaultTableModel(new Object[]{"Nome", "Cognome", "Professione", "Esperienza", "ID"}, 0);
-	public DefaultTableModel model_pren = new DefaultTableModel(new Object[]{"ID Paziente", "ID Medico", "Professione", "Data Prenotazione", "Prioritá", "Costo"},0);
+	public DefaultTableModel model_pren = new DefaultTableModel(new Object[]{"ID Paziente", "ID Medico", "Professione", "Data Prenotazione", "Prioritá", "Costo (€)"},0);
 	public String[] livello = new String[] {"Alta", "Media", "Bassa"};
 		
 	private static CommonPanelUtils instance;
@@ -76,7 +73,6 @@ public class CommonPanelUtils {
 	        ArrayList<String> list = new ArrayList<>();
 
 	        for (String valore : data) {
-	        	//DEBUG //System.out.println("Dati : " + valore);
 	            list.add(valore.toUpperCase());
 	        }
 

@@ -14,41 +14,14 @@ import org.junit.Test;
  */
 public class AppTest 
 {
-	JsonHelper n = JsonHelper.getIstance();
+
 	MedicoBuilder a = new MedicoBuilder();
-	static final String PATH = System.getProperty("user.dir");
-	static File m = new File(PATH + "\\Medico.json");
-	static File p = new File(PATH + "\\Paziente.json");
 	
 
 	@Before
 	public void setup() {
 	}
 	
-    @SuppressWarnings("static-access")
-	@Test
-    public void testJson() {
-       	n.addtoJson("Ciao", "Ciao", null,null,"01/10/2022",null,"1","Paziente");
-		n.addtoJson("Pippo", "Verdi", null,"test",null,null,"1", "Medico");
-		n.addtoJson("Mario", "Rossi", null,"test",null,null,"1","Medico");
-		n.writeJson("Medico");
-		n.writeJson("Paziente");
-		System.out.println("Struttura json per 'Paziente' :");
-		n.readDb("Medico");
-		n.readDb("Paziente");
-		n.printnomePaz();
-		System.out.println("Leggo dal file");
-		try {
-		n.readfromJson("Medico");
-		}
-		catch(Exception e) {
-			e.printStackTrace();
-		}
-		n.nm.get(0);
-		System.out.println("JSon 'Medico' creato correttamente" + " nel path : " + PATH);
-		assertTrue(m.exists());
-				
-    }
     
     @Test
     public void testbuildMedico() {
@@ -59,32 +32,7 @@ public class AppTest
     	
     }
     
-    @SuppressWarnings("static-access")
-	@Test
-    public void testarrayDB() {
-    	System.out.println("Testo il funzionamento della lettura array del DB 'Medico' per test");
-    	n.readDb("Medico");
-    	
-    	System.out.println(n.nm.get(0));
-    	
-    	assertEquals("Pippo",n.nm.get(0));
-    
-    }
+  
     
     
-    
-    
-    @AfterClass
-    static public void cleantestJson() {
-    	System.out.println("Pulizia dei database di prova");
-    	try {
-    	if(m.exists())
-    	m.delete();
-    	}
-    	catch (Exception e) {
-    		e.printStackTrace();
-    	}
-    	if(p.exists())
-        	p.delete();
-    }
 }

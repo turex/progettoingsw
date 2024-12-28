@@ -18,17 +18,7 @@ public class ListFrame {
 	CommonPanelUtils common = CommonPanelUtils.getInstance();
     private JTable tabella;
     
-    //private static ListFrame instance;
-    
-    
-	/*
-	 * public static ListFrame getInstance() {
-	 * 
-	 * if(instance == null) instance = new ListFrame();
-	 * 
-	 * return instance; }
-	 */
-        
+ 
     DefaultTableModel model;
     
     /**
@@ -100,7 +90,6 @@ public class ListFrame {
         common.setModel(tabella, model);
         
         f.add(scrollPane, BorderLayout.CENTER);
-        //f.add(save,BorderLayout.SOUTH);
         f.setVisible(true);
 
     }

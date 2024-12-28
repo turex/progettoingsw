@@ -15,7 +15,6 @@ import javax.swing.event.ListSelectionListener;
 import org.progettingsw.OCM.Basket;
 import org.progettingsw.OCM.ComandiMedico;
 import org.progettingsw.OCM.ComandiPrenotazione;
-import org.progettingsw.OCM.JsonHelper;
 import org.progettingsw.OCM.Popup;
 import org.progettingsw.OCM.Popup.msgtype;
 import org.progettingsw.OCM.PrenotazioneBuilder;
@@ -41,7 +40,6 @@ public class PrenotazioniPanel {
     
     static ComandiMedico commed = ComandiMedico.getIstance();
     static ComandiPrenotazione commpren = ComandiPrenotazione.getIstance();
-    static JsonHelper jhelper = JsonHelper.getIstance();
         
     JSpinner prioritySpinner; // spinner per impostare prioritá della visita
 
@@ -58,7 +56,12 @@ public class PrenotazioniPanel {
     private PrenotazioniPanel() {
     	
         pazientiTable = new JTable(common.model_paz){
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -9193741106200329034L;
+
+			@Override
             public boolean isCellEditable(int row, int column) {
                 return false; // Disabilita l'editabilità basata su isEditable
             }
@@ -66,7 +69,12 @@ public class PrenotazioniPanel {
         
         
         professionistiTable = new JTable(common.model_med){
-            @Override
+            /**
+			 * 
+			 */
+			private static final long serialVersionUID = -6017307607317755116L;
+
+			@Override
             public boolean isCellEditable(int row, int column) {
                 return false; // Disabilita l'editabilità basata su isEditable
             }
@@ -165,11 +173,7 @@ public class PrenotazioniPanel {
                             .setPriority(priorityValue)
                             .setCosto(costo)
                 			);
-                	
-                	
-                    jhelper.addPrenotazioni(split_paziente[4], split_medico[4], split_medico[2], formattedDate.toString(),priorityValue); // ID paziente, ID Medico , Professione e data prenotazione , questo va al json
-                    
-                    
+                	                                 
                     common.setPrenotazioniTableModel(new String[] {split_paziente[4], split_medico[4], split_medico[3], formattedDate.toString(), priorityValue,
                     		Integer.toString(costo)
                     		});  //questo popola la tabella

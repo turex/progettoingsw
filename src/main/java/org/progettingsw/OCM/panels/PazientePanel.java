@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import org.progettingsw.OCM.ComandiPaziente;
-import org.progettingsw.OCM.JsonHelper;
 import org.progettingsw.OCM.PazienteBuilder;
 import org.progettingsw.OCM.Popup;
 
@@ -25,7 +24,6 @@ public class PazientePanel {
 	
 	static ComandiPaziente command = ComandiPaziente.getIstance();
 	static PazienteBuilder p = new PazienteBuilder();
-	static JsonHelper dbs = JsonHelper.getIstance(); // creo oggetto JSON
 	CommonPanelUtils common = CommonPanelUtils.getInstance();
 	
 	ListFrame lista = new ListFrame();
@@ -74,9 +72,7 @@ public class PazientePanel {
             			command.addPaziente(p.setNome(nomeValue).setCognome(cognomeValue).setNascita(formattedDate).setSesso(sessoValue)); // *REMINDER*  L'ID viene assegnato da addPaziente
             			
             			String Id = command.getID(nomeValue, cognomeValue,formattedDate.toString());
-            			
-            			dbs.addtoJson(nomeValue, cognomeValue, Id ,null , formattedDate, sessoValue,null, "Paziente");
-            			
+            			            			
             		String[] data = new String[] {p.getPaziente().getNome(), 
         					p.getPaziente().getCognome(), 
         					p.getPaziente().getNascita(),

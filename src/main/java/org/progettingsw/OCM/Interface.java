@@ -1,16 +1,12 @@
 package org.progettingsw.OCM;
 
-import org.progettingsw.OCM.Popup.msgtype;
 //import org.progettingsw.OCM.panels.MacchinarioPanel;
 import org.progettingsw.OCM.panels.MedicoPanel;
 import org.progettingsw.OCM.panels.PazientePanel;
 import org.progettingsw.OCM.panels.PrenotazioniPanel;
 
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.File;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 /*
@@ -26,11 +22,6 @@ import javax.swing.JTabbedPane;
 
 public class Interface {
 
-	final String PATH = System.getProperty("user.dir"); // Path corrente dell'eseguibile
-	File pf, mf, ppf; // file per check db()p paziente , m medico, pp prenotazione
-
-	static JsonHelper dbs = JsonHelper.getIstance(); // creo oggetto JSON
-	
 	JFrame frame;
 
 	private final String VERSION = "v 2.0";
@@ -61,64 +52,17 @@ public class Interface {
 		
 		/*
 		 * 
-		 * All'avvio dell'interfaccia cerco di caricare interfaccia grafica e database
+		 * All'avvio dell'interfaccia cerco di caricare interfaccia grafica
 		 * 
 		 */
 
-		
-		loadDB();
-		
-		/*
-		 * Aggiungo listener per salvare automaticamnte tutti i DB 
-		 * 
-		 */
-		frame.addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowClosing(WindowEvent e) {
-                
-                int choice = Popup.showPopup("Vuoi salvare i dati prima di uscire?", msgtype.YES_NO_OPTION);
-                if(choice == JOptionPane.YES_OPTION) {
-                dbs.writeJson("Paziente");
-                dbs.writeJson("Medico");
-                dbs.writeJson("Prenotazione");
-                }
-                else
-                	System.out.println("NO.");
-
-            }
-        });
-
-		
 
 	}
 
 	public static void main(String[] args) {
 		
-		//SwingUtilities.invokeLater(() -> new Interface());
 		new Interface();
 	}
-	
-	private void loadDB() {
-		
-		pf = new File(PATH + "\\Paziente.json");
-		mf = new File(PATH + "\\Medico.json");
-		ppf = new File(PATH + "\\Prenotazione.json");
-		if (pf.exists()) {
-
-			dbs.readfromJson("Paziente");
-		}
-		if (mf.exists()) {
-			dbs.readfromJson("Medico");
-
-		} 
-		
-		if (ppf.exists()) {
-			dbs.readfromJson("Prenotazione");
-
-		} 
-	}
-	
-	
 	
 	
 }

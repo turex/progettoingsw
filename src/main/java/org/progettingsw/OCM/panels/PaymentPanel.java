@@ -3,15 +3,10 @@ package org.progettingsw.OCM.panels;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.SimpleDateFormat;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
-
-import org.progettingsw.OCM.Basket;
 import org.progettingsw.OCM.Pagamenti;
 import org.progettingsw.OCM.Pagamento;
 import org.progettingsw.OCM.Popup;

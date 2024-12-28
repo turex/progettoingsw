@@ -12,7 +12,6 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerListModel;
 
 import org.progettingsw.OCM.ComandiMedico;
-import org.progettingsw.OCM.JsonHelper;
 import org.progettingsw.OCM.MedicoBuilder;
 import org.progettingsw.OCM.Popup;
 
@@ -26,7 +25,6 @@ public class MedicoPanel {
     	
     static ComandiMedico medcommand = ComandiMedico.getIstance(); //obbligato per design di PrenotazionePanel
     static MedicoBuilder m = new MedicoBuilder();
-    static JsonHelper dbs = JsonHelper.getIstance(); // creo oggetto JSON
     PrenotazioniPanel pp = PrenotazioniPanel.getInstance();
     
     CommonPanelUtils common = CommonPanelUtils.getInstance();
@@ -87,8 +85,6 @@ public class MedicoPanel {
                     	
                     	
                     	 String Id = medcommand.getID(nomeValue,cognomeValue,professioneValue);
-
-            			dbs.addtoJson(nomeValue, cognomeValue, Id ,professioneValue , null, null,levelValue, "Medico"); 
             			
             			common.setMediciTableModel(new String[] {m.getMedico().getNome(),m.getMedico().getCognome(), professioneValue,levelValue, Id});  // Where i add data to the MODEL
             			new Popup("Medico aggiunto!", Popup.msgtype.OK);
@@ -114,20 +110,6 @@ public class MedicoPanel {
         });
 
        
-       
-        /*
-        modMedici.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-			lista.createAndShowFrame("Medico",true);
-				
-			}
-        	
-        	
-        });
-        
-        */
 
         return panel;
    
