@@ -102,7 +102,7 @@ public class PrenotazioniPanel {
     public JPanel createPanel() {
         JPanel panel = new JPanel(new BorderLayout());
 
-        JButton addPrenotazione, listPrenotazioni, salvaDB, paga;
+        JButton addPrenotazione, listPrenotazioni, paga;
 
         // Creazione del pannello per i pazienti a sinistra
         JPanel pazientiPanel = new JPanel();
@@ -260,7 +260,7 @@ public class PrenotazioniPanel {
             	JFrame paymentFrame = new JFrame("Pagamento");
             	PaymentPanel paymentPanel;
             	
-            	if (split_paziente != null && split_paziente.length > 4 && !split_paziente[4].isBlank()) { // Ensure split_paziente is properly initialized and has enough elements
+            	if (split_paziente != null && split_paziente.length > 4 && !split_paziente[4].isEmpty()) { // Ensure split_paziente is properly initialized and has enough elements
             	paymentPanel = new PaymentPanel(basket.getTotale(split_paziente[4]), split_paziente[4]);
             	
             	paymentFrame.add(paymentPanel.createPanel());

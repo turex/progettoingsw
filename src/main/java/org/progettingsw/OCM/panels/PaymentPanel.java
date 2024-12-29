@@ -42,7 +42,7 @@ public class PaymentPanel {
         JPanel panel = new JPanel();
         panel.setLayout(new GridLayout(0, 2, 10, 10)); // GridLayout con 2 colonne e 10 pixel di spazio tra le righe e le colonne
         
-        daPagare = new JLabel("Costo totale:" + importo); // Lunghezza preferita per il campo Nome
+        daPagare = new JLabel("Costo totale:" + importo);
         paga = new JButton("Paga");
         
         panel.add(daPagare);
@@ -70,6 +70,7 @@ public class PaymentPanel {
             	}
             	
             	pagamento.pagato(strategia,idpaziente);
+            	daPagare.updateUI();
             	
             	}
             	

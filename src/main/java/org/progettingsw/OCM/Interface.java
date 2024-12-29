@@ -5,7 +5,6 @@ import org.progettingsw.OCM.panels.MedicoPanel;
 import org.progettingsw.OCM.panels.PazientePanel;
 import org.progettingsw.OCM.panels.PrenotazioniPanel;
 
-import java.io.File;
 import javax.swing.JFrame;
 import javax.swing.JTabbedPane;
 
