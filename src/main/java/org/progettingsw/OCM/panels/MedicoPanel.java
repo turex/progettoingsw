@@ -73,15 +73,15 @@ public class MedicoPanel {
                 String levelValue = level.getValue().toString();
 
                 // Esegui le azioni necessarie con i valori ottenuti
-                if (!nomeValue.isEmpty() && !cognomeValue.isEmpty()) {
+                if (!nomeValue.isEmpty() && !cognomeValue.isEmpty() && nomeValue.matches("[a-zA-Z]+") && cognomeValue.matches("[a-zA-Z]+")) {
                     if (!medcommand.checkMedico(nomeValue, cognomeValue, professioneValue)) {
-                    	
                     	
                     	medcommand.addMedico(m.setNome(nomeValue)
                     			.setCognome(cognomeValue)
                     			.setProfessione(professioneValue)
                     			.setLevel(professioneValue)
                     			);
+                    	
                     	
                     	
                     	 String Id = medcommand.getID(nomeValue,cognomeValue,professioneValue);
@@ -92,8 +92,9 @@ public class MedicoPanel {
             			new Popup("Errore!\nNome, cognome e data di nascita sono necessari o medico gia registrato",Popup.msgtype.ERR);
                     }
                 } else {
-                	new Popup("Errore!\nInserire tutti i campi obbligatori", Popup.msgtype.ERR);
+                	new Popup("Errore!\nInserire tutti i campi obbligatori(ammesse solo lettere)", Popup.msgtype.ERR);
                 }
+                
             }
         });
 

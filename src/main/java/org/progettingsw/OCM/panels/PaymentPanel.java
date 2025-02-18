@@ -7,6 +7,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
+
+import org.progettingsw.OCM.Basket;
 import org.progettingsw.OCM.Pagamenti;
 import org.progettingsw.OCM.Pagamento;
 import org.progettingsw.OCM.Popup;
@@ -30,9 +32,11 @@ public class PaymentPanel {
 	  Pagamenti strategia; // Strategia di pagamento
 	  Pagamento pagamento = new Pagamento();  //Pagamento finale
 	  
-	  PaymentPanel(int importo, String idpaziente){
+	  Basket carrello = Basket.getIstance();
+	  
+	  PaymentPanel(String idpaziente){
 		  
-		  this.importo = importo;
+		  this.importo = carrello.getTotale(idpaziente);
 		  this.idpaziente = idpaziente;
 		  
 	  }
@@ -53,7 +57,9 @@ public class PaymentPanel {
         
         
         paga.addActionListener(new ActionListener() {
+        	
             public void actionPerformed(ActionEvent e) {
+            	     	
             	String selezione = metodoPagamento.getValue().toString(); // Immagazino in questa variabile la mia scelta di pagamento
             	
             	if(importo > 0) {
@@ -70,7 +76,10 @@ public class PaymentPanel {
             	}
             	
             	pagamento.pagato(strategia,idpaziente);
-            	daPagare.updateUI();
+            	importo = carrello.getTotale(idpaziente);
+            	daPagare.setText("Costo totale:" + Integer.toString(importo)); 
+            	daPagare.revalidate();  // Revalidate the layout
+                daPagare.repaint();     // Repaint the label to show changes
             	
             	}
             	

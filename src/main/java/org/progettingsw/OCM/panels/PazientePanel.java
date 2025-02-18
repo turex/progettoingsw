@@ -66,7 +66,10 @@ public class PazientePanel {
                 
             	
             	// Esegui le azioni necessarie con i valori ottenuti
-            	if (!nomeValue.isEmpty() && !cognomeValue.isEmpty() && !formattedDate.isEmpty()) {
+            	if (!nomeValue.isEmpty() && !cognomeValue.isEmpty() && !formattedDate.isEmpty() &&
+            			nomeValue.matches("[a-zA-Z]+") && cognomeValue.matches("[a-zA-Z]+")
+            			) {
+            		
             		if (!command.checkPaziente(nomeValue, cognomeValue, formattedDate)) {
             			
             			command.addPaziente(p.setNome(nomeValue).setCognome(cognomeValue).setNascita(formattedDate).setSesso(sessoValue)); // *REMINDER*  L'ID viene assegnato da addPaziente
@@ -87,7 +90,7 @@ public class PazientePanel {
             			new Popup("Errore!\nNome, cognome e data di nascita sono necessari o paziente gia registrato",Popup.msgtype.ERR);
             		}
             	} else {
-            		new Popup("Errore!\nInserire tutti i campi obbligatori", Popup.msgtype.ERR);
+            		new Popup("Errore!\nInserire tutti i campi obbligatori(ammesse solo lettere)", Popup.msgtype.ERR);
             	}
             }
         });

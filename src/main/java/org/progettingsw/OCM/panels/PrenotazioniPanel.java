@@ -43,12 +43,12 @@ public class PrenotazioniPanel {
         
     JSpinner prioritySpinner; // spinner per impostare prioritá della visita
 
-    String formattedDate;
-    JSpinner spinner;
+    static String formattedDate;
+    static JSpinner spinner;
     
-    Date selectedDate;
+    static Date selectedDate;
     
-    SimpleDateFormat dateFormat;
+    static SimpleDateFormat dateFormat;
     
     PrenotazioneBuilder pb = new PrenotazioneBuilder();
     String priorityValue = "";
@@ -91,7 +91,7 @@ public class PrenotazioniPanel {
         dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm"); // Nuovo formato desiderato (per confronto database)
         formattedDate = dateFormat.format(selectedDate);
     }
-
+    
     public static PrenotazioniPanel getInstance() {
         if (instance == null) {
             instance = new PrenotazioniPanel();
@@ -147,8 +147,6 @@ public class PrenotazioniPanel {
 
         addPrenotazione.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            	
-            	
                
                 priorityValue = prioritySpinner.getValue().toString();
                                 
@@ -161,7 +159,6 @@ public class PrenotazioniPanel {
                 if (commpren.checkPrenotazione(split_paziente[4], split_medico[4], split_medico[2], formattedDate.toString(), priorityValue)) {
                 	
                 	
-                	//*** GO TO PAYMENT BEFORE PRENOTAZIONE ***
                 	
                 costo = basket.addToBasket(split_medico[2], split_paziente[4], split_medico[3], split_paziente[2]);
                 
@@ -261,7 +258,7 @@ public class PrenotazioniPanel {
             	PaymentPanel paymentPanel;
             	
             	if (split_paziente != null && split_paziente.length > 4 && !split_paziente[4].isEmpty()) { // Ensure split_paziente is properly initialized and has enough elements
-            	paymentPanel = new PaymentPanel(basket.getTotale(split_paziente[4]), split_paziente[4]);
+            	paymentPanel = new PaymentPanel(split_paziente[4]);
             	
             	paymentFrame.add(paymentPanel.createPanel());
             	paymentFrame.setSize(400, 300);
