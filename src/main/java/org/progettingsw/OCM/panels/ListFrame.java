@@ -21,13 +21,6 @@ public class ListFrame {
  
     DefaultTableModel model;
     
-    /**
-     * Constructor
-     *
-     * @param tipo the type (either "Medico" or "Paziente") to list various items in a table
-     */
-    
-    
     /*
      * 
      * Add parameter to edit table 

@@ -1,7 +1,7 @@
 package org.progettingsw.OCM;
 
 
-public class Paziente implements Uomo{
+public class Paziente{
 	
 	String nome = "";
 	String cognome = "";
@@ -17,38 +17,32 @@ public Paziente(String nome,String cognome,String ID,String nascita,String sesso
 		this.sesso = sesso;
 	}
 
-	@Override
 	public String getNome() {
 		// TODO Auto-generated method stub
 		return nome;
 	}
 
-	@Override
 	public String getCognome() {
 		// TODO Auto-generated method stub
 		return cognome;
 	}
 
-	@Override
 	public String getID() {
 		// TODO Auto-generated method stub
 		return ID;
 	}
 
-	@Override
 	public String getNascita() {
 		// TODO Auto-generated method stub
 		return nascita;
 	}
 	
-	@Override
 	public String getSesso() {
 		// TODO Auto-generated method stub
 		return sesso;
 	}
 	
 
-	@Override
 	public String toString() {
 		return "Paziente [nome=" + nome + ", cognome=" + cognome + ", ID=" + ID + ", nascita="
 				+ nascita + ", sesso=" + sesso + "]";

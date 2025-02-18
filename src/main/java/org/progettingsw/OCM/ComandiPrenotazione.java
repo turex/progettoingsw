@@ -83,7 +83,7 @@ public class ComandiPrenotazione {
 	        case "BASSA":
 	            return 3; // Priorità più bassa
 	        default:
-	            return Integer.MAX_VALUE; // Se la priorità non è valida, restituisci un valore massimo per evitare conflitti
+	            return 0; // Se la priorità non è valida, restituisci 0 per evitare conflitti
 	    }
 	}
 	
@@ -93,12 +93,12 @@ public class ComandiPrenotazione {
 	    if (id_paziente == null || id_medico == null || professione == null || data_prenotazione == null || priorita == null
 	        || id_paziente.isEmpty() || id_medico.isEmpty() || professione.isEmpty() || data_prenotazione.isEmpty() || priorita.isEmpty()) {
 
-	        System.out.println("Errore: uno dei parametri è null o vuoto");
+	        new Popup("Errore: uno dei parametri è null o vuoto",msgtype.ERR);
 	        return false; // Se uno dei parametri è vuoto o null, la prenotazione non è valida
 	    }
 
 	    // Debug: Stampa i parametri ricevuti
-	    System.out.println("Parametri ricevuti: " + id_paziente + ", " + id_medico + ", " + professione + ", " + data_prenotazione + ", " + priorita);
+	   // System.out.println("Parametri ricevuti: " + id_paziente + ", " + id_medico + ", " + professione + ", " + data_prenotazione + ", " + priorita);
 
 	    // Verifica se esiste una prenotazione che corrisponde ai criteri specificati
 	    boolean prenotazioneEsistente = pren.stream()
@@ -112,18 +112,18 @@ public class ComandiPrenotazione {
 
 	    // Se la prenotazione esiste già, restituisce false
 	    if (prenotazioneEsistente) {
-	        System.out.println("Prenotazione già esistente.");
+	        new Popup("Prenotazione già esistente.",msgtype.ERR);
 	        return false; // La prenotazione esiste già
 	    }
 
 	    // Ora controlliamo se il medico è disponibile per la data specificata con la priorità
 	    if (!checkdispoMedico(id_medico, professione, data_prenotazione, priorita)) {
-	        System.out.println("Errore: il medico non è disponibile per questa data e priorità.");
+	    	new Popup("Errore: il medico non è disponibile per questa data e priorità.",msgtype.ERR);
 	        return false; // Il medico non è disponibile, non puoi procedere con la prenotazione
 	    }
 
 	    // Se non esiste una prenotazione già registrata e il medico è disponibile, la prenotazione è valida
-	    System.out.println("Prenotazione effettuata con successo.");
+	    new Popup("Prenotazione effettuata con successo.",msgtype.OK);
 	    return true; // La prenotazione è valida
 	}
 
