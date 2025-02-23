@@ -45,10 +45,10 @@ public int addToBasket(String visita, String idpaziente, String livelloMedico, S
 				maggiorazione = 50;
 				break;
 			case "MEDIA":
-				maggiorazione = 30;
+				maggiorazione = 20;
 				break;
 			case "BASSA":
-				maggiorazione = 10;
+				maggiorazione = 0;
 				break;
     	
     	
@@ -56,16 +56,16 @@ public int addToBasket(String visita, String idpaziente, String livelloMedico, S
     	
 			switch (visita.toUpperCase()) {
 			case "CHIRURGO":
-				costo = 30;
+				costo = 60;
 				break;
 			case "OCULISTA":
-				costo = 20;
+				costo = 40;
 				break;
 			case "FISIOTERAPISTA":
-				costo = 50;	   
+				costo = 30;	   
 				break;
 			default:
-				System.out.println("Tipo di visita non riconosciuto.");
+				new Popup("Tipo di visita non riconosciuto.",msgtype.OK);
 				break;
 			}
 	   
@@ -75,7 +75,7 @@ public int addToBasket(String visita, String idpaziente, String livelloMedico, S
 			}
 			else {
 				spesaTotale = 0;
-				new Popup("Paziente esente da pagamento", msgtype.OK);
+				new Popup("Paziente esente dal pagamento", msgtype.OK);
 			}
 			       
        transazione.put(idpaziente, spesaTotale);

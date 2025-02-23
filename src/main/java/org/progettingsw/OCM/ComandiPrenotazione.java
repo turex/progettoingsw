@@ -62,7 +62,6 @@ public class ComandiPrenotazione {
 	            });
 
 	        if (conflittoPriorita) {
-	            System.out.println("Errore: il medico ha una prenotazione con priorità più alta nello stesso momento.");
 	            new Popup("Attenzione\nIl medico ha già una prenotazione con una priorità più alta per la stessa data.", msgtype.OK);
 	            return false; // Se esiste una priorità più alta, non è possibile prenotare
 	        }
